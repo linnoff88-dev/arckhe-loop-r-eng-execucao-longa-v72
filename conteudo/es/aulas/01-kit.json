@@ -1,0 +1,353 @@
+{
+  "slug": "kit",
+  "num": 1,
+  "menu": "Kit",
+  "titulo": "El kit: siete archivos que sostienen una ejecución larga",
+  "titulo_curto": "El kit y los 7 archivos",
+  "minutos": 15,
+  "lead": "Una sesión larga falla de tres maneras: no sabe cuándo parar, olvida lo que hizo después de compactar y gasta lo que no debía. El kit execucao-longa responde con archivos, no con la memoria del modelo: el agente relee la carpeta en vez de recordar. En esta clase instalas el kit y creas la primera carpeta.",
+  "objetivo": "crear la carpeta longrun/ de una ejecución y decir, para cada uno de los siete archivos, quién escribe, cuándo se lee y si solo agrega.",
+  "competencias": [
+    "instalar-kit-execucao-longa",
+    "criar-pasta-longrun",
+    "classificar-arquivos-de-estado"
+  ],
+  "aprende": [
+    {
+      "icone": "baixar",
+      "t": "Instalar el kit y comprobar que pasan las 73 pruebas"
+    },
+    {
+      "icone": "pasta",
+      "t": "Crear longrun/[fecha]-[slug]/ con un comando"
+    },
+    {
+      "icone": "arquivo",
+      "t": "Separar lo que se reescribe de lo que solo se agrega"
+    },
+    {
+      "icone": "cerebro",
+      "t": "Poner el método en las reglas globales del agente"
+    }
+  ],
+  "hero_alt": "Carpetas de archivo grises alineadas en un estante de metal, junto a un servidor pequeño.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Los siete archivos alrededor del agente",
+      "sub": "Haz clic en cada bloque: quién escribe, cuándo se lee y cómo cambia.",
+      "nos": [
+        {
+          "icone": "alvo",
+          "titulo": "goal.md",
+          "sub": "el objetivo y la prueba",
+          "itens": [
+            {
+              "icone": "caneta",
+              "t": "Tú escribes",
+              "sub": "antes de empezar"
+            },
+            {
+              "icone": "check",
+              "t": "Criterios comando → salida"
+            }
+          ],
+          "detalhe": "Resultado en una frase, criterios de terminado (función, regresión, límite), topes, restricciones y puertas humanas. Es el único archivo que el agente no debe reescribir: cambiar el goal a mitad de camino es cambiar de tarea."
+        },
+        {
+          "icone": "lista",
+          "titulo": "plan.md + state.md",
+          "sub": "reescritos en cada ciclo",
+          "itens": [
+            {
+              "icone": "seta",
+              "t": "plan: estrategia + 3 próximos pasos"
+            },
+            {
+              "icone": "check",
+              "t": "state: qué funciona, qué falta, cómo retomar"
+            }
+          ],
+          "detalhe": "Los dos son fotografías del ahora: se reescriben, no se acumulan. El state.md termina con los comandos exactos para retomar. Cuando la primera línea de \"Funciona\" dice concluído, el vigía y el hook dejan de tratar la ejecución como activa.",
+          "forte": true
+        },
+        {
+          "icone": "relogio",
+          "titulo": "progress, failures, decisions",
+          "sub": "solo agregan",
+          "itens": [
+            {
+              "icone": "git",
+              "t": "progress: checkpoint + commit"
+            },
+            {
+              "icone": "x",
+              "t": "failures: error → intento → resultado"
+            },
+            {
+              "icone": "marca",
+              "t": "decisions: decisión, motivo, alternativa"
+            }
+          ],
+          "detalhe": "Historial fechado en tabla. Nunca se borra una línea: es lo que permite ver después si el agente reabrió algo ya hecho o repitió el mismo intento tres veces."
+        },
+        {
+          "icone": "memoria",
+          "titulo": "canal.md",
+          "sub": "lo que la compactación pierde",
+          "itens": [
+            {
+              "icone": "lupa",
+              "t": "hechos, aprendizajes"
+            },
+            {
+              "icone": "lupa",
+              "t": "glosario, trampas"
+            }
+          ],
+          "detalhe": "Conocimiento del proyecto, no estado de la tarea: dónde están las cosas, el nombre correcto de cada pieza, la trampa que costó una hora. Solo agrega, una línea por hecho, con fecha. El hook pide llenarlo en la franja 1 (clase 3)."
+        },
+        {
+          "icone": "robo",
+          "titulo": "Agente o loop",
+          "sub": "Claude Code, Codex, codex exec",
+          "itens": [
+            {
+              "icone": "voltar",
+              "t": "Relee goal → state → plan → canal"
+            },
+            {
+              "icone": "terminal",
+              "t": "Actúa, prueba, actualiza, hace commit"
+            }
+          ],
+          "detalhe": "Después de cada compactación o retomada, lo primero es releer los archivos, en el orden goal → state → plan → canal → final de progress y failures, y seguir desde el primer ítem pendiente."
+        }
+      ],
+      "volta": "¿Se compactó, se cayó o cambiaste de modelo? El próximo ciclo relee la carpeta y continúa.",
+      "legenda": "Los mismos archivos sirven para Claude Code y para Codex: uno retoma lo que el otro grabó.",
+      "rolagem": true,
+      "rolagem_fim": {
+        "titulo": "La carpeta es la memoria",
+        "texto": "El objetivo queda quieto en goal.md; el ahora queda en plan y en state; el historial solo crece en progress, failures y decisions; lo que el resumen pierde queda en el canal.",
+        "curto": "Relee la carpeta, no la conversación."
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Cuándo entra en juego cada archivo",
+      "sub": "Una ejecución de principio a fin, vista a través de los archivos.",
+      "passos": [
+        {
+          "titulo": "Antes",
+          "sub": "tú",
+          "texto": [
+            "<code>novo-longrun.sh</code> crea la carpeta con los siete archivos ya marcados con la fecha.",
+            "Tú completas el <code>goal.md</code>. Es la parte que lleva tiempo, y es la que decide si la ejecución termina (clase 2)."
+          ],
+          "exemplo": {
+            "rot": "Nombre de la carpeta",
+            "texto": "longrun/2026-10-19-contador-palavras/"
+          }
+        },
+        {
+          "titulo": "En cada ciclo",
+          "sub": "el agente",
+          "texto": [
+            "Lee state y plan, elige la próxima acción útil, la ejecuta y la prueba.",
+            "Al final reescribe state y plan y agrega una línea en progress. Si algo salió mal, una línea en failures."
+          ],
+          "exemplo": {
+            "rot": "Línea de progress.md",
+            "texto": "| 2026-10-01 14:30 | medição do piloto | 7714c3c | sim (nível 3) | 332791 / 304000 / 4296 | 0 |"
+          }
+        },
+        {
+          "titulo": "Después de compactar",
+          "sub": "el agente, recordado por el hook",
+          "texto": [
+            "El resumen de la compactación mezcla lo confirmado con la suposición. Los archivos no.",
+            "El agente relee goal → state → plan → canal antes de actuar y no reabre lo que el state dice que está hecho."
+          ]
+        },
+        {
+          "titulo": "Al final",
+          "sub": "tú verificas",
+          "texto": [
+            "El <code>state.md</code> dice concluido, pero quien lo cierra eres tú: ejecutas la prueba final por tu cuenta y mides la sesión (clase 7).",
+            "La corrección más pequeña de cada falla va del <code>failures.md</code> al <code>FALHAS.md</code> del proyecto."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Instalar y crear la primera carpeta",
+      "sub": "Una vez por máquina, y después una carpeta por ejecución. Las rutas siguen el README del kit.",
+      "blocos": [
+        {
+          "rot": "Terminal · instalar el kit (una vez)",
+          "icone": "terminal",
+          "conteudo": "git clone https://github.com/inematds/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
+        },
+        {
+          "rot": "Terminal · una carpeta por ejecución",
+          "icone": "pasta",
+          "conteudo": "~/projetos/execucao-longa/tools/novo-longrun.sh ~/projetos/<seu-projeto> <slug-do-objetivo>\nls ~/projetos/<seu-projeto>/longrun/*/"
+        },
+        {
+          "rot": "CLAUDE.md y AGENTS.md globales · pegar una vez (templates/AGENTS-long-run.md)",
+          "icone": "arquivo",
+          "conteudo": "## Execução longa (/goal, loop, objetivo de horas) — método em ~/projetos/execucao-longa\n\n- **Antes de começar:** `~/projetos/execucao-longa/tools/novo-longrun.sh <projeto> <slug>` cria `longrun/<data>-<slug>/` (goal, plan, state, progress, failures, decisions, canal). Critério de pronto no `goal.md` em **nível 3+**: `comando → saída esperada`, cobrindo função, regressão e limite, sem atalho possível (contagem mínima, testes congelados, validador).\n- **Durante:** releia goal → state → plan → canal após toda compactação ou retomada; registre cedo no `canal.md` (só acrescentar) fatos, aprendizados, glossário e armadilhas; teste cada mudança; commit a cada checkpoint; continue enquanto houver próxima ação útil e segura.\n- **Parar e chamar o humano:** 3 ciclos sem avanço mensurável; o mesmo plano de fechamento repetido sem fechar ou item já feito reaberto (contexto degradou); crédito/API, ação irreversível ou externa, credencial ausente, decisão de negócio.\n- **Faixas de contexto** (no Claude Code o hook avisa uma vez cada; no Codex, acompanhe o % em `/status`): ~50% → registrar no `canal.md`; ~70% → atualizar estado e pedir `/compact`; ~85% ou 3ª compactação → `/session-handoff` + sessão nova + `/prime`.\n- **Headless:** `~/projetos/execucao-longa/tools/loop-longrun.sh <pasta-longrun>` (flock, timeout, MemoryMax, testes protegidos, parada por estagnação). Medir: `tools/medir-sessao.py <jsonl>`.\n- Tetos sempre: timeout, memória (`systemd-run --user --scope -p MemoryMax=`), saída de ferramenta curta.\n- **Histórico:** `recall \"termo\" [--projeto X] [--fonte codex|claude] [--desde AAAA-MM-DD]` busca em tudo o que já foi dito com o Codex e o Claude nesta máquina (índice reindexado de hora em hora) — use antes de perguntar ao usuário algo que pode já ter sido decidido."
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>$ python3 -m pytest -q -p no:cacheprovider | tail -1\n73 passed in 18.59s\n\n$ novo-longrun.sh ~/ensaio/projeto-teste contador-palavras\ncriado: ~/ensaio/projeto-teste/longrun/2026-10-19-contador-palavras\npróximo: preencher ~/ensaio/projeto-teste/longrun/2026-10-19-contador-palavras/goal.md (critérios nível 3+) e colar templates/prompt-goal-codex.md no /goal\n\n$ ls ~/ensaio/projeto-teste/longrun/*/\ncanal.md  decisions.md  failures.md  goal.md  plan.md  progress.md  state.md\n\n$ novo-longrun.sh ~/ensaio/projeto-teste contador-palavras\njá existe: ~/ensaio/projeto-teste/longrun/2026-10-19-contador-palavras\n$ echo $?\n1</pre><p>Ejecutado con el kit del 18/10/2026; solo se acortó la ruta de la carpeta de ensayo. El tiempo de pytest cambia de una máquina a otra.</p>"
+          },
+          {
+            "rot": "Errores comunes",
+            "html": "<ul><li><b>Carpeta fuera de un proyecto</b>: el script exige que la carpeta del proyecto exista. El hook y el vigia buscan <code>longrun/*/state.md</code> en la raíz del repositorio git.</li><li><b>Reutilizar el slug</b>: dos ejecuciones el mismo día con el mismo slug chocan y el script se niega. Usa otro slug; no borres la carpeta antigua, es historial.</li><li><b>Escribir \"concluído\" en el state.md por error</b>: para el hook y el vigia, la ejecución deja de estar activa.</li></ul>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "video",
+      "titulo": "Video: las tres piezas del método",
+      "sub": "Seis minutos con el concepto (10/10/2026). El concepto sigue vigente; dos detalles cambiaron después: en la franja 3 y en la 3.ª compactación el agente termina la tarea en curso antes de la sesión nueva (clase 3), y el cuidado con la caché hoy es el handoff automático a los 45 min de inactividad (clase 4).",
+      "chave": "execucao-longa-pratica"
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "En tu máquina. Pasa al siguiente solo cuando el \"listo cuando\" sea verdad.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Kit instalado y probado",
+          "min": "10 min",
+          "texto": "Clona el kit en ~/projetos/execucao-longa y ejecuta su suite de pruebas.",
+          "pronto": "<code>python3 -m pytest -q -p no:cacheprovider | tail -1</code> → <code>73 passed</code> (en un clon más nuevo el número puede ser mayor; nunca puede aparecer <code>failed</code>)."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · La carpeta de una ejecución de verdad",
+          "min": "10 min",
+          "texto": "Elige una tarea real de un proyecto tuyo que lleve más de una hora y crea su carpeta. Ejecuta el mismo comando dos veces.",
+          "pronto": "<code>ls ~/projetos/[tu-proyecto]/longrun/*/ | wc -l</code> → <code>7</code>; la segunda llamada imprime <code>já existe:</code> y <code>echo $?</code> → <code>1</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · El método en las reglas globales",
+          "min": "10 min",
+          "texto": "Pega el bloque de templates/AGENTS-long-run.md en ~/.claude/CLAUDE.md y en ~/.codex/AGENTS.md. Abre una sesión nueva y pregunta: \"¿cómo empiezas una ejecución larga?\" El bloque también menciona /session-handoff, /prime y recall: solo existen a partir de las clases 5 y 7.",
+          "pronto": "<code>grep -c novo-longrun.sh ~/.claude/CLAUDE.md</code> → <code>1</code> o más, y la sesión nueva responde citando novo-longrun.sh y criterio nivel 3 sin que tú se lo recuerdes."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "perguntas": [
+        {
+          "p": "¿Cuál de estos archivos debe el agente REESCRIBIR en cada ciclo, en lugar de solo agregar?",
+          "opcoes": [
+            "progress.md",
+            "decisions.md",
+            "failures.md",
+            "state.md"
+          ],
+          "certa": 3,
+          "explica": "state.md y plan.md son la fotografía del ahora y se reescriben. progress, failures y decisions son historial: solo se agregan, para poder ver después si el agente repitió un intento o reabrió un ítem.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "El agente descubrió que la base de datos de prueba solo levanta con la variable DB_LOCAL=1. ¿Dónde va eso?",
+          "opcoes": [
+            "En plan.md, que se reescribe",
+            "En ningún lado: lo va a recordar",
+            "En goal.md, como criterio nuevo",
+            "En canal.md, con fecha"
+          ],
+          "certa": 3,
+          "explica": "Es conocimiento del proyecto que la compactación pierde: canal.md, una línea con fecha. En plan.md desaparece en la próxima reescritura; en goal.md cambiaría la tarea.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Después de una compactación, ¿qué es lo primero que hace el agente?",
+          "opcoes": [
+            "Le pide al usuario que repita el pedido",
+            "Relee goal → state → plan → canal y el final de progress y failures",
+            "Escribe un goal.md nuevo",
+            "Continúa desde el resumen de la compactación, que ya trae el estado, las decisiones y los próximos pasos"
+          ],
+          "certa": 1,
+          "explica": "El resumen mezcla lo confirmado con la suposición. Los archivos no. Por eso el kit manda releer la carpeta en orden y seguir desde el primer ítem pendiente.",
+          "ref": "passos",
+          "cert": true
+        },
+        {
+          "p": "Ejecutaste novo-longrun.sh con un slug que ya existe hoy. ¿Qué pasa?",
+          "opcoes": [
+            "Se niega con \"já existe\" y sale con código 1",
+            "Crea una carpeta nueva con sufijo -2 y deja la antigua intacta",
+            "Borra la carpeta antigua",
+            "Sobrescribe los archivos"
+          ],
+          "certa": 0,
+          "explica": "El script se niega y no toca la carpeta existente. Una carpeta antigua es historial: usa otro slug.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "La carpeta es la memoria",
+          "texto": "El agente no necesita recordar: relee goal, state, plan y canal después de compactar o retomar."
+        },
+        {
+          "t": "Reescribir × agregar",
+          "texto": "plan y state son el ahora; progress, failures y decisions solo crecen; canal guarda lo que el resumen pierde."
+        },
+        {
+          "t": "Un comando",
+          "texto": "novo-longrun.sh crea la carpeta con fecha; el método va en las reglas globales para valer sin recordatorio."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "Kit execucao-longa en GitHub (README PT/EN/ES)",
+          "href": "https://github.com/inematds/execucao-longa",
+          "icone": "git"
+        },
+        {
+          "t": "Guía visual del kit",
+          "href": "https://inematds.github.io/execucao-longa/guia/",
+          "icone": "camadas"
+        },
+        {
+          "t": "Curso 0 de la formación: anatomía del loop y estado fuera del modelo",
+          "href": "https://inematds.github.io/loop-r-eng-base-v72/es/",
+          "icone": "lista"
+        },
+        {
+          "t": "Anthropic: harnesses para agentes de larga duración (26/11/2025)",
+          "href": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+          "icone": "lupa"
+        }
+      ]
+    }
+  ]
+}

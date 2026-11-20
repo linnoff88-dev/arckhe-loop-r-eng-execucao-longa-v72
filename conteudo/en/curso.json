@@ -1,0 +1,194 @@
+{
+  "id": "loop-r-eng-execucao-longa-v72",
+  "lang": "en",
+  "url": "https://inematds.github.io/loop-r-eng-execucao-longa-v72/en/",
+  "nome": "Long Run",
+  "sub": "LOOP-R Engineering Track · course 2",
+  "volta": {
+    "t": "LOOP-R Engineering Track area",
+    "href": "https://eventos.inema.pro/loop-r-engenharia/en/"
+  },
+  "lado_card": {
+    "rot": "This course's kit",
+    "t": "Long Run (open source)",
+    "texto": "Templates, hook, headless loop, and measurement. Every command in the lessons comes from it, in the 10/18/2026 version.",
+    "link": "Open the kit guide",
+    "href": "https://inematds.github.io/execucao-longa/guia/"
+  },
+  "rodape": "INEMA.CLUB · open and free content · INEMA Learning v7.2 format · LOOP-R Engineering Track, course 2 of 6 · <a href=\"https://eventos.inema.pro/loop-r-engenharia/en/\">eventos.inema.pro/loop-r-engenharia</a> · <a href=\"https://github.com/inematds/execucao-longa\">execucao-longa kit on GitHub</a> · <a href=\"https://inema.club/\">inema.club</a>",
+  "videos": {
+    "execucao-longa-pratica": {
+      "titulo": "Long Run in practice",
+      "duracao": "6 min 20 s",
+      "mp4": "https://github.com/inematds/execucao-longa-pratica/releases/download/video-v2.0.0/execucao-longa-pratica-completo-16x9.mp4",
+      "vtt": "assets/vtt/execucao-longa-pratica.vtt",
+      "poster": "assets/img/execucao-longa-pratica.jpg",
+      "pagina": "https://inematds.github.io/execucao-longa-pratica/videos/"
+    }
+  },
+  "inicio": {
+    "kicker": "LOOP-R Engineering Track · course 2 of 6 · 8 lessons",
+    "titulo": "Long runs: the agent works for hours and the test decides when it's done",
+    "lead": "Seven state files, a goal.md that can't be met by a shortcut, a hook that watches the context and the cache, a handoff you can check, a headless loop with caps, and measurement of every session. All with the open execucao-longa kit and real terminal output.",
+    "cta": "Start with lesson 1",
+    "cta2": {
+      "t": "See the track area",
+      "href": "https://eventos.inema.pro/loop-r-engenharia/en/"
+    },
+    "capa_alt": "Engineering workbench at night with a terminal, an instrument panel, and a cable in a loop.",
+    "numeros": [
+      {
+        "v": "8",
+        "t": "lessons"
+      },
+      {
+        "v": "20",
+        "t": "exercises with expected output"
+      },
+      {
+        "v": "73",
+        "t": "tests in the kit (10/19)"
+      },
+      {
+        "v": "1",
+        "t": "video"
+      }
+    ],
+    "aulas_titulo": "The lessons",
+    "aulas_sub": "In the order you build them: folder and goal, context and cache, handoff, headless loop, measurement, and a full run.",
+    "blocos": [
+      {
+        "t": "Who it's for",
+        "itens": [
+          "People who already use Claude Code or Codex in the terminal and want to leave a task running for hours.",
+          "People who have seen the agent say \"done\" with a deleted test, or forget what it did after a compaction.",
+          "People who need to run an agent in cron or systemd without freezing the machine or wasting the quota."
+        ]
+      },
+      {
+        "t": "What you'll be able to do",
+        "itens": [
+          "Create the longrun/ folder and write command → output criteria that cover function, regression, and limit.",
+          "Turn on the context band hook and know when to compact, write a handoff, or open a new session.",
+          "Run loop-longrun.sh with flock, timeout, MemoryMax, and protected tests, first with a fake agent.",
+          "Measure the session, the cost of resuming, and find old decisions with recall."
+        ]
+      },
+      {
+        "t": "Before you start",
+        "itens": [
+          "Linux or macOS with git, Python 3, and pytest; on Linux, user systemd for MemoryMax and the timers.",
+          "Claude Code or Codex installed and signed in through your subscription. The rehearsal exercises don't use up quota.",
+          "Recommended: course 0 (Base) for the done criterion scale and course 1 (Verification) for evaluators."
+        ]
+      }
+    ]
+  },
+  "ui": {
+    "pular": "Skip to content",
+    "aulas": "Lessons",
+    "concluido": "completed",
+    "aula": "Lesson",
+    "nesta_aula": "In this lesson, you'll learn:",
+    "objetivo": "Goal:",
+    "proxima_aula": "Next lesson",
+    "aula_anterior": "Previous lesson",
+    "voltar_inicio": "Back to course start",
+    "marcar_concluida": "Mark lesson as completed",
+    "dg_dica": "Click each block in the diagram to see what it does.",
+    "copiar": "Copy",
+    "copiado": "Copied",
+    "selo_simulacao": "Simulation: illustrative example",
+    "selo_real": "Example from the repository",
+    "pronto_quando": "Done when:",
+    "fiz": "I did this exercise",
+    "video_pagina": "Video page with script",
+    "pergunta": "Question",
+    "de": "of",
+    "cert_tag": "skill",
+    "correto": "Correct",
+    "errado": "Not this one",
+    "quiz_aguarda": "Pick an answer. The explanation shows up after you try.",
+    "proxima_pergunta": "Next question",
+    "quiz_ver": "See result",
+    "quiz_fim": "Quiz complete",
+    "quiz_total": "You got {a} of {n} right. Get them all right and the lesson is marked as complete.",
+    "aparencia": "Appearance",
+    "tamanho_texto": "Text size",
+    "tema": "Theme",
+    "tema_escuro": "Dark",
+    "tema_papel": "Light paper",
+    "role_dica": "Scroll the page: each step below lights up its part of the diagram.",
+    "pre_requisito": "requires",
+    "ver_aula": "View the lesson",
+    "mapa_dica": "Click an exercise to see what to do and the \"done when\".",
+    "etapas": "Steps",
+    "exercicios": "exercises",
+    "rever": "Review:",
+    "revisar_erradas": "Review the wrong ones",
+    "refazer": "Retake the quiz",
+    "h_semana": "h per week",
+    "data_inicio": "Start date",
+    "ritmo": "Time available",
+    "gerar_plano": "Generate my plan",
+    "baixar_md": "Download plan.md",
+    "baixar_ics": "Download to calendar (.ics)",
+    "ind_estudo": "Study (lessons)",
+    "ind_pratica": "Declared practice",
+    "ind_nota": "Practice = exercises you marked as done. Proof comes in the certification exam.",
+    "estudo": {
+      "titulo": "Your study",
+      "continuar": "Pick up where I left off",
+      "comecar": "Start with lesson 1",
+      "cta_continuar": "Continue lesson {n}",
+      "hoje": "today",
+      "ontem": "yesterday",
+      "ha_dias": "{n} days ago",
+      "desempenho": "Test results",
+      "notas": "My notes",
+      "dados": "Copy my data",
+      "sem_testes": "No tests taken yet. The test is at the end of each lesson.",
+      "nao_fez": "test not taken yet",
+      "ultimo": "Latest",
+      "melhor": "Best",
+      "tentativas": "attempts",
+      "tentativa": "attempt",
+      "tudo_certo": "You got everything right on the last test.",
+      "rever": "To review",
+      "resposta": "Right answer:",
+      "ir_teste": "Retake the quiz",
+      "sem_notas": "No notes yet. In the lesson, select a passage of text and tap Highlight or Note.",
+      "so_marcado": "(highlight only)",
+      "marcar": "Highlight",
+      "anotar": "Note",
+      "salvar": "Save",
+      "apagar": "Remove highlight",
+      "fechar": "Close",
+      "nota_ph": "Write your note about this passage…",
+      "um_bloco": "Highlight within a single paragraph.",
+      "nao_marca": "This passage can't be highlighted.",
+      "dados_exp": "Your progress, your notes, and your test scores stay only in this browser. Download a copy (.json) to keep it or to continue on another computer or browser; there, load the copy. Loading adds to what already exists and doesn't erase anything.",
+      "exportar": "Download copy",
+      "importar": "Load copy",
+      "import_ok": "Copy loaded ({n} items). Refreshing the page…",
+      "import_erro": "File not recognized. Nothing was changed.",
+      "import_outro": "This copy is from a different course. Nothing was changed.",
+      "export_ok": "Copy downloaded."
+    },
+    "conv_dica": "Choose your answer. The feedback appears right after, and the conversation continues based on your choice.",
+    "conv_voce": "You",
+    "conv_escolha": "Your answer",
+    "conv_boa": "Good choice",
+    "conv_meio": "Could be better",
+    "conv_ruim": "Weak choice",
+    "conv_fim": "End of the conversation",
+    "conv_placar": "You scored {p} of {m} possible points.",
+    "conv_licao": "Lesson:",
+    "conv_recomecar": "Restart the conversation",
+    "conv_feita": "Your best score: {p} of {m} points.",
+    "comecar": "Start the lesson",
+    "nesta_vai": "In this lesson you will",
+    "trocar_tema": "Switch light/dark theme"
+  },
+  "icone": "relogio"
+}

@@ -1,0 +1,289 @@
+{
+  "slug": "faixas",
+  "num": 3,
+  "menu": "Bands",
+  "titulo": "Context in bands: 50, 70 and 85% of the compaction point",
+  "titulo_curto": "Context bands",
+  "minutos": 18,
+  "lead": "The biggest enemy of a long session is repeated compaction: the goal survives, but what is done and what remains get diluted. The hook-longrun measures the context and acts before the limit, in three bands. In this lesson you turn on the hook and trigger all three bands in a rehearsal, without spending a token.",
+  "objetivo": "turn on the hook-longrun and trigger the three bands in a rehearsal, knowing what each one asks of the agent and when to do /clear + /prime.",
+  "competencias": [
+    "configurar-hook-longrun",
+    "agir-por-faixa-de-contexto",
+    "decidir-compactar-ou-sessao-nova"
+  ],
+  "aprende": [
+    {
+      "icone": "grafico",
+      "t": "Where the bands sit: ~484, ~677 and ~822 thousand tokens"
+    },
+    {
+      "icone": "camadas",
+      "t": "Compaction × handoff: what each one keeps"
+    },
+    {
+      "icone": "terminal",
+      "t": "Turn on the hook for the five Claude Code events"
+    },
+    {
+      "icone": "play",
+      "t": "Rehearse the hook with a fake transcript"
+    }
+  ],
+  "hero_alt": "Industrial pressure gauge with the needle in the middle band on a dark panel.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "The bands over the compaction point",
+      "sub": "The percentage is of the point at which Claude Code compacts by size, not of the whole window.",
+      "estilo": "escada",
+      "nos": [
+        {
+          "icone": "memoria",
+          "titulo": "Band 1 · ~50%",
+          "sub": "~484 thousand tokens",
+          "itens": [
+            {
+              "icone": "caneta",
+              "t": "Append to canal.md"
+            }
+          ],
+          "detalhe": "The hook asks the agent to write in canal.md what it would need if the history disappeared right now: facts, lessons, glossary, pitfalls, where things are. Then work continues as normal. It only shows up with a long run active."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "Band 2 · ~70%",
+          "sub": "~677 thousand tokens",
+          "itens": [
+            {
+              "icone": "check",
+              "t": "State + handoff + /compact"
+            }
+          ],
+          "detalhe": "Update state, progress and canal, finish the current unit of work, write the handoff without waiting to be asked, and tell you it is time for /compact. Compacting early summarizes better than the automatic one near the limit. In any session (even without a longrun), this band asks for the handoff."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Band 3 · ~85%",
+          "sub": "~822 thousand tokens",
+          "itens": [
+            {
+              "icone": "x",
+              "t": "No new work"
+            }
+          ],
+          "detalhe": "Do not open new work. Update the state and ask for /session-handoff, a new session and /prime at the end of the unit in progress, without dropping it midway. With no human around, continue only to the next checkpoint.",
+          "forte": true
+        },
+        {
+          "icone": "camadas",
+          "titulo": "Compaction · ~967 thousand",
+          "sub": "1M models",
+          "itens": [
+            {
+              "icone": "voltar",
+              "t": "Afterward: reread the folder and the handoff"
+            }
+          ],
+          "detalhe": "Documented Claude Code point for 1M models (CLAUDE_CODE_AUTO_COMPACT_WINDOW or LONGRUN_TETO change it). After compacting, the hook tells the agent to reread goal → state → plan → canal and this session's handoff. On the 3rd compaction: continue the task in progress and suggest a new session when it finishes."
+        }
+      ],
+      "legenda": "Hook-longrun 1.9.6 (10/18/2026). The bands change with LONGRUN_FAIXAS=\"50,70,85\". The warning arrives one tool call later, because the transcript is written with a delay.",
+      "dica": "In the measurements from 10/07 to 10/15/2026, no session compacted by size: all 93 compactions were due to idle time (lesson 4)."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Compact, write a handoff, or open a new session",
+      "sub": "What each path keeps, measured on 10/15/2026 (17 compactions with a handoff from the same session in the 3 h before).",
+      "passos": [
+        {
+          "titulo": "Compaction",
+          "sub": "more detail",
+          "texto": [
+            "The summary cites 20 to 54 files and keeps recent steps and commands. Within the same session, it holds more concrete detail than the handoff.",
+            "But it doesn't separate what's confirmed from what's a guess, it mixes the decisions into the narrative, and it doesn't survive /clear."
+          ]
+        },
+        {
+          "titulo": "Handoff",
+          "sub": "higher quality",
+          "texto": [
+            "It cites 1 to 27 files, but it marks what was proven, and keeps the decisions and the next action in a section of their own.",
+            "It's the only one that works for another session, another day, or Codex. The two together are better than either one alone."
+          ],
+          "exemplo": {
+            "rot": "Mistake to avoid",
+            "texto": "Writing the handoff from the compaction summary: it becomes a copy of a copy."
+          }
+        },
+        {
+          "titulo": "/clear + /prime",
+          "sub": "new session",
+          "texto": [
+            "The new session rediscovers things: 80% of the first 25 steps were reads, versus 51–59% after compacting.",
+            "That's why the new session comes at band 3 or the 3rd compaction, at the end of the unit in progress, and not early."
+          ]
+        },
+        {
+          "titulo": "Spend less context",
+          "sub": "first of all",
+          "texto": [
+            "Half of a 1.84 GB JSONL measured on 10/01/2026 was tool output. Write logs to a file and read the part you need (tail -50).",
+            "A subagent spends its own context and returns only the summary; Anthropic cites returns of 1,000 to 2,000 tokens. How to use subagents is the topic of course 3."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Turn on the hook and rehearse the bands",
+      "sub": "The rehearsal writes a fake transcript with whatever number of tokens you want and calls the hook the way Claude Code would.",
+      "blocos": [
+        {
+          "rot": "~/.claude/settings.json · \"hooks\" excerpt (merge with yours)",
+          "icone": "arquivo",
+          "conteudo": "{\n  \"cleanupPeriodDays\": 365,\n  \"hooks\": {\n    \"PreCompact\":       [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"SessionStart\":     [{ \"matcher\": \"compact|resume|clear\", \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"PostToolUse\":      [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"UserPromptSubmit\": [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"Stop\":             [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }]\n  }\n}"
+        },
+        {
+          "rot": "ensaio-hook.sh · save to a file and run with bash",
+          "icone": "terminal",
+          "conteudo": "# ensaio-hook.sh — dispara o hook-longrun com uma transcrição FALSA (nenhum token gasto)\n# uso: bash ensaio-hook.sh <tokens|-> [minutos-parado] [evento]     (\"-\" reaproveita a transcrição anterior)\nE=/tmp/ensaio-hook; K=~/projetos/execucao-longa\nmkdir -p $E/proj/longrun/2026-10-19-teste $E/proj/handoffs/history\n[ -f $E/proj/longrun/2026-10-19-teste/state.md ] || echo \"# Estado\" > $E/proj/longrun/2026-10-19-teste/state.md\n[ \"${1:-500000}\" = \"-\" ] || python3 - \"${1:-500000}\" \"${2:-0}\" > $E/t.jsonl <<'PY'\nimport json, sys, time, datetime\nn, parado = int(sys.argv[1]), float(sys.argv[2])\nts = datetime.datetime.fromtimestamp(time.time() - parado * 60, datetime.timezone.utc).isoformat().replace(\"+00:00\", \"Z\")\nprint(json.dumps({\"type\": \"assistant\", \"timestamp\": ts, \"message\": {\"model\": \"claude-opus-5-5\",\n      \"content\": [{\"type\": \"text\", \"text\": \"ok\"}],\n      \"usage\": {\"input_tokens\": 10, \"cache_read_input_tokens\": n - 10, \"cache_creation_input_tokens\": 0}}}))\nPY\necho \"{\\\"hook_event_name\\\":\\\"${3:-PostToolUse}\\\",\\\"cwd\\\":\\\"$E/proj\\\",\\\"session_id\\\":\\\"ensaio\\\",\\\"transcript_path\\\":\\\"$E/t.jsonl\\\",\\\"prompt\\\":\\\"oi\\\"}\" \\\n  | LONGRUN_ESTADO=$E/estado LONGRUN_AGENDAR_ARQ=$E/agenda.jsonl python3 $K/tools/hook-longrun.py\necho"
+        },
+        {
+          "rot": "Terminal · the three bands",
+          "icone": "play",
+          "conteudo": "rm -rf /tmp/ensaio-hook\nbash ensaio-hook.sh 500000    # faixa 1\nbash ensaio-hook.sh 500000    # mesma faixa: silêncio (uma vez por faixa)\nbash ensaio-hook.sh 700000    # faixa 2\nbash ensaio-hook.sh 830000    # faixa 3"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>$ bash ensaio-hook.sh 500000\n{\"hookSpecificOutput\": {\"hookEventName\": \"PostToolUse\", \"additionalContext\":\n \"Contexto em 52% do ponto de compactação (500 mil de 967 mil tokens). FAIXA 1 de 3:\n antes de seguir, acrescente em longrun/2026-10-19-teste/canal.md o que você precisaria\n se o histórico sumisse agora (…) Só acrescentar. Depois continue o trabalho normalmente.\"}}\n\n$ bash ensaio-hook.sh 500000\n\n$ bash ensaio-hook.sh 700000\n{… \"Contexto em 72% do ponto de compactação (700 mil de 967 mil tokens). FAIXA 2 de 3:\n atualize state.md, progress.md e (…) canal.md; termine a unidade de trabalho atual e\n grave o handoff agora (…)\"},\n \"systemMessage\": \"Execução longa em 72% do ponto de compactação: hora de /compact\n (o agente foi avisado).\"}\n\n$ bash ensaio-hook.sh 830000\n{… \"Contexto em 86% do ponto de compactação (830 mil de 967 mil tokens). FAIXA 3 de 3:\n não abra trabalho novo. (…) /session-handoff, sessão nova e /prime (…) ao fim da\n unidade em curso, sem largá-la no meio. (…)\"},\n \"systemMessage\": \"Execução longa em 86% do ponto de compactação: hora de\n /session-handoff + sessão nova + /prime.\"}</pre><p>Line breaks and (…) added to fit the screen; the text is from hook-longrun 1.9.6. The <code>additionalContext</code> goes to the agent; the <code>systemMessage</code> appears to you.</p>"
+          },
+          {
+            "rot": "And in Codex?",
+            "html": "<ul><li>There is no compaction hook or counter. Track the percentage in <code>/status</code>; what follows the bands is the AGENTS.md rule (lesson 1) and you.</li><li>Measured in the kit: Codex compacts near 90–93% of the window, around 230–240 thousand of 258 thousand, too late for good summary quality. Do the manual <code>/compact</code> earlier.</li><li>With an OpenAI model, automatic compaction runs on the server and ignores the <code>compact_prompt</code>; the structured prompt in <code>~/.codex/config.toml</code> only applies to the manual <code>/compact</code>.</li></ul>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "The first exercise touches your settings.json: make a backup first.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E6 · Hook turned on for all five events",
+          "min": "15 min",
+          "texto": "Copy settings.json to settings.json.bak and merge the hooks excerpt into the ones you already have (don't delete yours). Open a new Claude Code session to load it.",
+          "pronto": "<code>python3 -c \"import json,os;h=json.load(open(os.path.expanduser('~/.claude/settings.json')))['hooks'];print(sorted(e for e,l in h.items() if 'hook-longrun' in json.dumps(l)))\"</code> → <code>['PostToolUse', 'PreCompact', 'SessionStart', 'Stop', 'UserPromptSubmit']</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E7 · The three bands in the rehearsal",
+          "min": "10 min",
+          "texto": "Save ensaio-hook.sh and run the three-band sequence. Then delete /tmp/ensaio-hook and run <code>LONGRUN_TETO=600000 bash ensaio-hook.sh 500000</code>.",
+          "pronto": "these appear, in this order: <code>FAIXA 1 de 3</code>, nothing, <code>FAIXA 2 de 3</code>, and <code>FAIXA 3 de 3</code>; with <code>LONGRUN_TETO=600000</code>, 500 thousand already lands in <code>FAIXA 2 de 3</code> (83% of 600 thousand)."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "perguntas": [
+        {
+          "p": "On a 1M model, at how many tokens does the hook warn for band 2 by default?",
+          "opcoes": [
+            "~700 thousand (70% of the 1 million window)",
+            "~677 thousand (70% of ~967 thousand)",
+            "~157 thousand",
+            "~1 million"
+          ],
+          "certa": 1,
+          "explica": "The calculation is based on the compaction point by size (~967 thousand), not on the window. The 112/157/191 thousand bands were from hook 1.2.x, which used the wrong cap of 225 thousand and fired in the middle of the work.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Band 3 fired in the middle of a refactor. What should the agent do?",
+          "opcoes": [
+            "Finish the unit in progress without opening new work; when it's done, handoff + new session",
+            "Ignore it: it's just a warning",
+            "Delete canal.md to free up context",
+            "Drop the refactor right away, write the handoff and ask for /clear to open a clean new session"
+          ],
+          "certa": 0,
+          "explica": "Since 1.4.1, band 3 and the 3rd compaction no longer tell you to drop everything midway: the new session costs more to read (80% of the first 25 steps), so it comes at the end of the unit.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Within the same session, which one keeps more concrete detail (files, steps)?",
+          "opcoes": [
+            "The compaction summary",
+            "The canal.md",
+            "The handoff, which separates proven from guessed",
+            "The goal.md"
+          ],
+          "certa": 0,
+          "explica": "Measured on 10/15: the summary cites 20–54 files; the handoff, 1–27. The handoff wins at separating proven from guessed, at decisions, and at surviving /clear. That's why you use both together.",
+          "ref": "passos"
+        },
+        {
+          "p": "You use Codex. How do you follow the bands?",
+          "opcoes": [
+            "The hook-longrun works the same",
+            "Watches the % in /status and follows the AGENTS.md rule, with a manual /compact before 90%",
+            "By setting compact_prompt in config.toml, which Codex applies on every automatic compaction",
+            "No need: Codex never compacts"
+          ],
+          "certa": 1,
+          "explica": "Codex has no compaction hook and no counter. The written rule and you play the role of the hook; and its automatic compaction ignores the compact_prompt with an OpenAI model.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "About the right moment",
+          "texto": "The bands are 50/70/85% of ~967k: canal, then state + handoff + /compact, then nothing new and a new session at the end."
+        },
+        {
+          "t": "Both together",
+          "texto": "The compaction keeps more detail; the handoff keeps what's proven and the decisions, and survives /clear."
+        },
+        {
+          "t": "Rehearse first",
+          "texto": "With a fake transcript you see every hook warning without spending a single token."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "Compaction × handoff study (10/15/2026)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/compactacao-x-handoff-2026-10-15.md",
+          "icone": "grafico"
+        },
+        {
+          "t": "hook-longrun.py (code and LONGRUN_* variables)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/tools/hook-longrun.py",
+          "icone": "terminal"
+        },
+        {
+          "t": "Anthropic: Effective context engineering for AI agents (09/29/2025)",
+          "href": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+          "icone": "lupa"
+        }
+      ]
+    }
+  ]
+}

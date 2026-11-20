@@ -1,0 +1,228 @@
+{
+  "slug": "medir",
+  "num": 7,
+  "menu": "Medir",
+  "titulo": "Medir a sessão: medir-sessao.py, custo de retomada e recall",
+  "titulo_curto": "Medir a sessão",
+  "minutos": 17,
+  "lead": "Sem medir, \"a sessão ficou cara\" e \"o agente esqueceu\" são impressão. O kit lê as transcrições JSONL do Claude Code e do Codex e devolve duração, compactações, tokens e cache por turno, o custo real de retomar e uma busca em tudo o que já foi dito. Nesta aula você mede um caso conhecido e depois a sua maior sessão.",
+  "objetivo": "medir duração, compactações, tokens e cache de uma sessão, ler o custo de retomar e achar uma decisão antiga com recall.",
+  "competencias": [
+    "medir-sessao-jsonl",
+    "ler-custo-de-retomada",
+    "buscar-historico-com-recall"
+  ],
+  "aprende": [
+    { "icone": "pasta", "t": "Onde ficam as transcrições do Claude e do Codex" },
+    { "icone": "grafico", "t": "medir-sessao.py: resumo, --json e --por-turno" },
+    { "icone": "calendario", "t": "custo-retomada.py e nota-retomada.py" },
+    { "icone": "lupa", "t": "recall: busca em 0,02 s no que já foi dito" }
+  ],
+  "hero_alt": "Osciloscópio de bancada mostrando uma onda verde limpa, com ponteiras sobre a mesa.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Da transcrição à medida",
+      "sub": "Quatro ferramentas do kit, só biblioteca padrão do Python, nenhuma rede.",
+      "nos": [
+        {
+          "icone": "arquivo",
+          "titulo": "Transcrições",
+          "sub": "JSONL",
+          "itens": [
+            { "icone": "pasta", "t": "~/.claude/projects/*/*.jsonl" },
+            { "icone": "pasta", "t": "~/.codex/sessions/**/*.jsonl" }
+          ],
+          "detalhe": "Uma linha JSON por evento. Não são fonte do projeto: metade é saída de ferramenta, são apagadas após cleanupPeriodDays e o Codex não lê as do Claude. Servem para medir e para buscar."
+        },
+        {
+          "icone": "grafico",
+          "titulo": "medir-sessao.py",
+          "sub": "uma sessão por vez",
+          "detalhe": "Detecta se é Claude ou Codex e mede duração, compactações, turnos, tokens de entrada e saída, cache (lido ÷ entrada), bytes de saída de ferramenta e modelos. --json para máquina, --por-turno para a curva. Lê 1,8 GB em ~9 s (medido em 01/10/2026).",
+          "forte": true
+        },
+        {
+          "icone": "calendario",
+          "titulo": "custo-retomada.py",
+          "sub": "reenviar × /prime",
+          "detalhe": "Varre as transcrições do Claude dos últimos N dias (padrão 14) e compara (A) reenviar numa sessão de ≥ 150 mil parada > 60 min com (B) sessão nova que começa com /prime. Unidade: tokens-equivalentes ao preço de entrada = entrada + escrita 5 min × 1,25 + escrita 1 h × 2 + leitura × 0,1."
+        },
+        {
+          "icone": "check",
+          "titulo": "nota-retomada.py",
+          "sub": "quanto foi recuperado",
+          "detalhe": "Registra a nota das perguntas-teste (aula 5) por modo: compactada, retomada, continuada, prime. --relatorio mostra acerto e contexto mediano de cada modo. É o par do custo: um diz quanto custou voltar, o outro quanto voltou."
+        },
+        {
+          "icone": "lupa",
+          "titulo": "recall",
+          "sub": "SQLite FTS5",
+          "detalhe": "Indexa o que você e os agentes disseram (sem saída de ferramenta) e busca por termo, projeto, fonte e data. Medido em 01/10/2026: 7.219 sessões viraram 90 mil trechos, indexação inicial em 1 min 24 s, incremental em 0,2 s e busca em 0,02–0,04 s."
+        }
+      ],
+      "legenda": "O que foi decidido tem de estar num arquivo do projeto. A transcrição serve para medir e para lembrar onde procurar."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Medir um caso conhecido e depois o seu",
+      "sub": "Os fixtures dos testes do kit dão números fixos: se a sua saída bater, a ferramenta está certa na sua máquina.",
+      "blocos": [
+        {
+          "rot": "Terminal · medir os fixtures",
+          "icone": "grafico",
+          "conteudo": "K=~/projetos/execucao-longa\npython3 $K/tools/medir-sessao.py $K/tests/fixtures/claude_mini.jsonl\npython3 $K/tools/medir-sessao.py $K/tests/fixtures/codex_mini.jsonl\npython3 $K/tools/medir-sessao.py $K/tests/fixtures/claude_mini.jsonl --json --por-turno"
+        },
+        {
+          "rot": "Terminal · a sua maior sessão do Claude Code e o custo de retomar",
+          "icone": "terminal",
+          "conteudo": "S=$(ls -S ~/.claude/projects/*/*.jsonl | head -1); echo \"$S\"\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py \"$S\"\npython3 ~/projetos/execucao-longa/tools/custo-retomada.py 14\npython3 ~/projetos/execucao-longa/tools/nota-retomada.py --relatorio"
+        },
+        {
+          "rot": "Terminal · recall nos fixtures (índice separado, em /tmp)",
+          "icone": "lupa",
+          "conteudo": "K=~/projetos/execucao-longa; R=/tmp/ensaio-recall\nrm -rf $R && mkdir -p $R/codex/2026/10/01 $R/claude/-home-voce-projetos-demo $R/arq\ncp $K/tests/fixtures/recall_codex.jsonl $R/codex/2026/10/01/rollout-a.jsonl\ncp $K/tests/fixtures/recall_claude.jsonl $R/claude/-home-voce-projetos-demo/s1.jsonl\nexport RECALL_DB=$R/recall.db\npython3 $K/tools/recall.py indexar --codex $R/codex --claude $R/claude --arquivo $R/arq\npython3 $K/tools/recall.py indexar --codex $R/codex --claude $R/claude --arquivo $R/arq\npython3 $K/tools/recall.py PostgreSQL\nunset RECALL_DB"
+        },
+        {
+          "rot": "Terminal · recall de verdade (uma vez por máquina, Linux)",
+          "icone": "relogio",
+          "conteudo": "mkdir -p ~/.local/bin && ln -s ~/projetos/execucao-longa/tools/recall.py ~/.local/bin/recall\nrecall indexar                      # primeira vez: indexa ~/.claude/projects e ~/.codex/sessions\nrecall \"cleanupPeriodDays\" -n 5     # busca (as opções: --projeto X --fonte codex|claude --desde AAAA-MM-DD)\ncp ~/projetos/execucao-longa/tools/systemd/recall-indexar.* ~/.config/systemd/user/\nsed -i \"s#/home/nmaldaner#$HOME#g\" ~/.config/systemd/user/recall-indexar.service\nsystemctl --user daemon-reload && systemctl --user enable --now recall-indexar.timer   # reindexa de hora em hora"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Saída capturada (19/10/2026)",
+            "html": "<pre>$ medir-sessao.py tests/fixtures/claude_mini.jsonl\n…/tests/fixtures/claude_mini.jsonl (claude)\n  duração: 7200 s | compactações: 1 | turnos: 2\n  tokens de entrada: 2000 | saída: 55 | cache: 45.0%\n  cache lido: 900 | escrito: 1085 | saída de ferramenta: 37 bytes\n  modelos: claude-opus-5-5, claude-sonnet-5-5\n\n$ medir-sessao.py tests/fixtures/codex_mini.jsonl\n…/tests/fixtures/codex_mini.jsonl (codex)\n  duração: 3600 s | compactações: 1 | turnos: 2\n  tokens de entrada: 3000 | saída: 120 | cache: 60.0%\n  cache lido: 1800 | escrito: 0 | saída de ferramenta: 8 bytes\n  modelos: gpt-6-astra, gpt-6.1-sol\n\n$ medir-sessao.py tests/fixtures/claude_mini.jsonl --json --por-turno\n[{\"i\": 1, \"timestamp\": \"2026-09-02T08:00:05.000Z\", \"input\": 1000, \"cached\": 0, \"ratio\": 0.0, \"compactacoes\": 0},\n {\"i\": 2, \"timestamp\": \"2026-09-02T09:00:10.000Z\", \"input\": 1000, \"cached\": 900, \"ratio\": 0.9, \"compactacoes\": 1}]\n\n$ recall indexar … (duas vezes) ; recall PostgreSQL\n2 arquivos processados; 8 trechos novos.\n0 arquivos processados; 0 trechos novos.\n2026-09-10T10:00:03.000Z codex alfa user Quero migrar o banco para PostgreSQL até sexta …/rollout-a.jsonl:4\n\n$ nota-retomada.py --relatorio      (sem medições ainda)\nNotas de retomada (últimos 30 dias, 0 medições) — …/notas.jsonl\nmodo          n  acerto  tokens (mediana)\ncompactada    0       —                 —\nretomada      0       —                 —\ncontinuada    0       —                 —\nprime         0       —                 —</pre><p>Fixtures são transcrições pequenas e sintéticas dos testes do kit (nomes de modelo incluídos); os números servem para conferir a ferramenta, não como medida de uso. Caminhos encurtados com …</p>"
+          },
+          {
+            "rot": "O que já foi medido com elas",
+            "html": "<table><tr><th>Medição</th><th>Resultado</th><th>Data · amostra</th></tr><tr><td>Retomar com cache vencido × /prime</td><td>284 mil × 187 mil eq na volta; ~23 mil × ~10 mil por turno depois</td><td>14 dias até 17/10/2026 · 4.609 transcrições, 190 × 11 casos</td></tr><tr><td>Cache nas sessões longas</td><td>93–99%, sem cair com compactações</td><td>01/10/2026 · 3 sessões (46,7 h, 59,8 h e 17,8 h)</td></tr><tr><td>Custo por turno sem compactar</td><td>último décimo ~5× o primeiro (810 × 157 mil)</td><td>01/10/2026 · 1 sessão de 17,8 h</td></tr><tr><td>Saída de ferramenta</td><td>916 MB de um JSONL de 1,84 GB</td><td>01/10/2026 · 1 sessão de 46,7 h</td></tr></table><p>Fontes: <code>docs/analise-geral-2026-10-17.md</code> e <code>docs/experimento-f7-retrospectivo-2026-10.md</code> do kit.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Como ler e onde anotar",
+      "sub": "Uma linha por execução no progress.md, com os números da ferramenta.",
+      "passos": [
+        {
+          "titulo": "Cache",
+          "sub": "lido ÷ entrada",
+          "texto": [
+            "Entre 93% e 99% é o normal medido nas sessões longas. Muito abaixo disso numa sessão longa, procure pausas maiores que o cache ou troca de modelo no meio.",
+            "Compactação não derruba o cache: não é motivo para cortar a sessão."
+          ]
+        },
+        {
+          "titulo": "Compactações",
+          "sub": "contagem",
+          "texto": [
+            "No Claude, linhas compact_boundary; no Codex, linhas compacted. Três na mesma sessão: o hook já pediu sessão nova ao fim da tarefa (aula 3).",
+            "Para ver quando, use --json --por-turno e procure onde a coluna compactacoes sobe."
+          ]
+        },
+        {
+          "titulo": "Saída de ferramenta",
+          "sub": "diagnóstico",
+          "texto": [
+            "Não é limite: o arquivo grande não trava nada; o que pesa é o contexto. Mas se ela domina, o agente está lendo log inteiro em vez de tail -50."
+          ]
+        },
+        {
+          "titulo": "progress.md",
+          "sub": "fechar com número",
+          "texto": [
+            "Na linha do checkpoint final: tokens entrada / cache lido / saída e compactações, como o piloto fez.",
+            "É o que permite comparar a próxima execução com esta."
+          ],
+          "exemplo": { "rot": "Linha do piloto (01/10/2026)", "texto": "| 2026-10-01 14:30 | medição do piloto | 7714c3c | sim (nível 3) | 332791 / 304000 / 4296 (cache 91,3%) | 0 |" }
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Prática",
+      "sub": "Primeiro o caso conhecido, depois os seus dados.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E16 · A ferramenta bate na sua máquina",
+          "min": "5 min",
+          "texto": "Meça os dois fixtures e rode o ensaio do recall.",
+          "pronto": "claude_mini → <code>compactações: 1 | turnos: 2</code> e <code>cache: 45.0%</code>; codex_mini → <code>cache: 60.0%</code>; o recall imprime <code>2 arquivos processados; 8 trechos novos.</code>, depois <code>0 arquivos processados</code> e uma linha com <code>PostgreSQL</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E17 · A sua maior sessão no progress.md",
+          "min": "15 min",
+          "texto": "Meça a maior transcrição do seu Claude Code (ou uma do Codex em ~/.codex/sessions) e escreva a linha no progress.md da sua execução, com a data.",
+          "pronto": "a linha do progress.md traz tokens de entrada, cache lido, saída e compactações iguais aos que <code>medir-sessao.py</code> imprimiu para o mesmo arquivo."
+        },
+        {
+          "id": "e3",
+          "titulo": "E18 · Recall nas suas sessões",
+          "min": "15 min",
+          "texto": "Instale o comando recall, indexe e procure uma decisão que você lembra ter tomado com o agente na última semana.",
+          "pronto": "<code>recall indexar</code> → <code>N arquivos processados</code> com N maior que 0, e <code>recall \"[termo]\" --desde [data]</code> devolve a linha com o arquivo e o número da linha da conversa."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Teste da aula",
+      "perguntas": [
+        {
+          "p": "Como o medir-sessao.py calcula o cache?",
+          "opcoes": ["saída ÷ entrada", "compactações ÷ turnos", "cache lido ÷ tokens de entrada", "bytes de ferramenta ÷ bytes do arquivo"],
+          "certa": 2,
+          "explica": "cache_ratio = cached ÷ input. No Claude, input soma entrada + leitura + escrita do cache, e cached é a leitura.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Por que a transcrição JSONL não serve como fonte do que foi decidido?",
+          "opcoes": ["Porque é criptografada", "Metade é saída de ferramenta, ela é apagada após o prazo e o Codex não a lê", "Porque o recall não lê", "Serve: é o registro completo da conversa, e o recall indexa tudo de hora em hora"],
+          "certa": 1,
+          "explica": "Decisão vai para arquivo do projeto (handoff, decisions.md, CLAUDE.md). A transcrição serve para medir e para o recall achar onde procurar.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "O que o custo-retomada.py compara?",
+          "opcoes": ["Compactar × não compactar", "Opus × Sonnet", "Reenviar numa sessão grande com cache vencido × começar sessão nova com /prime", "Claude × Codex"],
+          "certa": 2,
+          "explica": "(A) primeira chamada depois de > 60 min parado com ≥ 150 mil × (B) sessão que começa com /prime, em tokens-equivalentes ao preço de entrada.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Sua sessão mostra saída de ferramenta enorme. O que isso indica?",
+          "opcoes": ["Que o arquivo vai travar o Claude", "Nada", "Que o cache caiu", "Que o agente provavelmente lê logs e saídas inteiras; peça trechos (tail) e grave log em arquivo"],
+          "certa": 3,
+          "explica": "O tamanho do arquivo não trava nada; o contexto ativo é que pesa. Saída curta de ferramenta é um dos tetos de toda execução longa.",
+          "ref": "passos"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "Em três frases",
+      "itens": [
+        { "t": "Meça o conhecido primeiro", "texto": "Os fixtures dão números fixos; se batem, a ferramenta está certa na sua máquina." },
+        { "t": "Custo e conhecimento", "texto": "custo-retomada.py diz quanto custou voltar; nota-retomada.py, quanto voltou." },
+        { "t": "Lembrar sem confiar", "texto": "recall acha onde algo foi dito; o que vale está no arquivo do projeto." }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir além",
+      "links": [
+        { "t": "tools/medir-sessao.py", "href": "https://github.com/inematds/execucao-longa/blob/main/tools/medir-sessao.py", "icone": "grafico" },
+        { "t": "Pesquisa: claude-mem × recall (out/2026)", "href": "https://github.com/inematds/execucao-longa/blob/main/docs/pesquisa-memoria-claude-mem-2026-10.md", "icone": "lupa" },
+        { "t": "Curso 5 da formação: observabilidade e custo por ciclo no loop que aprende", "href": "https://inematds.github.io/loop-r-eng-aprende-v72/", "icone": "camadas" }
+      ]
+    }
+  ]
+}

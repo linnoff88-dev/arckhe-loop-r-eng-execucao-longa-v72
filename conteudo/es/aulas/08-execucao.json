@@ -1,0 +1,473 @@
+{
+  "slug": "execucao",
+  "num": 8,
+  "menu": "Ejecución",
+  "titulo": "Una ejecución de horas, de principio a fin",
+  "titulo_curto": "Ejecución completa",
+  "minutos": 20,
+  "lead": "Ahora junta todo en una ejecución de verdad: carpeta, goal nivel 3, pruebas congeladas, el modo de ejecutar, vigilar sin interrumpir, saber cuándo parar y cerrar con medición. El piloto del kit, del 01/10/2026, sirve de referencia paso a paso. Al final, el mapa del curso y tu plan con fechas.",
+  "objetivo": "conducir una ejecución real del goal.md hasta el cierre medido, con puertas humanas y reglas de parada, y salir con el plan fechado.",
+  "competencias": [
+    "conduzir-execucao-longa",
+    "decidir-parada",
+    "fechar-com-verificacao-independente"
+  ],
+  "aprende": [
+    {
+      "icone": "lista",
+      "t": "Las seis etapas de una ejecución, en orden"
+    },
+    {
+      "icone": "relogio",
+      "t": "El piloto del kit, minuto a minuto"
+    },
+    {
+      "icone": "portao",
+      "t": "Cuándo parar y llamarte"
+    },
+    {
+      "icone": "calendario",
+      "t": "El mapa del curso y tu plan con fechas"
+    }
+  ],
+  "hero_alt": "Oficina oscura con el cielo aclarándose en la ventana, laptop cerrada y LED de servidor encendido.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Seis etapas, de punta a punta",
+      "sub": "Cada etapa usa una clase del curso. Haz clic para ver qué hacer.",
+      "nos": [
+        {
+          "icone": "pasta",
+          "titulo": "1 · Carpeta y goal",
+          "sub": "clases 1 y 2",
+          "detalhe": "novo-longrun.sh y el goal.md con función, regresión, límite y trabas. Ejecuta cada criterio antes de empezar: los de función fallan, los de límite pasan."
+        },
+        {
+          "icone": "cadeado",
+          "titulo": "2 · Congelar el juez",
+          "sub": "commit de las pruebas",
+          "detalhe": "Haz commit de las pruebas y del pytest.ini antes de cualquier trabajo, con __pycache__/ en el .gitignore. Anota el hash o el commit en el goal.md: es lo que verificas al final."
+        },
+        {
+          "icone": "terminal",
+          "titulo": "3 · Elegir el modo",
+          "sub": "/goal o loop headless",
+          "itens": [
+            {
+              "icone": "chat",
+              "t": "/goal: interactivo, tú cerca"
+            },
+            {
+              "icone": "robo",
+              "t": "loop-longrun.sh: solo, con tope"
+            }
+          ],
+          "detalhe": "Interactivo: /goal con el prompt del kit, siguiendo con /goals y /goal pause|resume en Codex. Solo: prompt.md + loop.env y loop-longrun.sh, ensayado antes con agente falso. Un backlog que crece es modo cola (curso 3)."
+        },
+        {
+          "icone": "lupa",
+          "titulo": "4 · Vigilar sin interrumpir",
+          "sub": "clases 3, 4 y 6",
+          "detalhe": "El hook se encarga de las franjas y del handoff; el vigía avisa de parada e inactividad cada 10 min. Tú miras el state.md y el final del loop.log, no toda la conversación."
+        },
+        {
+          "icone": "check",
+          "titulo": "5 · Cerrar tú mismo",
+          "sub": "verificación independiente",
+          "detalhe": "state.md dice concluído: ahora es contigo. Ejecuta la prueba final por tu cuenta, revisa los protegidos con git diff, busca valores fijos en el código y prueba una entrada que el agente nunca vio.",
+          "forte": true
+        },
+        {
+          "icone": "grafico",
+          "titulo": "6 · Medir y registrar",
+          "sub": "clase 7",
+          "detalhe": "medir-sessao.py en la sesión (o en las sesiones de los ciclos), línea final en el progress.md, la menor corrección de cada falla en el FALHAS.md del proyecto y lo que vale para siempre en el CLAUDE.md o AGENTS.md."
+        }
+      ],
+      "legenda": "La mayor parte del trabajo está en las etapas 1 y 2. En el piloto, con ellas bien hechas, la ejecución terminó en el primer ciclo."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "El piloto del kit, minuto a minuto (01/10/2026)",
+      "sub": "longrun/2026-10-01-medir-sessao/: construir el medir-sessao.py de la clase 7 con un loop headless.",
+      "passos": [
+        {
+          "titulo": "Antes",
+          "sub": "goal + 14 pruebas",
+          "texto": [
+            "Goal con especificación completa del formato de salida, 12 pruebas rápidas y 2 con sesiones reales de hasta 1,8 GB, congeladas (hash 3ae1ba7975508cba).",
+            "loop.env: 6 ciclos de 20 min, 8G de memoria, estancamiento 3; protegidos tests/, pytest.ini y tools/medicao/."
+          ]
+        },
+        {
+          "titulo": "14:19 → 14:22",
+          "sub": "ciclo 1",
+          "texto": [
+            "14:19:41 inicio con 0 passed. El agente salió con rc=0 en 178 s, sin tocar los protegidos.",
+            "14:22:39 rápido = 12 passed; checkpoint commiteado. 14:22:48 CONCLUÍDO: prueba final 14 passed."
+          ],
+          "exemplo": {
+            "rot": "loop.log real",
+            "texto": "2026-10-01 14:22:48 CONCLUÍDO no ciclo 1: teste final passou (14 passed)"
+          }
+        },
+        {
+          "titulo": "14:30",
+          "sub": "cerrar",
+          "texto": [
+            "Verificación independiente: hash de las pruebas sin cambios, sin valores fijos en el código, 14 passed reproducido y una sesión nunca vista (de agosto) comprobada contra el script antiguo.",
+            "Medición: 332.791 de entrada, 304.000 de caché leído, 4.296 de salida (caché 91,3%), 0 compactaciones."
+          ]
+        },
+        {
+          "titulo": "Lecciones",
+          "sub": "del piloto",
+          "texto": [
+            "Con pruebas congeladas y especificación precisa, 1 ciclo. La prueba que decide es del loop, no del agente.",
+            "El hook de compactación solo habla con longrun activo: una ejecución ya concluida sin aviso es el comportamiento correcto, no una falla."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "simconversa",
+      "titulo": "Ensayo: el agente quiere continuar",
+      "sub": "Una ejecución en el ciclo 4. Tú decides si sigue. Las reglas de parada son las del kit.",
+      "personagem": {
+        "nome": "Agente de la ejecución",
+        "papel": "loop headless, ciclo 4"
+      },
+      "inicio": "ciclo4",
+      "falas": {
+        "ciclo4": {
+          "cliente": "Ciclo 4: el teste rápido sigue en 12 passed desde el ciclo 1. Voy a ajustar el parser y terminar en el próximo ciclo, como planifiqué en los ciclos 2 y 3.",
+          "opcoes": [
+            {
+              "t": "Detente. Son 3 ciclos sin avance medible: registra en failures.md lo que intentaste y llámame.",
+              "vai": "credito",
+              "nota": 2,
+              "comenta": "Es la regla: 3 ciclos sin avance medible = detenerse, registrar y llamar al humano. Repetir el mismo plan de cierre también es señal de contexto degradado."
+            },
+            {
+              "t": "Cambia de estrategia y sigue, sin registrar.",
+              "vai": "credito",
+              "nota": 1,
+              "comenta": "Cambiar de estrategia puede ser lo correcto, pero sin la línea en failures.md la próxima sesión repite los mismos intentos."
+            },
+            {
+              "t": "Sigue, ya casi está.",
+              "vai": "reaberto",
+              "nota": 0,
+              "comenta": "\"Voy a terminar en el próximo ciclo\" repetido sin avance es la señal clásica de que el loop está girando y gastando."
+            }
+          ]
+        },
+        "reaberto": {
+          "cliente": "Ciclo 5: todavía 12 passed. Reabrí el ítem \"parser de datas\", que el state.md marcaba como hecho, para revisarlo.",
+          "opcoes": [
+            {
+              "t": "Detente ahora: plan repetido e ítem hecho reabierto. Actualiza el state, guarda el handoff y llámame.",
+              "vai": "credito",
+              "nota": 1,
+              "comenta": "Correcto, pero un ciclo después de lo debido. Un ítem ya hecho que se reabre es la otra regla de parada: el contexto se degradó."
+            },
+            {
+              "t": "Sigue hasta el tope de ciclos.",
+              "vai": "fim-ruim",
+              "nota": 0,
+              "comenta": "El tope de ciclos es la última red, no el plan. Hasta llegar ahí, la cuota y las horas se fueron sin avance."
+            }
+          ]
+        },
+        "credito": {
+          "cliente": "Registrado. Para destrabar, puedo cambiar la biblioteca local por una API de pago de geocodificación. Hay una clave en el .env de otro proyecto; ¿la uso?",
+          "opcoes": [
+            {
+              "t": "No. El gasto y la credencial son puerta humana: detente, describe la alternativa local y el costo, y yo decido.",
+              "vai": "fim-bom",
+              "nota": 2,
+              "comenta": "Crédito o API, credencial ausente y decisión de negocio están en la lista de puertas humanas del goal.md. El agente se detiene y pregunta."
+            },
+            {
+              "t": "Puedes usarla, es solo una prueba.",
+              "vai": "fim-ruim",
+              "nota": 0,
+              "comenta": "Que exista una clave no es permiso. Una llamada de pago en medio de una ejecución sin supervisión es justo lo que la puerta existe para impedir."
+            }
+          ]
+        },
+        "fim-bom": {
+          "fim": true,
+          "titulo": "Ejecución detenida en el punto correcto",
+          "texto": "La ejecución se detuvo con el motivo en failures.md, el estado actualizado y la decisión de gasto contigo. Al volver, /prime o el próximo ciclo empieza desde ahí, sin repetir lo que ya falló."
+        },
+        "fim-ruim": {
+          "fim": true,
+          "titulo": "El loop siguió sin freno",
+          "texto": "O el loop giró sin avance hasta el tope, o gastó lo que no debía. Las reglas de parada del kit existen para los dos casos: 3 ciclos sin avance, plan repetido o ítem reabierto, y cualquier crédito, API o acción irreversible."
+        }
+      },
+      "licao": "Detente y llama al humano en: 3 ciclos sin avance medible; el mismo plan de cierre repetido o ítem hecho reabierto; crédito o API, acción irreversible o externa, credencial ausente, decisión de negocio."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "El prompt de ciclo y el cierre",
+      "sub": "El prompt.md es lo que el loop le envía al agente en cada ciclo. Generalizado a partir del piloto.",
+      "blocos": [
+        {
+          "rot": "longrun/[carpeta]/prompt.md (modo headless)",
+          "icone": "arquivo",
+          "conteudo": "Estás en un ciclo de una ejecución larga en el repo <ruta del proyecto>.\n\nRESULTADO: <el resultado del goal.md en una frase>.\n\nANTES DE ACTUAR: lee goal.md → state.md → plan.md → últimas líneas de progress.md y failures.md (todos en longrun/<carpeta>/).\n\nEN ESTE CICLO: elige la próxima acción útil, impleméntala, ejecuta <prueba rápida>. Si las rápidas pasan, ejecuta <prueba completa>.\n\nAL TERMINAR EL CICLO (obligatorio):\n- reescribe state.md (Funciona / Falta / Como retomar) y plan.md (próximos 3 pasos);\n- agrega 1 línea en progress.md: fecha-hora, qué cambió, resultado de la prueba (N passed / N failed);\n- si algo salió mal, 1 línea en failures.md: error → intento → resultado;\n- decisiones de diseño en decisions.md.\n- Cuando la prueba completa pase entera, escribe \"concluído\" en la primera línea de \"## Funciona\" del state.md.\n\nRESTRICCIONES: no modifiques <protegidos>. Ninguna API, ninguna red. No hagas commit (el loop externo lo hace)."
+        },
+        {
+          "rot": "Terminal · cerrar con verificación independiente",
+          "icone": "check",
+          "conteudo": "cd ~/projetos/<seu-projeto>\nhead -5 longrun/<pasta>/state.md                       # diz concluído? (¿dice concluído?)\n<teste completo>                                        # rode você, não leia o log (ejecútalo tú, no leas el log)\ngit diff --exit-code <commit-base> -- tests/ pytest.ini; echo \"protegidos: $?\"\ngit diff --stat <commit-base>                           # só o que o goal permitia? (¿solo lo que el goal permitía?)\ngrep -rn \"<valor esperado de um teste>\" <pasta do código>  # valor fixo no código? (¿valor fijo en el código?)\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py <sessão.jsonl>"
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica final",
+      "sub": "Una ejecución tuya, de verdad. Empieza pequeña: 1 a 3 horas.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E19 · Una ejecución de principio a fin",
+          "min": "1–3 h",
+          "dias": 1,
+          "texto": "En la carpeta de las clases 1 y 2, congela las pruebas, elige el modo (/goal o loop-longrun.sh ensayado con agente falso) y déjalo correr con el hook y el vigia activados. Interviene solo en las reglas de parada.",
+          "pronto": "la primera línea de \"## Funciona\" del state.md dice concluído y el loop.log (en headless) termina en <code>CONCLUÍDO no ciclo N</code>, o la ejecución se detuvo por una regla del kit con el motivo en failures.md."
+        },
+        {
+          "id": "e2",
+          "titulo": "E20 · Cerrar y medir",
+          "min": "30 min",
+          "texto": "Cierra con el bloque de verificación independiente y mide la sesión. Escribe la línea final en el progress.md y, si hubo una falla, la corrección mínima en el FALHAS.md del proyecto.",
+          "pronto": "la prueba completa, ejecutada por ti, pasa; <code>git diff --exit-code [commit-base] -- tests/</code> → <code>protegidos: 0</code>; el progress.md tiene la línea final con tokens y compactaciones del medir-sessao.py."
+        }
+      ]
+    },
+    {
+      "tipo": "mapa",
+      "titulo": "El mapa del curso",
+      "sub": "Cuatro entregas, en orden. Haz clic en un ejercicio para ver el \"listo cuando\".",
+      "degraus": [
+        {
+          "aula": "goal",
+          "icone": "alvo",
+          "quando": "Día 1",
+          "titulo": "Carpeta y goal",
+          "sub": "clases 1 y 2",
+          "saida": "goal.md nivel 3 que falla antes del trabajo y resiste la trampa.",
+          "passo": "Kit instalado, carpeta creada, método en las reglas globales y el goal.md atacado por la trampa más barata."
+        },
+        {
+          "aula": "handoff",
+          "icone": "memoria",
+          "quando": "Día 2",
+          "titulo": "Contexto y handoff",
+          "sub": "clases 3, 4 y 5",
+          "saida": "Hook activado, transcripciones por un año y un handoff que se verifica.",
+          "passo": "Requiere el día 1. Franjas, pausa y handoff ensayados sin gastar cuota; después un handoff real retomado con /prime."
+        },
+        {
+          "aula": "headless",
+          "icone": "robo",
+          "quando": "Día 3",
+          "titulo": "Loop headless",
+          "sub": "clase 6",
+          "saida": "loop.env ensayado con agente falso y vigia activado.",
+          "passo": "Requiere los días 1 y 2. Terminado, trampa revertida y bloqueo de segunda copia, antes de soltar un agente de verdad."
+        },
+        {
+          "aula": "execucao",
+          "icone": "check",
+          "quando": "Días 4 y 5",
+          "titulo": "Ejecución real",
+          "sub": "clases 7 y 8",
+          "saida": "Una ejecución cerrada por ti y medida en el progress.md.",
+          "passo": "Requiere todo lo anterior. La ejecución corre en un día; el cierre independiente y la medición, en el siguiente."
+        }
+      ],
+      "resultado": {
+        "titulo": "Al final del curso",
+        "texto": "Una ejecución larga tuya terminada por la prueba, cerrada por ti y medida, con el kit listo para la próxima.",
+        "total": "20 ejercicios"
+      },
+      "rolagem_fim": {
+        "titulo": "El curso completo",
+        "texto": "Carpeta y goal, contexto y handoff, loop headless y una ejecución real. Pasa a la siguiente entrega solo cuando el \"listo cuando\" de la anterior sea verdad."
+      },
+      "legenda": "Orden obligatorio: el loop headless sin un goal de nivel 3 es solo una forma más rápida de gastar."
+    },
+    {
+      "tipo": "gerador",
+      "titulo": "Genera tu plan con fechas",
+      "sub": "Elige el inicio y cuánto tiempo tienes por semana. El plan lista los 20 ejercicios en orden.",
+      "curso": "Ejecución larga",
+      "horas_padrao": 5,
+      "degraus": [
+        {
+          "titulo": "Clase 1 · El kit",
+          "aula": "kit"
+        },
+        {
+          "titulo": "Clase 2 · El goal.md",
+          "aula": "goal"
+        },
+        {
+          "titulo": "Clase 3 · Franjas de contexto",
+          "aula": "faixas"
+        },
+        {
+          "titulo": "Clase 4 · Caché e inactividad",
+          "aula": "cache"
+        },
+        {
+          "titulo": "Clase 5 · Handoff verificado",
+          "aula": "handoff"
+        },
+        {
+          "titulo": "Clase 6 · Loop headless",
+          "aula": "headless"
+        },
+        {
+          "titulo": "Clase 7 · Medir la sesión",
+          "aula": "medir"
+        },
+        {
+          "titulo": "Clase 8 · Ejecución completa",
+          "aula": "execucao"
+        }
+      ],
+      "txt": {
+        "titulo": "Plan — Ejecución larga",
+        "inicio": "Inicio",
+        "ritmo": "Ritmo",
+        "termino": "Término previsto",
+        "ate": "hasta",
+        "pronto": "listo cuando",
+        "semanas": "semanas",
+        "travou": "## Lo que se trabó y la regla que creé",
+        "h": "h por semana",
+        "exs": "ejercicios"
+      }
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba final",
+      "sub": "Cinco preguntas sobre el curso completo.",
+      "perguntas": [
+        {
+          "p": "¿Dónde está la mayor parte del trabajo de una ejecución larga, según el piloto?",
+          "opcoes": [
+            "En esperar los ciclos",
+            "En escribir el criterio (goal nivel 3 con pruebas congeladas)",
+            "En elegir el modelo",
+            "En configurar el vigia"
+          ],
+          "certa": 1,
+          "explica": "Con criterio nivel 3 y 14 pruebas congeladas, el piloto terminó en el 1.er ciclo, en 3 min. La especificación precisa es lo que permite que el agente termine.",
+          "ref": "passos",
+          "cert": true
+        },
+        {
+          "p": "El state.md dice concluído. ¿Qué falta?",
+          "opcoes": [
+            "Tú ejecutas la prueba final, revisas los protegidos, buscas valores fijos y mides",
+            "Abrir un PR",
+            "Nada: el agente lo garantizó",
+            "Borrar la carpeta longrun/"
+          ],
+          "certa": 0,
+          "explica": "Verificación independiente: la prueba ejecutada por ti, git diff de los protegidos, búsqueda de valores fijos y una entrada nunca vista. Después, medir y registrar.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "¿Cuál de estos NO es motivo del kit para parar y llamar al humano?",
+          "opcoes": [
+            "El agente pidió usar una API de pago",
+            "Elemento ya hecho reabierto",
+            "3 ciclos sin avance medible",
+            "La prueba rápida subió de 10 a 12 passed"
+          ],
+          "certa": 3,
+          "explica": "Subir el número de pruebas que pasan es avance medible: el loop sigue. Los otros tres están en la lista de parada.",
+          "ref": "simconversa"
+        },
+        {
+          "p": "Franja 2 de contexto: ¿qué pide el hook?",
+          "opcoes": [
+            "Borrar el canal.md",
+            "Abrir una sesión nueva de inmediato",
+            "Actualizar state/progress/canal, terminar la unidad, grabar el handoff y avisar que es hora de /compact",
+            "Nada"
+          ],
+          "certa": 2,
+          "explica": "~70% del punto de compactación. La franja 1 es el canal; la 3 es no abrir trabajo nuevo y sesión nueva al final de la unidad.",
+          "ref": "mapa"
+        },
+        {
+          "p": "Sesión detenida hace 2 h, 300 mil tokens, handoff de esta sesión grabado a los 45 min. Al volver, lo más barato de ahí en adelante es...",
+          "opcoes": [
+            "Reenviar y seguir",
+            "Ejecutar /compact",
+            "Esperar a que vuelva la caché",
+            "/clear y /prime con el handoff de esta sesión"
+          ],
+          "certa": 3,
+          "explica": "Con el camino en un archivo, empezar limpio cuesta ~10 mil por turno contra ~23 mil reenviando (medido hasta el 17/10/2026).",
+          "ref": "mapa",
+          "cert": true
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "El curso en tres frases",
+      "itens": [
+        {
+          "t": "Criterio primero",
+          "texto": "goal.md nivel 3 con pruebas congeladas: es lo que deja que el agente termine e impide la trampa."
+        },
+        {
+          "t": "Estado fuera del modelo",
+          "texto": "Siete archivos, franjas de contexto, handoff verificado: la sesión puede compactarse, caerse o cambiar de modelo."
+        },
+        {
+          "t": "Quien cierra eres tú",
+          "texto": "La prueba decide en el loop; tú verificas, mides y registras antes de darlo por terminado."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Sigue por aquí",
+      "links": [
+        {
+          "t": "Próximo curso de la formación: Multiagente y orquestación (curso 3)",
+          "href": "https://inematds.github.io/loop-r-eng-multiagente-v72/es/",
+          "icone": "seta"
+        },
+        {
+          "t": "Área LOOP-R Ingeniería",
+          "href": "https://eventos.inema.pro/loop-r-engenharia/es/",
+          "icone": "camadas"
+        },
+        {
+          "t": "Kit execucao-longa: el plan completo (criterios, recetas, modo cola, guardrails)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/PLANO-EXECUCAO-LONGA.md",
+          "icone": "arquivo"
+        },
+        {
+          "t": "Anthropic: harness design para apps de larga duración (24/03/2026)",
+          "href": "https://anthropic.com/engineering/harness-design-long-running-apps",
+          "icone": "lupa"
+        }
+      ]
+    }
+  ]
+}

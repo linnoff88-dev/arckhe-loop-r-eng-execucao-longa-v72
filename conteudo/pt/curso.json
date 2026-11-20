@@ -1,0 +1,191 @@
+{
+  "id": "loop-r-eng-execucao-longa-v72",
+  "lang": "pt-BR",
+  "url": "https://inematds.github.io/loop-r-eng-execucao-longa-v72/",
+  "nome": "Execução Longa",
+  "sub": "Formação LOOP-R Engenharia · curso 2",
+  "volta": {
+    "t": "Área LOOP-R Engenharia",
+    "href": "https://eventos.inema.pro/loop-r-engenharia/"
+  },
+  "lado_card": {
+    "rot": "O kit deste curso",
+    "t": "Execução Longa (código aberto)",
+    "texto": "Templates, hook, loop headless e medição. Todo comando das aulas vem dele, na versão de 18/10/2026.",
+    "link": "Abrir o guia do kit",
+    "href": "https://inematds.github.io/execucao-longa/guia/"
+  },
+  "rodape": "INEMA.CLUB · conteúdo aberto e gratuito · formato INEMA Learning v7.2 · Formação LOOP-R Engenharia, curso 2 de 6 · <a href=\"https://eventos.inema.pro/loop-r-engenharia/\">eventos.inema.pro/loop-r-engenharia</a> · <a href=\"https://github.com/inematds/execucao-longa\">kit execucao-longa no GitHub</a> · <a href=\"https://inema.club/\">inema.club</a>",
+  "videos": {
+    "execucao-longa-pratica": {
+      "titulo": "Execução Longa na prática",
+      "duracao": "6 min 20 s",
+      "mp4": "https://github.com/inematds/execucao-longa-pratica/releases/download/video-v2.0.0/execucao-longa-pratica-completo-16x9.mp4",
+      "vtt": "assets/vtt/execucao-longa-pratica.vtt",
+      "poster": "assets/img/execucao-longa-pratica.jpg",
+      "pagina": "https://inematds.github.io/execucao-longa-pratica/videos/"
+    }
+  },
+  "inicio": {
+    "kicker": "Formação LOOP-R Engenharia · curso 2 de 6 · 8 aulas",
+    "titulo": "Execução Longa: o agente trabalha horas e quem decide que acabou é o teste",
+    "lead": "Sete arquivos de estado, um goal.md que não se cumpre por atalho, hook que vigia o contexto e o cache, handoff que se confere, loop headless com teto e medição de cada sessão. Tudo com o kit aberto execucao-longa e saídas reais de terminal.",
+    "cta": "Começar pela aula 1",
+    "cta2": {
+      "t": "Ver a área da formação",
+      "href": "https://eventos.inema.pro/loop-r-engenharia/"
+    },
+    "capa_alt": "Bancada de engenharia à noite com terminal, painel de instrumentos e um cabo em laço.",
+    "numeros": [
+      {
+        "v": "8",
+        "t": "aulas"
+      },
+      {
+        "v": "20",
+        "t": "exercícios com saída esperada"
+      },
+      {
+        "v": "73",
+        "t": "testes no kit (19/10)"
+      },
+      {
+        "v": "1",
+        "t": "vídeo"
+      }
+    ],
+    "aulas_titulo": "As aulas",
+    "aulas_sub": "Na ordem em que você monta: pasta e goal, contexto e cache, handoff, loop sem interface, medição e uma execução completa.",
+    "blocos": [
+      {
+        "t": "Para quem é",
+        "itens": [
+          "Quem já usa Claude Code ou Codex no terminal e quer deixar uma tarefa rodando por horas.",
+          "Quem já viu o agente dizer \"terminei\" com teste apagado, ou esquecer o que fez depois de compactar.",
+          "Quem precisa rodar agente em cron ou systemd sem travar a máquina nem gastar a cota à toa."
+        ]
+      },
+      {
+        "t": "O que você sai fazendo",
+        "itens": [
+          "Criar a pasta longrun/ e escrever critérios comando → saída que cobrem função, regressão e limite.",
+          "Ligar o hook de faixas de contexto e saber quando compactar, gravar handoff ou abrir sessão nova.",
+          "Rodar o loop-longrun.sh com flock, timeout, MemoryMax e testes protegidos, primeiro com um agente falso.",
+          "Medir a sessão, o custo de retomar e achar decisões antigas com recall."
+        ]
+      },
+      {
+        "t": "Antes de começar",
+        "itens": [
+          "Linux ou macOS com git, Python 3 e pytest; no Linux, systemd de usuário para o MemoryMax e os timers.",
+          "Claude Code ou Codex instalado e entrando pela sua assinatura. As práticas de ensaio não gastam cota.",
+          "Recomendado: o curso 0 (Base) para a escala de critério de pronto e o curso 1 (Verificação) para avaliadores."
+        ]
+      }
+    ]
+  },
+  "ui": {
+    "pular": "Pular para o conteúdo",
+    "aulas": "Aulas",
+    "concluido": "concluído",
+    "aula": "Aula",
+    "nesta_aula": "Nesta aula, você vai aprender:",
+    "objetivo": "Objetivo:",
+    "proxima_aula": "Próxima aula",
+    "aula_anterior": "Aula anterior",
+    "voltar_inicio": "Voltar ao início do curso",
+    "marcar_concluida": "Marcar aula como concluída",
+    "dg_dica": "Clique em cada bloco do diagrama para ver o que ele faz.",
+    "copiar": "Copiar",
+    "copiado": "Copiado",
+    "selo_simulacao": "Simulação: exemplo ilustrativo",
+    "selo_real": "Exemplo do repositório",
+    "pronto_quando": "Pronto quando:",
+    "fiz": "Fiz este exercício",
+    "video_pagina": "Página do vídeo com roteiro",
+    "pergunta": "Pergunta",
+    "de": "de",
+    "cert_tag": "competência",
+    "correto": "Correto",
+    "errado": "Não é essa",
+    "quiz_aguarda": "Escolha uma alternativa. A explicação aparece depois da sua tentativa.",
+    "proxima_pergunta": "Próxima pergunta",
+    "quiz_ver": "Ver resultado",
+    "quiz_fim": "Teste concluído",
+    "quiz_total": "Você acertou {a} de {n}. Acertando todas, a aula é marcada como concluída.",
+    "aparencia": "Aparência",
+    "tamanho_texto": "Tamanho do texto",
+    "tema": "Tema",
+    "tema_escuro": "Escuro",
+    "tema_papel": "Papel claro",
+    "role_dica": "Role a página: cada etapa abaixo acende a sua parte do diagrama.",
+    "pre_requisito": "requer",
+    "ver_aula": "Ver a aula",
+    "mapa_dica": "Clique num exercício para ver o que fazer e o \"pronto quando\".",
+    "etapas": "Etapas",
+    "exercicios": "exercícios",
+    "rever": "Rever:",
+    "revisar_erradas": "Revisar as erradas",
+    "refazer": "Refazer o teste",
+    "h_semana": "h por semana",
+    "data_inicio": "Data de início",
+    "ritmo": "Tempo disponível",
+    "gerar_plano": "Gerar meu plano",
+    "baixar_md": "Baixar plano.md",
+    "baixar_ics": "Baixar para o calendário (.ics)",
+    "ind_estudo": "Estudo (aulas)",
+    "ind_pratica": "Prática declarada",
+    "ind_nota": "Prática = exercícios que você marcou como feitos. A comprovação vem na prova da certificação.",
+    "estudo": {
+      "titulo": "Seu estudo",
+      "continuar": "Continuar de onde parei",
+      "comecar": "Começar pela aula 1",
+      "cta_continuar": "Continuar a aula {n}",
+      "hoje": "hoje",
+      "ontem": "ontem",
+      "ha_dias": "há {n} dias",
+      "desempenho": "Desempenho nos testes",
+      "notas": "Minhas anotações",
+      "dados": "Copiar meus dados",
+      "sem_testes": "Nenhum teste feito ainda. O teste fica no fim de cada aula.",
+      "nao_fez": "teste ainda não feito",
+      "ultimo": "Último",
+      "melhor": "Melhor",
+      "tentativas": "tentativas",
+      "tentativa": "tentativa",
+      "tudo_certo": "Acertou tudo no último teste.",
+      "rever": "Para rever",
+      "resposta": "Resposta certa:",
+      "ir_teste": "Refazer o teste",
+      "sem_notas": "Nenhuma anotação ainda. Na aula, selecione um trecho do texto e toque em Marcar ou Anotar.",
+      "so_marcado": "(só marcado)",
+      "marcar": "Marcar",
+      "anotar": "Anotar",
+      "salvar": "Salvar",
+      "apagar": "Apagar marca",
+      "fechar": "Fechar",
+      "nota_ph": "Escreva sua anotação sobre este trecho…",
+      "um_bloco": "Marque dentro de um parágrafo só.",
+      "nao_marca": "Este trecho não pode ser marcado.",
+      "dados_exp": "Seu progresso, suas anotações e as notas dos testes ficam só neste navegador. Baixe uma cópia (.json) para guardar ou para continuar em outro computador ou navegador; lá, carregue a cópia. Carregar soma com o que já existe e não apaga nada.",
+      "exportar": "Baixar cópia",
+      "importar": "Carregar cópia",
+      "import_ok": "Cópia carregada ({n} itens). Atualizando a página…",
+      "import_erro": "Arquivo não reconhecido. Nada foi alterado.",
+      "import_outro": "Esta cópia é de outro curso. Nada foi alterado.",
+      "export_ok": "Cópia baixada."
+    },
+    "conv_dica": "Escolha a sua resposta. O comentário aparece logo depois e a conversa segue conforme a escolha.",
+    "conv_voce": "Você",
+    "conv_escolha": "Sua resposta",
+    "conv_boa": "Boa escolha",
+    "conv_meio": "Dá para melhorar",
+    "conv_ruim": "Escolha fraca",
+    "conv_fim": "Fim da conversa",
+    "conv_placar": "Você fez {p} de {m} pontos possíveis.",
+    "conv_licao": "Lição:",
+    "conv_recomecar": "Recomeçar a conversa",
+    "conv_feita": "Seu melhor placar: {p} de {m} pontos."
+  },
+  "icone": "relogio"
+}

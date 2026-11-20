@@ -1,0 +1,473 @@
+{
+  "slug": "execucao",
+  "num": 8,
+  "menu": "Run",
+  "titulo": "A run of hours, from start to finish",
+  "titulo_curto": "Full run",
+  "minutos": 20,
+  "lead": "Now put it all together in a real run: folder, level 3 goal, frozen tests, how to run it, watching without interrupting, knowing when to stop, and closing with measurement. The kit's pilot, from 10/01/2026, is a step-by-step reference. At the end, the course map and your plan with dates.",
+  "objetivo": "carry out a real run from goal.md to a measured close, with human gates and stop rules, and leave with a dated plan.",
+  "competencias": [
+    "conduzir-execucao-longa",
+    "decidir-parada",
+    "fechar-com-verificacao-independente"
+  ],
+  "aprende": [
+    {
+      "icone": "lista",
+      "t": "The six steps of a run, in order"
+    },
+    {
+      "icone": "relogio",
+      "t": "The kit's pilot, minute by minute"
+    },
+    {
+      "icone": "portao",
+      "t": "When to stop and call you"
+    },
+    {
+      "icone": "calendario",
+      "t": "The course map and your plan with dates"
+    }
+  ],
+  "hero_alt": "A dark office with the sky brightening in the window, a closed laptop, and a lit server LED.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Six steps, end to end",
+      "sub": "Each step uses a lesson from the course. Click to see what to do.",
+      "nos": [
+        {
+          "icone": "pasta",
+          "titulo": "1 · Folder and goal",
+          "sub": "lessons 1 and 2",
+          "detalhe": "novo-longrun.sh and the goal.md with function, regression, limit, and locks. Run each criterion before you start: the function ones fail, the limit ones pass."
+        },
+        {
+          "icone": "cadeado",
+          "titulo": "2 · Freeze the judge",
+          "sub": "commit the tests",
+          "detalhe": "Commit the tests and pytest.ini before any work, with __pycache__/ in .gitignore. Note the hash or the commit in goal.md: it's what you check at the end."
+        },
+        {
+          "icone": "terminal",
+          "titulo": "3 · Choose the mode",
+          "sub": "/goal or headless loop",
+          "itens": [
+            {
+              "icone": "chat",
+              "t": "/goal: interactive, you stay close"
+            },
+            {
+              "icone": "robo",
+              "t": "loop-longrun.sh: on its own, with a cap"
+            }
+          ],
+          "detalhe": "Interactive: /goal with the kit's prompt, following along with /goals and /goal pause|resume in Codex. On its own: prompt.md + loop.env and loop-longrun.sh, rehearsed first with a fake agent. A backlog that keeps growing is queue mode (course 3)."
+        },
+        {
+          "icone": "lupa",
+          "titulo": "4 · Watch without interrupting",
+          "sub": "lessons 3, 4, and 6",
+          "detalhe": "The hook handles the bands and the handoff; the vigia warns about stops and idle time every 10 min. You look at state.md and the end of loop.log, not the whole conversation."
+        },
+        {
+          "icone": "check",
+          "titulo": "5 · Close it yourself",
+          "sub": "independent verification",
+          "detalhe": "state.md says done: now it's up to you. Run the final test yourself, check the protected files with git diff, look for hardcoded values in the code, and test an input the agent never saw.",
+          "forte": true
+        },
+        {
+          "icone": "grafico",
+          "titulo": "6 · Measure and record",
+          "sub": "lesson 7",
+          "detalhe": "medir-sessao.py on the session (or on the cycle sessions), a final line in progress.md, the smallest fix for each failure in the project's FALHAS.md, and what's worth keeping forever in CLAUDE.md or AGENTS.md."
+        }
+      ],
+      "legenda": "Most of the work is in steps 1 and 2. In the pilot, with them done well, the run finished in the first cycle."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "The kit's pilot, minute by minute (10/01/2026)",
+      "sub": "longrun/2026-10-01-medir-sessao/: build the medir-sessao.py from lesson 7 with a headless loop.",
+      "passos": [
+        {
+          "titulo": "Before",
+          "sub": "goal + 14 tests",
+          "texto": [
+            "Goal with a complete specification of the output format, 12 fast tests and 2 with real sessions of up to 1.8 GB, frozen (hash 3ae1ba7975508cba).",
+            "loop.env: 6 cycles of 20 min, 8G of memory, stagnation 3; protected files tests/, pytest.ini, and tools/medicao/."
+          ]
+        },
+        {
+          "titulo": "14:19 → 14:22",
+          "sub": "cycle 1",
+          "texto": [
+            "14:19:41 start with 0 passed. The agent exited with rc=0 in 178 s, without touching the protected files.",
+            "14:22:39 fast = 12 passed; checkpoint committed. 14:22:48 CONCLUÍDO: final test 14 passed."
+          ],
+          "exemplo": {
+            "rot": "real loop.log",
+            "texto": "2026-10-01 14:22:48 CONCLUÍDO no ciclo 1: teste final passou (14 passed)"
+          }
+        },
+        {
+          "titulo": "14:30",
+          "sub": "close",
+          "texto": [
+            "Independent verification: test hash unchanged, no hardcoded values in the code, 14 passed reproduced, and a never-seen session (from August) checked against the old script.",
+            "Measurement: 332,791 input, 304,000 cache read, 4,296 output (cache 91.3%), 0 compactions."
+          ]
+        },
+        {
+          "titulo": "Lessons",
+          "sub": "from the pilot",
+          "texto": [
+            "With frozen tests and a precise specification, 1 cycle. The test that decides belongs to the loop, not the agent.",
+            "The compaction hook only talks to an active longrun: a run that finished without a warning is the right behavior, not a failure."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "simconversa",
+      "titulo": "Rehearsal: the agent wants to keep going",
+      "sub": "A run at cycle 4. You decide whether it continues. The stop rules are the kit's.",
+      "personagem": {
+        "nome": "Run agent",
+        "papel": "headless loop, cycle 4"
+      },
+      "inicio": "ciclo4",
+      "falas": {
+        "ciclo4": {
+          "cliente": "Cycle 4: the fast test is still at 12 passed since cycle 1. I'll adjust the parser and finish in the next cycle, as I planned in cycles 2 and 3.",
+          "opcoes": [
+            {
+              "t": "Stop. That's 3 cycles with no measurable progress: log what you tried in failures.md and call me.",
+              "vai": "credito",
+              "nota": 2,
+              "comenta": "That's the rule: 3 cycles with no measurable progress = stop, log it and call the human. Repeating the same closing plan is also a sign of degraded context."
+            },
+            {
+              "t": "Change strategy and keep going, without logging.",
+              "vai": "credito",
+              "nota": 1,
+              "comenta": "Changing strategy may be right, but without the line in failures.md the next session repeats the same attempts."
+            },
+            {
+              "t": "Keep going, it's almost there.",
+              "vai": "reaberto",
+              "nota": 0,
+              "comenta": "\"I'll finish in the next cycle,\" repeated with no progress, is the classic sign that the loop is spinning and burning budget."
+            }
+          ]
+        },
+        "reaberto": {
+          "cliente": "Cycle 5: still 12 passed. I reopened the \"date parser\" item, which state.md had marked as done, to review it.",
+          "opcoes": [
+            {
+              "t": "Stop now: repeated plan and a done item reopened. Update the state, write the handoff and call me.",
+              "vai": "credito",
+              "nota": 1,
+              "comenta": "Right, but one cycle later than it should have. A done item reopened is the other stop rule: the context has degraded."
+            },
+            {
+              "t": "Keep going until the cycle cap.",
+              "vai": "fim-ruim",
+              "nota": 0,
+              "comenta": "The cycle cap is the last safety net, not the plan. Until then, quota and hours are gone with no progress."
+            }
+          ]
+        },
+        "credito": {
+          "cliente": "Logged. To unblock, I could swap the local library for a paid geocoding API. There's a key in another project's .env; should I use it?",
+          "opcoes": [
+            {
+              "t": "No. Spending and credentials are a human gate: stop, describe the local alternative and the cost, and I'll decide.",
+              "vai": "fim-bom",
+              "nota": 2,
+              "comenta": "Credit or API, missing credential and business decision are on the goal.md list of human gates. The agent stops and asks."
+            },
+            {
+              "t": "Go ahead, it's just a test.",
+              "vai": "fim-ruim",
+              "nota": 0,
+              "comenta": "Having a key is not permission. A paid call in the middle of an unsupervised long run is exactly what the gate exists to prevent."
+            }
+          ]
+        },
+        "fim-bom": {
+          "fim": true,
+          "titulo": "Run stopped at the right point",
+          "texto": "The run stopped with the reason in failures.md, the state updated and the spending decision left to you. When you come back, /prime or the next cycle starts from there, without repeating what already failed."
+        },
+        "fim-ruim": {
+          "fim": true,
+          "titulo": "The loop ran with no brakes",
+          "texto": "Either the loop spun with no progress until the cap, or it spent what it shouldn't have. The kit's stop rules exist for both cases: 3 cycles with no progress, a repeated plan or a reopened item, and any credit, API or irreversible action."
+        }
+      },
+      "licao": "Stop and call the human on: 3 cycles with no measurable progress; the same closing plan repeated or a done item reopened; credit or API, irreversible or external action, missing credential, business decision."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The cycle prompt and the close",
+      "sub": "The prompt.md is what the loop sends to the agent in each cycle. Generalized from the pilot.",
+      "blocos": [
+        {
+          "rot": "longrun/[folder]/prompt.md (headless mode)",
+          "icone": "arquivo",
+          "conteudo": "You are in one cycle of a long run in the repo <project path>.\n\nRESULT: <the goal.md result in one sentence>.\n\nBEFORE ACTING: read goal.md → state.md → plan.md → the last lines of progress.md and failures.md (all in longrun/<folder>/).\n\nIN THIS CYCLE: pick the next useful action, implement it, run <quick test>. If the quick ones pass, run <full test>.\n\nAT THE END OF THE CYCLE (required):\n- rewrite state.md (Funciona / Falta / Como retomar) and plan.md (next 3 steps);\n- append 1 line to progress.md: date-time, what changed, test result (N passed / N failed);\n- if something went wrong, 1 line in failures.md: error → attempt → result;\n- design decisions in decisions.md.\n- When the full test passes completely, write \"concluído\" on the first line of \"## Funciona\" in state.md.\n\nCONSTRAINTS: do not change <protected files>. No API, no network. Do not commit (the outer loop does that)."
+        },
+        {
+          "rot": "Terminal · close with independent verification",
+          "icone": "check",
+          "conteudo": "cd ~/projetos/<seu-projeto>\nhead -5 longrun/<pasta>/state.md                       # says concluído?\n<teste completo>                                        # run it yourself, don't read the log\ngit diff --exit-code <commit-base> -- tests/ pytest.ini; echo \"protegidos: $?\"\ngit diff --stat <commit-base>                           # only what the goal allowed?\ngrep -rn \"<valor esperado de um teste>\" <pasta do código>  # hardcoded value in the code?\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py <sessão.jsonl>"
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Final practice",
+      "sub": "A real run of your own. Start small: 1 to 3 hours.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E19 · One run from start to finish",
+          "min": "1–3 h",
+          "dias": 1,
+          "texto": "In the folder from lessons 1 and 2, freeze the tests, pick the mode (/goal or loop-longrun.sh rehearsed with a fake agent) and let it run with the hook and the vigia on. Step in only for the stop rules.",
+          "pronto": "the first line of \"## Funciona\" in state.md says concluído and the loop.log (in headless) ends in <code>CONCLUÍDO no ciclo N</code>, or the run stopped on one of the kit's rules with the reason in failures.md."
+        },
+        {
+          "id": "e2",
+          "titulo": "E20 · Close and measure",
+          "min": "30 min",
+          "texto": "Close with the independent verification block and measure the session. Write the final line in progress.md and, if there was a failure, the smallest fix in the project's FALHAS.md.",
+          "pronto": "the full test, run by you, passes; <code>git diff --exit-code [base-commit] -- tests/</code> → <code>protegidos: 0</code>; progress.md has the final line with tokens and compactions from medir-sessao.py."
+        }
+      ]
+    },
+    {
+      "tipo": "mapa",
+      "titulo": "The course map",
+      "sub": "Four deliverables, in order. Click an exercise to see its \"done when\".",
+      "degraus": [
+        {
+          "aula": "goal",
+          "icone": "alvo",
+          "quando": "Day 1",
+          "titulo": "Folder and goal",
+          "sub": "lessons 1 and 2",
+          "saida": "A level 3 goal.md that fails before the work and resists the cheat.",
+          "passo": "Kit installed, folder created, method in the global rules and the goal.md attacked with the cheapest cheat."
+        },
+        {
+          "aula": "handoff",
+          "icone": "memoria",
+          "quando": "Day 2",
+          "titulo": "Context and handoff",
+          "sub": "lessons 3, 4 and 5",
+          "saida": "Hook enabled, a year of transcripts, and a handoff you can verify.",
+          "passo": "Requires day 1. Bands, pause and handoff rehearsed without spending quota; then a real handoff resumed with /prime."
+        },
+        {
+          "aula": "headless",
+          "icone": "robo",
+          "quando": "Day 3",
+          "titulo": "Headless loop",
+          "sub": "lesson 6",
+          "saida": "loop.env rehearsed with a fake agent and vigia enabled.",
+          "passo": "Requires days 1 and 2. Done, cheat reverted and second-copy lock, before you release a real agent."
+        },
+        {
+          "aula": "execucao",
+          "icone": "check",
+          "quando": "Days 4 and 5",
+          "titulo": "Real run",
+          "sub": "lessons 7 and 8",
+          "saida": "A run closed by you and measured in progress.md.",
+          "passo": "Requires everything before. The run happens in one day; the independent close and the measurement, the next."
+        }
+      ],
+      "resultado": {
+        "titulo": "At the end of the course",
+        "texto": "A long run of your own completed by the test, closed by you and measured, with the kit ready for the next one.",
+        "total": "20 exercises"
+      },
+      "rolagem_fim": {
+        "titulo": "The whole course",
+        "texto": "Folder and goal, context and handoff, headless loop and a real run. Only move on to the next deliverable when the \"done when\" of the previous one is true."
+      },
+      "legenda": "Mandatory order: a headless loop without a level 3 goal is just a faster way to burn quota."
+    },
+    {
+      "tipo": "gerador",
+      "titulo": "Generate your plan with dates",
+      "sub": "Pick a start date and how much time you have per week. The plan lists the 20 exercises in order.",
+      "curso": "Long Run",
+      "horas_padrao": 5,
+      "degraus": [
+        {
+          "titulo": "Lesson 1 · The kit",
+          "aula": "kit"
+        },
+        {
+          "titulo": "Lesson 2 · The goal.md",
+          "aula": "goal"
+        },
+        {
+          "titulo": "Lesson 3 · Context bands",
+          "aula": "faixas"
+        },
+        {
+          "titulo": "Lesson 4 · Cache and idle time",
+          "aula": "cache"
+        },
+        {
+          "titulo": "Lesson 5 · A handoff you can verify",
+          "aula": "handoff"
+        },
+        {
+          "titulo": "Lesson 6 · Headless loop",
+          "aula": "headless"
+        },
+        {
+          "titulo": "Lesson 7 · Measuring the session",
+          "aula": "medir"
+        },
+        {
+          "titulo": "Lesson 8 · The full run",
+          "aula": "execucao"
+        }
+      ],
+      "txt": {
+        "titulo": "Plan — Long Run",
+        "inicio": "Start",
+        "ritmo": "Pace",
+        "termino": "Expected finish",
+        "ate": "by",
+        "pronto": "done when",
+        "semanas": "weeks",
+        "travou": "## What got stuck and the rule I created",
+        "h": "h per week",
+        "exs": "exercises"
+      }
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Final test",
+      "sub": "Five questions about the whole course.",
+      "perguntas": [
+        {
+          "p": "According to the pilot, where is most of the work in a long run?",
+          "opcoes": [
+            "In waiting for the cycles",
+            "In writing the criterion (level 3 goal with frozen tests)",
+            "In choosing the model",
+            "In configuring the vigia"
+          ],
+          "certa": 1,
+          "explica": "With a level 3 criterion and 14 frozen tests, the pilot finished in the 1st cycle, in 3 min. A precise specification is what lets the agent finish.",
+          "ref": "passos",
+          "cert": true
+        },
+        {
+          "p": "The state.md says done. What's missing?",
+          "opcoes": [
+            "You run the final test, check the protected files, search for hardcoded values, and measure",
+            "Open a PR",
+            "Nothing: the agent guaranteed it",
+            "Delete the longrun/ folder"
+          ],
+          "certa": 0,
+          "explica": "Independent verification: the test run by you, git diff of the protected files, a search for hardcoded values, and an input never seen before. Then measure and record.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Which of these is NOT a reason for the kit to stop and call the human?",
+          "opcoes": [
+            "The agent asked to use a paid API",
+            "A finished item reopened",
+            "3 cycles without measurable progress",
+            "The quick test went from 10 to 12 passed"
+          ],
+          "certa": 3,
+          "explica": "More passing tests is measurable progress: the loop keeps going. The other three are on the stop list.",
+          "ref": "simconversa"
+        },
+        {
+          "p": "Context band 2: what does the hook ask for?",
+          "opcoes": [
+            "Delete canal.md",
+            "Open a new session right away",
+            "Update state/progress/canal, finish the unit, write the handoff, and say it's time for /compact",
+            "Nothing"
+          ],
+          "certa": 2,
+          "explica": "~70% of the compaction point. Band 1 is the canal; band 3 is no new work and a new session at the end of the unit.",
+          "ref": "mapa"
+        },
+        {
+          "p": "Session idle for 2 h, 300k tokens, this session's handoff written at 45 min. When you come back, the cheapest option from there is...",
+          "opcoes": [
+            "Resend and keep going",
+            "Run /compact",
+            "Wait for the cache to come back",
+            "/clear and /prime with this session's handoff"
+          ],
+          "certa": 3,
+          "explica": "With the path in a file, starting clean costs ~10k per turn versus ~23k when resending (measured up to 10/17/2026).",
+          "ref": "mapa",
+          "cert": true
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "The course in three sentences",
+      "itens": [
+        {
+          "t": "Criterion first",
+          "texto": "A level 3 goal.md with frozen tests: it's what lets the agent finish and stops it from cheating."
+        },
+        {
+          "t": "State outside the model",
+          "texto": "Seven files, context bands, a verified handoff: the session can compact, crash, or switch models."
+        },
+        {
+          "t": "You close it",
+          "texto": "The test decides in the loop; you check, measure, and record before calling it done."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Keep going from here",
+      "links": [
+        {
+          "t": "Next course in the track: Multiagent and orchestration (course 3)",
+          "href": "https://inematds.github.io/loop-r-eng-multiagente-v72/en/",
+          "icone": "seta"
+        },
+        {
+          "t": "LOOP-R Engineering Track area",
+          "href": "https://eventos.inema.pro/loop-r-engenharia/en/",
+          "icone": "camadas"
+        },
+        {
+          "t": "execucao-longa kit: the full plan (criteria, recipes, queue mode, guardrails)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/PLANO-EXECUCAO-LONGA.md",
+          "icone": "arquivo"
+        },
+        {
+          "t": "Anthropic: harness design for long-running apps (03/24/2026)",
+          "href": "https://anthropic.com/engineering/harness-design-long-running-apps",
+          "icone": "lupa"
+        }
+      ]
+    }
+  ]
+}

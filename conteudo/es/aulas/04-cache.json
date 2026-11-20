@@ -1,0 +1,282 @@
+{
+  "slug": "cache",
+  "num": 4,
+  "menu": "Caché",
+  "titulo": "Caché e inactividad: lo que muestran los números de octubre",
+  "titulo_curto": "Caché e inactividad",
+  "minutos": 16,
+  "lead": "Volver a una sesión grande parada hace dos horas puede costar cientos de miles de tokens en un solo mensaje. No es un error: es la caché que venció. Con los números medidos en octubre de 2026, entiendes la línea de tiempo de una sesión parada y decides, con cuentas, entre reenviar y empezar limpio.",
+  "objetivo": "leer la línea de tiempo de una sesión parada (45, 54, 60 min) y elegir entre reenviar y /clear + /prime con los números medidos.",
+  "competencias": [
+    "calcular-custo-de-retomada",
+    "ler-linha-do-tempo-do-cache",
+    "configurar-trava-de-pausa"
+  ],
+  "aprende": [
+    {
+      "icone": "relogio",
+      "t": "Qué pasa a los 45, ~54 y 60 min de parada"
+    },
+    {
+      "icone": "grafico",
+      "t": "Los números medidos: caché, compactaciones y retomada"
+    },
+    {
+      "icone": "escudo",
+      "t": "La traba que retiene el primer mensaje después de la pausa"
+    },
+    {
+      "icone": "voltar",
+      "t": "Cuándo reenviar y cuándo /clear + /prime"
+    }
+  ],
+  "hero_alt": "Reloj de arena de vidrio sobre una placa de circuito oscura, con un termómetro digital al lado.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "La línea de tiempo de una sesión parada",
+      "sub": "Claude Code, caché de 1 h, contexto por encima de ~200 mil tokens, hook-longrun 1.9.6 activado.",
+      "nos": [
+        {
+          "icone": "check",
+          "titulo": "0 min",
+          "sub": "la respuesta termina",
+          "itens": [
+            {
+              "icone": "calendario",
+              "t": "Timer de 45 min programado"
+            }
+          ],
+          "detalhe": "En el evento Stop, con contexto ≥ 200 mil y la carpeta handoffs/ en el proyecto, el hook programa un timer (systemd-run --user, uno por sesión, rehecho en cada respuesta). Si envías otro mensaje, el reloj vuelve a empezar."
+        },
+        {
+          "icone": "lua",
+          "titulo": "3–12 min",
+          "sub": "resumen de ausencia",
+          "detalhe": "Si cambias de foco, Claude Code graba un away_summary en la conversación. Desde la 1.8.6 eso (y comandos locales como /exit) ya no cuenta como \"la sesión avanzó\": antes, 7 sesiones del 16/10 quedaron sin handoff por eso."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "45 min",
+          "sub": "handoff en la copia",
+          "itens": [
+            {
+              "icone": "memoria",
+              "t": "claude -p --resume --fork-session"
+            }
+          ],
+          "detalhe": "Si la sesión sigue detenida, sin un handoff de esta sesión grabado hasta 5 min antes de la última respuesta, y la caché aún sirve (< 55 min), el hook graba el handoff en una COPIA de la sesión, mismo modelo, caché caliente, que solo puede ejecutar handoff-grava.py y leer archivos. La sesión abierta no se toca.",
+          "forte": true
+        },
+        {
+          "icone": "camadas",
+          "titulo": "~54 min",
+          "sub": "compactación por inactividad",
+          "detalhe": "Claude Code compacta solo tras unos 55 min sin respuesta, únicamente por encima de ~200 mil tokens, antes de que la caché venza. En los registros del 07 al 15/10/2026, las 93 compactaciones llegaron entre 53–58 min después de la última respuesta. Pero no siempre ocurre: el 18/10, una sesión de 480 mil no compactó."
+        },
+        {
+          "icone": "x",
+          "titulo": "60 min",
+          "sub": "la caché vence",
+          "detalhe": "El siguiente mensaje vuelve a leer toda la conversación sin caché. Con más de 150 mil en el contexto, el hook retiene ese primer mensaje una vez y explica: reenviar continúa; /clear + /prime reinicia limpio desde el handoff de esta sesión."
+        }
+      ],
+      "legenda": "Por qué 45 y no 50: la compactación por inactividad llega entre 53 y 58 min y la copia tarda 30–60 s más el arranque. A los 45 queda margen; el costo es el mismo a cualquier hora antes de 1 h.",
+      "rolagem": true,
+      "rolagem_fim": {
+        "titulo": "La protección es el handoff",
+        "texto": "La compactación es un bonus cuando llega. El handoff a los 45 min, grabado con la caché caliente, es lo que garantiza que la vuelta tenga un camino barato.",
+        "curto": "Handoff con caché caliente."
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "La cuenta, en cuatro números",
+      "sub": "Todos del kit execucao-longa, con la fecha y el tamaño de la muestra.",
+      "passos": [
+        {
+          "titulo": "Caliente × fría",
+          "sub": "README, 18/10",
+          "texto": [
+            "Con la caché caliente (hasta ~1 h desde la última respuesta), releer la conversación sale por ~10% del precio de entrada. Vencida, reprocesa todo y vuelve a grabar la caché, ~2×: cerca de 20× un mensaje con la caché caliente.",
+            "En la suscripción esto no se convierte en dinero, pero sale de la cuota de 5 h y de la semanal. Y se paga una vez: los mensajes siguientes vuelven a ser baratos."
+          ]
+        },
+        {
+          "titulo": "Retomar cuesta",
+          "sub": "14 días hasta el 17/10",
+          "texto": [
+            "Reenviar con la caché vencida: mediana de 284 mil tokens equivalentes en la primera llamada (190 casos, de 17 mil a 1,25 millones) y ~23 mil por turno después.",
+            "/clear + /prime: mediana de 187 mil (solo 11 casos) y ~10 mil por turno después. El piso viene de volver a grabar el paquete inicial (instrucciones, memoria, skills)."
+          ],
+          "exemplo": {
+            "rot": "Salvedad de la fuente",
+            "texto": "Parte de las 190 retomas puede haber pasado por una compactación antes; el /prime tiene solo 11 casos."
+          }
+        },
+        {
+          "titulo": "La caché no es el problema",
+          "sub": "3 sesiones, 01/10",
+          "texto": [
+            "Entre 93% y 99% de caché en todas las sesiones largas medidas, sin empeorar con el número de compactaciones. No es motivo para cortar la sesión.",
+            "Lo que crece es el costo por turno: sin compactar, el último décimo de una sesión de 1M leyó ~5× más por turno que el primero (810 mil contra 157 mil)."
+          ]
+        },
+        {
+          "titulo": "Decidir",
+          "sub": "al volver",
+          "texto": [
+            "Si las decisiones están en archivos (commits, state.md, handoff), /clear + /prime sale más barato desde ahí en adelante.",
+            "Solo vale la pena reenviar y pagar la relectura completa cuando hay una decisión que quedó solo en la conversación y no pasó al handoff."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "El bloqueo de la pausa, en el ensayo",
+      "sub": "El mismo ensaio-hook.sh de la clase 3: transcripción falsa con 220 mil tokens y la última respuesta hace 120 min.",
+      "blocos": [
+        {
+          "rot": "Terminal · pausa de 2 h y reenvío",
+          "icone": "play",
+          "conteudo": "rm -rf /tmp/ensaio-hook\nbash ensaio-hook.sh 220000 120 UserPromptSubmit   # 1er mensaje después de la pausa\nbash ensaio-hook.sh - - UserPromptSubmit          # reenviar el mismo\nbash ensaio-hook.sh 250000 0 Stop                 # fin de respuesta: agenda el handoff por inactividad\ncat /tmp/ensaio-hook/agenda.jsonl"
+        },
+        {
+          "rot": "Variables del hook (en el entorno de Claude Code)",
+          "icone": "arquivo",
+          "conteudo": "LONGRUN_PAUSA_MIN=60          # minutos detenido antes de retener el mensaje\nLONGRUN_PAUSA_TOKENS=150000   # contexto mínimo para retener; 0 desactiva el bloqueo\nLONGRUN_OCIOSO_MIN=45         # minutos detenido antes de grabar el handoff (no pases de ~45)\nLONGRUN_OCIOSO_TOKENS=200000  # contexto mínimo para grabar; 0 desactiva\nLONGRUN_CACHE_MIN=55          # pasado ese tiempo la copia no corre (la caché ya estaría fría)"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>$ bash ensaio-hook.sh 220000 120 UserPromptSubmit\n{\"decision\": \"block\", \"reason\": \"Sessão parada há 2h00: o cache venceu e esta mensagem\n vai reprocessar ~220 mil tokens do seu limite. Para continuar aqui, reenvie a mensagem.\n Para começar limpo: NENHUM handoff desta sessão foi gravado: antes do /clear, peça para\n gravar (skill session-handoff), senão o /prime não terá o caminho deste trabalho.\"}\n\n$ bash ensaio-hook.sh - - UserPromptSubmit\n\n$ bash ensaio-hook.sh 250000 0 Stop\n\n$ cat /tmp/ensaio-hook/agenda.jsonl\n{\"unidade\": \"longrun-ocioso-ensaio\", \"minutos\": 45, \"cmd\": [\"/usr/bin/python3\",\n \".../execucao-longa/tools/hook-longrun.py\", \"--ocioso\", \"ensaio\", ...]}</pre><p>Con <code>LONGRUN_AGENDAR_ARQ</code> el hook solo registra la programación en un archivo, en vez de crear el timer de verdad. Es la misma variable que usan las pruebas del kit.</p>"
+          },
+          {
+            "rot": "En una sesión real",
+            "html": "<p>Ejemplo del README del kit (sesión detenida hace 5h33 con 220 mil tokens):</p><pre>● UserPromptSubmit operation blocked by hook:\n  Sessão parada há 5h33: o cache venceu e esta mensagem vai reprocessar ~220 mil tokens do seu limite.\n  Para continuar aqui, reenvie a mensagem. Para começar limpo: /clear e depois /prime\n  (o último handoff do projeto é indicado na abertura).</pre><p>Desde la 1.7.1, cuando esta sesión grabó un handoff, el aviso trae su ruta en líneas separadas: <code>/clear</code> y <code>/prime handoffs/history/[archivo].md</code>. Otra sesión pudo haber grabado uno más nuevo en el mismo proyecto.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "Ensayo sin costo y un ajuste que protege tus transcripciones.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E8 · El bloqueo de la pausa",
+          "min": "10 min",
+          "texto": "Ejecuta el bloque de la pausa de 2 h. Después ejecútalo con 90000 tokens en lugar de 220000, en una carpeta limpia, para ver el límite de 150 mil.",
+          "pronto": "la 1.ª llamada imprime <code>\"decision\": \"block\"</code> con <code>cache venceu</code>; el reenvío (<code>-</code>) no imprime nada; con 90 mil no hay bloqueo; <code>agenda.jsonl</code> muestra <code>\"minutos\": 45</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E9 · Transcripciones por un año",
+          "min": "5 min",
+          "texto": "Claude Code borra las transcripciones después de cleanupPeriodDays (por defecto 30). Sin ellas, no hay medición ni recall (clase 7). Pon 365 en settings.json.",
+          "pronto": "<code>python3 -c \"import json,os;print(json.load(open(os.path.expanduser('~/.claude/settings.json'))).get('cleanupPeriodDays'))\"</code> → <code>365</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "perguntas": [
+        {
+          "p": "¿Por qué el hook graba el handoff por inactividad a los 45 min, y no a los 58?",
+          "opcoes": [
+            "Porque a los 45 min la caché ya venció y la copia debe correr antes de la compactación automática",
+            "Para interrumpir a quien está trabajando",
+            "Porque Claude Code exige 45",
+            "Para llegar antes de la compactación por inactividad y del fin de la caché, con margen para la copia"
+          ],
+          "certa": 3,
+          "explica": "Grabar con la caché caliente cuesta una lectura barata. A los 50 la copia puede llegar después del resumen o pasar de los 55 min del límite de la caché. A quien está trabajando no se le interrumpe: la copia se ejecuta aparte.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "En las mediciones de octubre, la caché de las sesiones largas...",
+          "opcoes": [
+            "cayó un poco con cada compactación, porque el resumen nuevo invalida el prefijo",
+            "solo existe en Codex",
+            "se mantuvo por debajo de 50%",
+            "se mantuvo entre 93% y 99% y no empeoró con las compactaciones"
+          ],
+          "certa": 3,
+          "explica": "93–99% en todas las sesiones largas medidas. Lo que crece sin compactar es el costo por turno (~5× en el último décimo), no la pérdida de caché.",
+          "ref": "passos",
+          "cert": true
+        },
+        {
+          "p": "Sesión detenida hace 3 h, 300 mil tokens, todas las decisiones ya en el handoff de esta sesión. ¿Qué hacer al volver?",
+          "opcoes": [
+            "Esperar una hora más",
+            "Borrar el handoff",
+            "/clear y /prime con el handoff de esta sesión",
+            "Reenviar el mensaje: con 300 mil tokens ya cargados, siempre es lo más barato"
+          ],
+          "certa": 2,
+          "explica": "Con el camino en un archivo, empezar limpio cuesta menos de ahí en adelante (~10 mil × ~23 mil por turno, medido hasta el 17/10). Reenviar solo vale la pena si algo quedó solo en la conversación.",
+          "ref": "passos"
+        },
+        {
+          "p": "La traba de la pausa bloqueó tu mensaje. Quieres continuar en esta sesión. ¿Qué hacer?",
+          "opcoes": [
+            "Ejecutar /compact antes, para que la sesión quepa en la caché y el bloqueo se libere",
+            "Apagar el hook",
+            "Esperar a que vuelva la caché",
+            "Reenviar el mismo mensaje: el bloqueo vale una vez por pausa"
+          ],
+          "certa": 3,
+          "explica": "El bloqueo es una pregunta, no un error: vale una vez por pausa y queda grabado en el estado de la sesión. Reenviar pasa directo.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "45, 54, 60",
+          "texto": "Handoff en la copia con caché caliente, compactación por inactividad cuando llega, caché vencida y traba al volver."
+        },
+        {
+          "t": "Números con fecha",
+          "texto": "Caché 93–99% (01/10); retomar 284 mil × 187 mil y ~23 mil × ~10 mil por turno (14 días hasta el 17/10)."
+        },
+        {
+          "t": "Decide con la cuenta",
+          "texto": "Camino en un archivo: /clear + /prime. Algo solo en la conversación: reenviar una vez y grabar el handoff."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "Análisis general: caché × compactación × continuidad (17/10/2026)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/analise-geral-2026-10-17.md",
+          "icone": "grafico"
+        },
+        {
+          "t": "F7: curva de caché y costo por turno (01/10/2026)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/experimento-f7-retrospectivo-2026-10.md",
+          "icone": "grafico"
+        },
+        {
+          "t": "README del kit: caché, handoff automático y compactación",
+          "href": "https://github.com/inematds/execucao-longa#cache-handoff-autom%C3%A1tico-e-compacta%C3%A7%C3%A3o-como-funciona",
+          "icone": "arquivo"
+        }
+      ]
+    }
+  ]
+}

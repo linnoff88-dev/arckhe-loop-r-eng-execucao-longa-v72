@@ -1,0 +1,194 @@
+{
+  "id": "loop-r-eng-execucao-longa-v72",
+  "lang": "es",
+  "url": "https://inematds.github.io/loop-r-eng-execucao-longa-v72/es/",
+  "nome": "Ejecución larga",
+  "sub": "Formación LOOP-R Ingeniería · curso 2",
+  "volta": {
+    "t": "Área LOOP-R Ingeniería",
+    "href": "https://eventos.inema.pro/loop-r-engenharia/es/"
+  },
+  "lado_card": {
+    "rot": "El kit de este curso",
+    "t": "Ejecución larga (código abierto)",
+    "texto": "Templates, hook, loop headless y medición. Todo comando de las clases viene de él, en la versión del 18/10/2026.",
+    "link": "Abrir la guía del kit",
+    "href": "https://inematds.github.io/execucao-longa/guia/"
+  },
+  "rodape": "INEMA.CLUB · contenido abierto y gratuito · formato INEMA Learning v7.2 · Formación LOOP-R Ingeniería, curso 2 de 6 · <a href=\"https://eventos.inema.pro/loop-r-engenharia/es/\">eventos.inema.pro/loop-r-engenharia</a> · <a href=\"https://github.com/inematds/execucao-longa\">kit execucao-longa en GitHub</a> · <a href=\"https://inema.club/\">inema.club</a>",
+  "videos": {
+    "execucao-longa-pratica": {
+      "titulo": "Ejecución larga en la práctica",
+      "duracao": "6 min 20 s",
+      "mp4": "https://github.com/inematds/execucao-longa-pratica/releases/download/video-v2.0.0/execucao-longa-pratica-completo-16x9.mp4",
+      "vtt": "assets/vtt/execucao-longa-pratica.vtt",
+      "poster": "assets/img/execucao-longa-pratica.jpg",
+      "pagina": "https://inematds.github.io/execucao-longa-pratica/videos/"
+    }
+  },
+  "inicio": {
+    "kicker": "Formación LOOP-R Ingeniería · curso 2 de 6 · 8 clases",
+    "titulo": "Ejecución larga: el agente trabaja horas y quien decide que terminó es el test",
+    "lead": "Siete archivos de estado, un goal.md que no se cumple con atajos, un hook que vigila el contexto y la caché, un handoff que se verifica, un loop headless con tope y medición de cada sesión. Todo con el kit abierto execucao-longa y salidas reales de terminal.",
+    "cta": "Empezar por la clase 1",
+    "cta2": {
+      "t": "Ver el área de la formación",
+      "href": "https://eventos.inema.pro/loop-r-engenharia/es/"
+    },
+    "capa_alt": "Banco de ingeniería de noche con terminal, panel de instrumentos y un cable en lazo.",
+    "numeros": [
+      {
+        "v": "8",
+        "t": "clases"
+      },
+      {
+        "v": "20",
+        "t": "ejercicios con salida esperada"
+      },
+      {
+        "v": "73",
+        "t": "tests en el kit (19/10)"
+      },
+      {
+        "v": "1",
+        "t": "video"
+      }
+    ],
+    "aulas_titulo": "Las clases",
+    "aulas_sub": "En el orden en que lo armas: carpeta y goal, contexto y caché, handoff, loop sin interfaz, medición y una ejecución completa.",
+    "blocos": [
+      {
+        "t": "Para quién es",
+        "itens": [
+          "Quien ya usa Claude Code o Codex en la terminal y quiere dejar una tarea corriendo por horas.",
+          "Quien ya vio al agente decir \"terminé\" con un test borrado, o olvidar lo que hizo después de compactar.",
+          "Quien necesita correr un agente en cron o systemd sin trabar la máquina ni gastar la cuota en vano."
+        ]
+      },
+      {
+        "t": "Lo que sales haciendo",
+        "itens": [
+          "Crear la carpeta longrun/ y escribir criterios comando → salida que cubran función, regresión y límite.",
+          "Activar el hook de franjas de contexto y saber cuándo compactar, grabar un handoff o abrir una sesión nueva.",
+          "Correr loop-longrun.sh con flock, timeout, MemoryMax y tests protegidos, primero con un agente falso.",
+          "Medir la sesión, el costo de retomar y encontrar decisiones antiguas con recall."
+        ]
+      },
+      {
+        "t": "Antes de empezar",
+        "itens": [
+          "Linux o macOS con git, Python 3 y pytest; en Linux, systemd de usuario para el MemoryMax y los timers.",
+          "Claude Code o Codex instalado y entrando por tu suscripción. Las prácticas de ensayo no gastan cuota.",
+          "Recomendado: el curso 0 (Base) para la escala de criterio de terminado y el curso 1 (Verificación) para evaluadores."
+        ]
+      }
+    ]
+  },
+  "ui": {
+    "pular": "Saltar al contenido",
+    "aulas": "Clases",
+    "concluido": "completado",
+    "aula": "Clase",
+    "nesta_aula": "En esta clase vas a aprender:",
+    "objetivo": "Objetivo:",
+    "proxima_aula": "Próxima clase",
+    "aula_anterior": "Clase anterior",
+    "voltar_inicio": "Volver al inicio del curso",
+    "marcar_concluida": "Marcar clase como completada",
+    "dg_dica": "Haz clic en cada bloque del diagrama para ver qué hace.",
+    "copiar": "Copiar",
+    "copiado": "Copiado",
+    "selo_simulacao": "Simulación: ejemplo ilustrativo",
+    "selo_real": "Ejemplo del repositorio",
+    "pronto_quando": "Listo cuando:",
+    "fiz": "Hice este ejercicio",
+    "video_pagina": "Página del video con guion",
+    "pergunta": "Pregunta",
+    "de": "de",
+    "cert_tag": "competencia",
+    "correto": "Correcto",
+    "errado": "No es esa",
+    "quiz_aguarda": "Elige una alternativa. La explicación aparece después de tu intento.",
+    "proxima_pergunta": "Siguiente pregunta",
+    "quiz_ver": "Ver resultado",
+    "quiz_fim": "Prueba terminada",
+    "quiz_total": "Acertaste {a} de {n}. Si aciertas todas, la clase se marca como completada.",
+    "aparencia": "Apariencia",
+    "tamanho_texto": "Tamaño del texto",
+    "tema": "Tema",
+    "tema_escuro": "Oscuro",
+    "tema_papel": "Papel claro",
+    "role_dica": "Desplaza la página: cada etapa de abajo enciende su parte del diagrama.",
+    "pre_requisito": "requiere",
+    "ver_aula": "Ver la clase",
+    "mapa_dica": "Haz clic en un ejercicio para ver qué hacer y el \"listo cuando\".",
+    "etapas": "Etapas",
+    "exercicios": "ejercicios",
+    "rever": "Repasar:",
+    "revisar_erradas": "Repasar las erradas",
+    "refazer": "Rehacer la prueba",
+    "h_semana": "h por semana",
+    "data_inicio": "Fecha de inicio",
+    "ritmo": "Tiempo disponible",
+    "gerar_plano": "Generar mi plan",
+    "baixar_md": "Descargar plan.md",
+    "baixar_ics": "Descargar para el calendario (.ics)",
+    "ind_estudo": "Estudio (clases)",
+    "ind_pratica": "Práctica declarada",
+    "ind_nota": "Práctica = ejercicios que marcaste como hechos. La comprobación viene en la prueba de la certificación.",
+    "estudo": {
+      "titulo": "Tu estudio",
+      "continuar": "Continuar donde lo dejé",
+      "comecar": "Empezar por la clase 1",
+      "cta_continuar": "Continuar la clase {n}",
+      "hoje": "hoy",
+      "ontem": "ayer",
+      "ha_dias": "hace {n} días",
+      "desempenho": "Desempeño en las pruebas",
+      "notas": "Mis anotaciones",
+      "dados": "Copiar mis datos",
+      "sem_testes": "Aún no has hecho ninguna prueba. La prueba está al final de cada clase.",
+      "nao_fez": "prueba aún no hecha",
+      "ultimo": "Último",
+      "melhor": "Mejor",
+      "tentativas": "intentos",
+      "tentativa": "intento",
+      "tudo_certo": "Acertaste todo en la última prueba.",
+      "rever": "Para repasar",
+      "resposta": "Respuesta correcta:",
+      "ir_teste": "Rehacer la prueba",
+      "sem_notas": "Aún no hay anotaciones. En la clase, selecciona un fragmento del texto y toca Marcar o Anotar.",
+      "so_marcado": "(solo marcado)",
+      "marcar": "Marcar",
+      "anotar": "Anotar",
+      "salvar": "Guardar",
+      "apagar": "Borrar marca",
+      "fechar": "Cerrar",
+      "nota_ph": "Escribe tu anotación sobre este fragmento…",
+      "um_bloco": "Marca dentro de un solo párrafo.",
+      "nao_marca": "Este fragmento no se puede marcar.",
+      "dados_exp": "Tu progreso, tus anotaciones y las notas de las pruebas quedan solo en este navegador. Descarga una copia (.json) para guardarla o para continuar en otro computador o navegador; allí, carga la copia. Cargar se suma a lo que ya existe y no borra nada.",
+      "exportar": "Descargar copia",
+      "importar": "Cargar copia",
+      "import_ok": "Copia cargada ({n} elementos). Actualizando la página…",
+      "import_erro": "Archivo no reconocido. No se cambió nada.",
+      "import_outro": "Esta copia es de otro curso. No se cambió nada.",
+      "export_ok": "Copia descargada."
+    },
+    "conv_dica": "Elige tu respuesta. El comentario aparece justo después y la conversación sigue según tu elección.",
+    "conv_voce": "Tú",
+    "conv_escolha": "Tu respuesta",
+    "conv_boa": "Buena elección",
+    "conv_meio": "Se puede mejorar",
+    "conv_ruim": "Elección débil",
+    "conv_fim": "Fin de la conversación",
+    "conv_placar": "Hiciste {p} de {m} puntos posibles.",
+    "conv_licao": "Lección:",
+    "conv_recomecar": "Reiniciar la conversación",
+    "conv_feita": "Tu mejor puntaje: {p} de {m} puntos.",
+    "comecar": "Comenzar la clase",
+    "nesta_vai": "En esta clase vas a",
+    "trocar_tema": "Cambiar tema claro/oscuro"
+  },
+  "icone": "relogio"
+}

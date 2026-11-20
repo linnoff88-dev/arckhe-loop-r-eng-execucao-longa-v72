@@ -1,0 +1,213 @@
+{
+  "slug": "faixas",
+  "num": 3,
+  "menu": "Faixas",
+  "titulo": "Contexto em faixas: 50, 70 e 85% do ponto de compactação",
+  "titulo_curto": "Faixas de contexto",
+  "minutos": 18,
+  "lead": "O maior inimigo de uma sessão longa é a compactação repetida: o objetivo sobrevive, mas o que está feito e o que falta se diluem. O hook-longrun mede o contexto e age antes do limite, em três faixas. Nesta aula você liga o hook e provoca as três faixas num ensaio, sem gastar um token.",
+  "objetivo": "ligar o hook-longrun e provocar as três faixas num ensaio, sabendo o que cada uma pede ao agente e quando fazer /clear + /prime.",
+  "competencias": [
+    "configurar-hook-longrun",
+    "agir-por-faixa-de-contexto",
+    "decidir-compactar-ou-sessao-nova"
+  ],
+  "aprende": [
+    { "icone": "grafico", "t": "Onde ficam as faixas: ~484, ~677 e ~822 mil tokens" },
+    { "icone": "camadas", "t": "Compactação × handoff: o que cada um guarda" },
+    { "icone": "terminal", "t": "Ligar o hook nos cinco eventos do Claude Code" },
+    { "icone": "play", "t": "Ensaiar o hook com uma transcrição falsa" }
+  ],
+  "hero_alt": "Manômetro industrial com o ponteiro na faixa intermediária sobre painel escuro.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "As faixas sobre o ponto de compactação",
+      "sub": "A porcentagem é sobre o ponto em que o Claude Code compacta por tamanho, não sobre a janela inteira.",
+      "estilo": "escada",
+      "nos": [
+        {
+          "icone": "memoria",
+          "titulo": "Faixa 1 · ~50%",
+          "sub": "~484 mil tokens",
+          "itens": [ { "icone": "caneta", "t": "Acrescentar no canal.md" } ],
+          "detalhe": "O hook pede ao agente para escrever no canal.md o que ele precisaria se o histórico sumisse agora: fatos, aprendizados, glossário, armadilhas, onde estão as coisas. Depois segue o trabalho normalmente. Só aparece com execução longa ativa."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "Faixa 2 · ~70%",
+          "sub": "~677 mil tokens",
+          "itens": [ { "icone": "check", "t": "Estado + handoff + /compact" } ],
+          "detalhe": "Atualizar state, progress e canal, terminar a unidade de trabalho atual, gravar o handoff sem esperar pedido e avisar você que é hora do /compact. Compactar cedo resume melhor do que o automático perto do limite. Em qualquer sessão (mesmo sem longrun), esta faixa pede o handoff."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Faixa 3 · ~85%",
+          "sub": "~822 mil tokens",
+          "itens": [ { "icone": "x", "t": "Nada de trabalho novo" } ],
+          "detalhe": "Não abrir trabalho novo. Atualizar o estado e pedir /session-handoff, sessão nova e /prime ao fim da unidade em curso, sem largá-la no meio. Sem humano por perto, seguir só até o próximo checkpoint.",
+          "forte": true
+        },
+        {
+          "icone": "camadas",
+          "titulo": "Compactação · ~967 mil",
+          "sub": "modelos de 1M",
+          "itens": [ { "icone": "voltar", "t": "Depois: reler a pasta e o handoff" } ],
+          "detalhe": "Ponto documentado do Claude Code para modelos de 1M (CLAUDE_CODE_AUTO_COMPACT_WINDOW ou LONGRUN_TETO mudam). Depois de compactar, o hook manda reler goal → state → plan → canal e o handoff desta sessão. Na 3ª compactação: continuar a tarefa em curso e sugerir sessão nova quando ela terminar."
+        }
+      ],
+      "legenda": "Hook-longrun 1.9.6 (18/10/2026). As faixas mudam com LONGRUN_FAIXAS=\"50,70,85\". O aviso chega uma chamada de ferramenta depois, porque a transcrição é gravada com atraso.",
+      "dica": "Nas medições de 07 a 15/10/2026, nenhuma sessão compactou por tamanho: as 93 compactações foram por ociosidade (aula 4)."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Compactar, gravar handoff ou abrir sessão nova",
+      "sub": "O que cada caminho guarda, medido em 15/10/2026 (17 compactações com handoff da mesma sessão nas 3 h antes).",
+      "passos": [
+        {
+          "titulo": "Compactação",
+          "sub": "mais detalhe",
+          "texto": [
+            "O resumo cita de 20 a 54 arquivos e preserva passos e comandos recentes. Dentro da mesma sessão, guarda mais detalhe concreto que o handoff.",
+            "Mas não separa o confirmado do palpite, mistura as decisões na narrativa e não sobrevive a /clear."
+          ]
+        },
+        {
+          "titulo": "Handoff",
+          "sub": "mais qualidade",
+          "texto": [
+            "Cita de 1 a 27 arquivos, mas marca o que foi provado, guarda as decisões e a próxima ação numa seção própria.",
+            "É o único que serve para outra sessão, outro dia ou o Codex. Os dois juntos são melhores que qualquer um sozinho."
+          ],
+          "exemplo": { "rot": "Erro a evitar", "texto": "Gravar o handoff a partir do resumo da compactação: vira cópia de cópia." }
+        },
+        {
+          "titulo": "/clear + /prime",
+          "sub": "sessão nova",
+          "texto": [
+            "A sessão nova redescobre: 80% dos primeiros 25 passos foram leituras, contra 51–59% depois de compactar.",
+            "Por isso a sessão nova vem na faixa 3 ou na 3ª compactação, ao fim da unidade em curso, e não cedo."
+          ]
+        },
+        {
+          "titulo": "Gastar menos contexto",
+          "sub": "antes de tudo",
+          "texto": [
+            "Metade de um JSONL de 1,84 GB medido em 01/10/2026 era saída de ferramenta. Grave log em arquivo e leia o trecho (tail -50).",
+            "Subagente gasta o contexto dele e devolve só o resumo; a Anthropic cita retornos de 1.000 a 2.000 tokens. Como usar subagentes é assunto do curso 3."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Ligar o hook e ensaiar as faixas",
+      "sub": "O ensaio escreve uma transcrição falsa com o número de tokens que você quiser e chama o hook como o Claude Code chamaria.",
+      "blocos": [
+        {
+          "rot": "~/.claude/settings.json · trecho \"hooks\" (junte aos seus)",
+          "icone": "arquivo",
+          "conteudo": "{\n  \"cleanupPeriodDays\": 365,\n  \"hooks\": {\n    \"PreCompact\":       [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"SessionStart\":     [{ \"matcher\": \"compact|resume|clear\", \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"PostToolUse\":      [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"UserPromptSubmit\": [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }],\n    \"Stop\":             [{ \"hooks\": [{ \"type\": \"command\", \"command\": \"bash ~/projetos/execucao-longa/tools/hook-longrun.sh 2>/dev/null || true\", \"timeout\": 10 }] }]\n  }\n}"
+        },
+        {
+          "rot": "ensaio-hook.sh · salve num arquivo e rode com bash",
+          "icone": "terminal",
+          "conteudo": "# ensaio-hook.sh — dispara o hook-longrun com uma transcrição FALSA (nenhum token gasto)\n# uso: bash ensaio-hook.sh <tokens|-> [minutos-parado] [evento]     (\"-\" reaproveita a transcrição anterior)\nE=/tmp/ensaio-hook; K=~/projetos/execucao-longa\nmkdir -p $E/proj/longrun/2026-10-19-teste $E/proj/handoffs/history\n[ -f $E/proj/longrun/2026-10-19-teste/state.md ] || echo \"# Estado\" > $E/proj/longrun/2026-10-19-teste/state.md\n[ \"${1:-500000}\" = \"-\" ] || python3 - \"${1:-500000}\" \"${2:-0}\" > $E/t.jsonl <<'PY'\nimport json, sys, time, datetime\nn, parado = int(sys.argv[1]), float(sys.argv[2])\nts = datetime.datetime.fromtimestamp(time.time() - parado * 60, datetime.timezone.utc).isoformat().replace(\"+00:00\", \"Z\")\nprint(json.dumps({\"type\": \"assistant\", \"timestamp\": ts, \"message\": {\"model\": \"claude-opus-5-5\",\n      \"content\": [{\"type\": \"text\", \"text\": \"ok\"}],\n      \"usage\": {\"input_tokens\": 10, \"cache_read_input_tokens\": n - 10, \"cache_creation_input_tokens\": 0}}}))\nPY\necho \"{\\\"hook_event_name\\\":\\\"${3:-PostToolUse}\\\",\\\"cwd\\\":\\\"$E/proj\\\",\\\"session_id\\\":\\\"ensaio\\\",\\\"transcript_path\\\":\\\"$E/t.jsonl\\\",\\\"prompt\\\":\\\"oi\\\"}\" \\\n  | LONGRUN_ESTADO=$E/estado LONGRUN_AGENDAR_ARQ=$E/agenda.jsonl python3 $K/tools/hook-longrun.py\necho"
+        },
+        {
+          "rot": "Terminal · as três faixas",
+          "icone": "play",
+          "conteudo": "rm -rf /tmp/ensaio-hook\nbash ensaio-hook.sh 500000    # faixa 1\nbash ensaio-hook.sh 500000    # mesma faixa: silêncio (uma vez por faixa)\nbash ensaio-hook.sh 700000    # faixa 2\nbash ensaio-hook.sh 830000    # faixa 3"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Saída capturada (19/10/2026)",
+            "html": "<pre>$ bash ensaio-hook.sh 500000\n{\"hookSpecificOutput\": {\"hookEventName\": \"PostToolUse\", \"additionalContext\":\n \"Contexto em 52% do ponto de compactação (500 mil de 967 mil tokens). FAIXA 1 de 3:\n antes de seguir, acrescente em longrun/2026-10-19-teste/canal.md o que você precisaria\n se o histórico sumisse agora (…) Só acrescentar. Depois continue o trabalho normalmente.\"}}\n\n$ bash ensaio-hook.sh 500000\n\n$ bash ensaio-hook.sh 700000\n{… \"Contexto em 72% do ponto de compactação (700 mil de 967 mil tokens). FAIXA 2 de 3:\n atualize state.md, progress.md e (…) canal.md; termine a unidade de trabalho atual e\n grave o handoff agora (…)\"},\n \"systemMessage\": \"Execução longa em 72% do ponto de compactação: hora de /compact\n (o agente foi avisado).\"}\n\n$ bash ensaio-hook.sh 830000\n{… \"Contexto em 86% do ponto de compactação (830 mil de 967 mil tokens). FAIXA 3 de 3:\n não abra trabalho novo. (…) /session-handoff, sessão nova e /prime (…) ao fim da\n unidade em curso, sem largá-la no meio. (…)\"},\n \"systemMessage\": \"Execução longa em 86% do ponto de compactação: hora de\n /session-handoff + sessão nova + /prime.\"}</pre><p>Quebras de linha e (…) acrescentados para caber na tela; o texto é o do hook-longrun 1.9.6. O <code>additionalContext</code> vai para o agente; o <code>systemMessage</code> aparece para você.</p>"
+          },
+          {
+            "rot": "E no Codex?",
+            "html": "<ul><li>Não há hook de compactação nem contador. Acompanhe a porcentagem em <code>/status</code>; quem segue as faixas é a regra do AGENTS.md (aula 1) e você.</li><li>Medido no kit: o Codex compacta perto de 90–93% da janela, por volta de 230–240 mil de 258 mil, tarde para a qualidade do resumo. Faça o <code>/compact</code> manual antes.</li><li>Com modelo da OpenAI a compactação automática roda no servidor e ignora o <code>compact_prompt</code>; o prompt estruturado em <code>~/.codex/config.toml</code> só vale no <code>/compact</code> manual.</li></ul>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Prática",
+      "sub": "O primeiro exercício mexe no seu settings.json: faça um backup antes.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E6 · Hook ligado nos cinco eventos",
+          "min": "15 min",
+          "texto": "Copie o settings.json para settings.json.bak e junte o trecho de hooks aos que você já tem (não apague os seus). Abra uma sessão nova do Claude Code para carregar.",
+          "pronto": "<code>python3 -c \"import json,os;h=json.load(open(os.path.expanduser('~/.claude/settings.json')))['hooks'];print(sorted(e for e,l in h.items() if 'hook-longrun' in json.dumps(l)))\"</code> → <code>['PostToolUse', 'PreCompact', 'SessionStart', 'Stop', 'UserPromptSubmit']</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E7 · As três faixas no ensaio",
+          "min": "10 min",
+          "texto": "Salve o ensaio-hook.sh e rode a sequência das três faixas. Depois apague /tmp/ensaio-hook e rode <code>LONGRUN_TETO=600000 bash ensaio-hook.sh 500000</code>.",
+          "pronto": "aparecem, nesta ordem, <code>FAIXA 1 de 3</code>, nada, <code>FAIXA 2 de 3</code> e <code>FAIXA 3 de 3</code>; com <code>LONGRUN_TETO=600000</code>, 500 mil já cai na <code>FAIXA 2 de 3</code> (83% de 600 mil)."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Teste da aula",
+      "perguntas": [
+        {
+          "p": "Num modelo de 1M, em quantos tokens o hook avisa a faixa 2 por padrão?",
+          "opcoes": ["~700 mil (70% da janela de 1 milhão)", "~677 mil (70% de ~967 mil)", "~157 mil", "~1 milhão"],
+          "certa": 1,
+          "explica": "A conta é sobre o ponto de compactação por tamanho (~967 mil), não sobre a janela. As faixas 112/157/191 mil eram do hook 1.2.x, que usava o teto errado de 225 mil e disparava no meio do trabalho.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "A faixa 3 disparou no meio de uma refatoração. O que o agente deve fazer?",
+          "opcoes": ["Fechar a unidade em curso sem abrir trabalho novo; no fim dela, handoff + sessão nova", "Ignorar: é só aviso", "Apagar o canal.md para liberar contexto", "Largar a refatoração na hora, gravar o handoff e pedir /clear para abrir uma sessão nova limpa"],
+          "certa": 0,
+          "explica": "Desde o 1.4.1 a faixa 3 e a 3ª compactação não mandam largar no meio: a sessão nova custa mais leitura (80% dos primeiros 25 passos), então ela vem ao fim da unidade.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Dentro da mesma sessão, o que guarda mais detalhe concreto (arquivos, passos)?",
+          "opcoes": ["O resumo da compactação", "O canal.md", "O handoff, que separa provado de palpite", "O goal.md"],
+          "certa": 0,
+          "explica": "Medido em 15/10: o resumo cita 20–54 arquivos; o handoff, 1–27. O handoff ganha em separar provado de palpite, nas decisões e em sobreviver a /clear. Por isso os dois juntos.",
+          "ref": "passos"
+        },
+        {
+          "p": "Você usa o Codex. Como segue as faixas?",
+          "opcoes": ["O hook-longrun funciona igual", "Olha o % em /status e segue a regra do AGENTS.md, com /compact manual antes dos 90%", "Configurando o compact_prompt no config.toml, que o Codex aplica em toda compactação automática", "Não precisa: o Codex nunca compacta"],
+          "certa": 1,
+          "explica": "O Codex não tem hook de compactação nem contador. A regra escrita e você fazem o papel do hook; e a compactação automática dele ignora o compact_prompt com modelo da OpenAI.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "Em três frases",
+      "itens": [
+        { "t": "Sobre o ponto certo", "texto": "As faixas são 50/70/85% de ~967 mil: canal, depois estado + handoff + /compact, depois nada novo e sessão nova ao fim." },
+        { "t": "Os dois juntos", "texto": "A compactação guarda mais detalhe; o handoff guarda o provado, as decisões e sobrevive a /clear." },
+        { "t": "Ensaie antes", "texto": "Com uma transcrição falsa você vê cada aviso do hook sem gastar um token." }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir além",
+      "links": [
+        { "t": "Estudo compactação × handoff (15/10/2026)", "href": "https://github.com/inematds/execucao-longa/blob/main/docs/compactacao-x-handoff-2026-10-15.md", "icone": "grafico" },
+        { "t": "hook-longrun.py (código e variáveis LONGRUN_*)", "href": "https://github.com/inematds/execucao-longa/blob/main/tools/hook-longrun.py", "icone": "terminal" },
+        { "t": "Anthropic: Effective context engineering for AI agents (29/09/2025)", "href": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", "icone": "lupa" }
+      ]
+    }
+  ]
+}

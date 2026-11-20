@@ -1,0 +1,206 @@
+{
+  "slug": "goal",
+  "num": 2,
+  "menu": "Goal",
+  "titulo": "Escrever o goal.md nível 3+ sem atalho possível",
+  "titulo_curto": "O goal.md nível 3+",
+  "minutos": 18,
+  "lead": "No piloto do kit, com critério nível 3 e 14 testes congelados, a execução terminou no primeiro ciclo, em 3 minutos. A maior parte do trabalho de uma execução longa é escrever o critério. Aqui você escreve o seu goal.md de forma que o único jeito de cumprir seja fazer o trabalho.",
+  "objetivo": "escrever um goal.md com critérios comando → saída que cubram função, regressão e limite e que não se cumpram por atalho.",
+  "competencias": [
+    "escrever-criterio-verificavel",
+    "travar-atalho",
+    "adaptar-criterio-ao-goal"
+  ],
+  "aprende": [
+    { "icone": "alvo", "t": "Cobrir função, regressão e limite" },
+    { "icone": "cadeado", "t": "Pôr trava: contagem mínima, teste congelado, validador" },
+    { "icone": "chat", "t": "Fazer a prova aparecer na saída do /goal" },
+    { "icone": "check", "t": "Testar o critério contra a trapaça mais barata" }
+  ],
+  "hero_alt": "Paquímetro digital medindo uma peça metálica usinada sobre bancada escura.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Do resultado à prova na tela",
+      "sub": "Um goal.md bom tem estas cinco partes. Clique em cada uma.",
+      "nos": [
+        {
+          "icone": "alvo",
+          "titulo": "Resultado",
+          "sub": "uma frase",
+          "detalhe": "O que existe quando terminar, numa frase. Se você não consegue escrever o comando que prova que acabou, a tarefa ainda não está pronta para rodar sozinha."
+        },
+        {
+          "icone": "check",
+          "titulo": "Função",
+          "sub": "faz o que devia",
+          "itens": [ { "icone": "terminal", "t": "pytest -q → 0 falhas e ≥ 48 testes" } ],
+          "detalhe": "O comportamento novo, provado por comando. Número mínimo junto: \"0 falhas\" sozinho passa se o agente apagar os testes."
+        },
+        {
+          "icone": "voltar",
+          "titulo": "Regressão",
+          "sub": "não quebrou o resto",
+          "itens": [ { "icone": "terminal", "t": "o comando antigo continua rodando" } ],
+          "detalhe": "O que já funcionava continua funcionando. No piloto: as ferramentas antigas de medição continuam rodando e não foram tocadas."
+        },
+        {
+          "icone": "cadeado",
+          "titulo": "Limite",
+          "sub": "não mexeu onde não devia",
+          "itens": [ { "icone": "git", "t": "git diff --exit-code -- tests/ → código 0" } ],
+          "detalhe": "Arquivos congelados, pastas fora do escopo, gasto proibido. É a camada que mais falta e a que fecha o atalho de editar o próprio juiz.",
+          "forte": true
+        },
+        {
+          "icone": "chat",
+          "titulo": "Prova na saída",
+          "sub": "o avaliador lê a conversa",
+          "detalhe": "No /goal do Claude Code, um modelo pequeno julga a condição a cada turno lendo só a conversa: não roda comando nem abre arquivo. A condição tem de aparecer impressa na saída do agente."
+        }
+      ],
+      "legenda": "Função + regressão + limite, cada um com trava, e a prova visível. A escala 0–4 completa é do curso 0; como montar o verificador, do curso 1."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "As cinco perguntas do templates/goal.md",
+      "sub": "Cada \"não\" derruba o nível do critério.",
+      "passos": [
+        {
+          "titulo": "Dá para checar com um comando?",
+          "texto": [ "\"Deixar bom\" e \"revisado e limpo\" não têm comando. Reescreva até ter um." ],
+          "exemplo": { "rot": "Reescrito", "texto": "python3 validar.py && echo OK → OK" }
+        },
+        {
+          "titulo": "A resposta é sim ou não?",
+          "texto": [ "\"Melhorou a performance\" é comparação. Fixe o número: \"p95 abaixo de 200 ms no benchmark X\"." ]
+        },
+        {
+          "titulo": "É impossível cumprir sem fazer o trabalho?",
+          "texto": [ "Procure a trapaça mais barata: apagar teste, página vazia, valor fixo no código. Para cada uma, uma trava: contagem mínima, hash ou git diff dos testes, validador do conteúdo." ],
+          "exemplo": { "rot": "Nível 2 → nível 3", "texto": "\"0 falhas\" vira \"0 falhas E ≥ 48 testes E tests/ intocado\"." }
+        },
+        {
+          "titulo": "A prova aparece na saída?",
+          "texto": [ "Para o /goal do Claude, escreva a condição como algo que o agente imprime: \"a saída do npm test mostra 0 falhas\". \"O state.md diz concluído\" só vale se o agente mostrar o arquivo." ]
+        },
+        {
+          "titulo": "Função, regressão e limite estão cobertos?",
+          "texto": [ "Os três, cada um com pelo menos uma linha. E dois testes: um rápido por ciclo (segundos ou minutos) e o completo no final." ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "O goal.md e os dois prompts de /goal",
+      "sub": "Exemplo preenchido para uma tarefa pequena (contar palavras). Troque pelo seu.",
+      "blocos": [
+        {
+          "rot": "longrun/[data]-contador-palavras/goal.md",
+          "icone": "arquivo",
+          "conteudo": "# Goal — contador-palavras\n\n- **Início:** 2026-10-19 09:00 · **Agente:** Claude /goal\n- **Tetos:** tempo 2 h · memória 2G\n\n## Resultado\n`conta.py` tem conta_palavras(texto) que conta palavras separadas por qualquer espaço.\n\n## Critérios de pronto (verificáveis)\n\n**Função**\n- [ ] `python3 -m pytest -q` → `3 passed`, 0 failed (e nunca menos de 3 testes)\n\n**Regressão**\n- [ ] `python3 -c \"import conta\"` → sem erro (o módulo continua importável)\n\n**Limite**\n- [ ] `git diff --exit-code -- tests/ pytest.ini` → código 0 (testes congelados)\n- [ ] `git diff --stat` → só `conta.py` e a pasta longrun/\n\n**Teste rápido por ciclo**: `python3 -m pytest -q`\n**Teste completo no final**: `python3 -m pytest -q`\n\n## Restrições\n- só pela assinatura; nenhuma API\n- não mexer em: tests/, pytest.ini\n\n## Portões humanos (parar e perguntar)\n- qualquer mudança fora de conta.py e da pasta longrun/"
+        },
+        {
+          "rot": "Claude Code · /goal (templates/prompt-goal-claude.md)",
+          "icone": "chat",
+          "conteudo": "/goal A saída do terminal mostra <comando de verificação> passando com <resultado esperado>, e longrun/<pasta>/state.md diz \"concluído\"."
+        },
+        {
+          "rot": "Codex · /goal (templates/prompt-goal-codex.md)",
+          "icone": "terminal",
+          "conteudo": "/goal\nRESULTADO: <resultado final em uma frase>\n\nVERIFICAÇÃO (só termina quando todos passarem):\n- <comando> → <saída esperada>\n\nRESTRIÇÕES: <o que não pode>. Uso só pela assinatura; nenhuma API sem autorização.\n\nESTADO: use longrun/<pasta>/ (goal.md, plan.md, state.md, progress.md, failures.md, decisions.md, canal.md).\nApós qualquer compactação ou retomada, releia goal.md, state.md, plan.md e canal.md antes de agir. Registre no canal.md (só acrescentar) fatos, aprendizados, glossário e armadilhas assim que surgirem.\n\nCICLO: analisar → escolher a próxima ação útil → executar → testar → observar → corrigir → atualizar state/progress → commit no checkpoint → continuar.\nEnquanto existir uma próxima ação objetiva, segura e alinhada ao objetivo, execute-a sem esperar nova instrução.\n3 ciclos sem avanço mensurável = parar, registrar em failures.md e me chamar.\n\nPARE E ME CHAME SÓ SE: gasto de crédito/API, ação irreversível ou externa (push em produção, e-mail, apagar), credencial ausente, decisão de negócio, conflito real entre requisitos."
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Critérios do piloto (01/10/2026)",
+            "html": "<p>Do <code>longrun/2026-10-01-medir-sessao/goal.md</code> do kit, a execução que construiu o <code>medir-sessao.py</code>:</p><pre>Função\n- pytest -q → todos passam (12 rápidos + 2 com sessões reais), 0 falhas, 0 skips\n\nRegressão\n- python3 tools/medicao/cx.py | head -1 e cc.py continuam rodando\n\nLimite\n- git diff --exit-code -- tests/ pytest.ini → vazio\n  (testes congelados; hash inicial 3ae1ba7975508cba)\n- só criar/alterar tools/medir-sessao.py e a pasta longrun/\n\nTeste rápido por ciclo: pytest -q -m \"not real\"\nTeste completo no final: pytest -q</pre><p>Resultado: concluído no 1º ciclo (3 min). Verificação independente depois: hash dos testes intacto, sem valores fixos no código, 14 passed reproduzido e uma sessão nunca vista conferida.</p>"
+          },
+          {
+            "rot": "Sinais de critério ruim",
+            "html": "<ul><li>Palavras \"bom\", \"limpo\", \"adequado\", \"completo\".</li><li>Depende do agente dizer que terminou.</li><li>Só contagem, sem checar o conteúdo (20 páginas vazias passam).</li><li>Não diz o que NÃO pode mudar.</li><li>A verificação leva horas: o loop não consegue medir avanço a cada ciclo.</li></ul><p>Lista do <code>templates/goal.md</code> do kit.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Prática",
+      "sub": "Use a pasta que você criou na aula 1.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E4 · O goal.md da sua execução",
+          "min": "30 min",
+          "texto": "Preencha o goal.md com resultado, função, regressão, limite, os dois testes, restrições e portões humanos. Antes de qualquer trabalho, rode cada critério no terminal.",
+          "pronto": "cada critério tem um comando que roda agora; os de função <b>falham</b> antes do trabalho (se já passam, o critério não mede a tarefa) e o de limite já passa: <code>git diff --exit-code -- tests/; echo $?</code> → <code>0</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E5 · Ataque o próprio critério",
+          "min": "20 min",
+          "texto": "Num branch descartável (git switch -c ataque), faça a trapaça mais barata: apague um teste que falha, ou troque a função por um valor fixo. Rode os critérios de novo e volte com git switch -.",
+          "pronto": "para cada trapaça, pelo menos um critério falha; apagando teste, <code>git diff --exit-code -- tests/; echo $?</code> → <code>1</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Teste da aula",
+      "perguntas": [
+        {
+          "p": "O critério é \"pytest -q → 0 falhas\". Qual trapaça ele deixa passar?",
+          "opcoes": ["Apagar os testes que falham", "Nenhuma: 0 falhas é prova suficiente", "Rodar o pytest duas vezes", "Usar outro modelo"],
+          "certa": 0,
+          "explica": "Sem contagem mínima e sem congelar tests/, apagar o teste que falha dá 0 falhas. Nível 3 soma \"≥ N testes\" e \"git diff --exit-code -- tests/ → 0\".",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "No /goal do Claude Code, por que a condição tem de aparecer na saída?",
+          "opcoes": ["Porque o Codex exige", "Não precisa: o avaliador lê o state.md", "Porque o avaliador só lê a conversa, sem rodar comando nem abrir arquivo", "Porque o avaliador roda de novo os comandos citados e compara a saída com o critério"],
+          "certa": 2,
+          "explica": "A doc do /goal diz que o avaliador julga só o que está na conversa. Por isso a condição é algo que o agente imprime, como a saída do teste.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Antes de qualquer trabalho, você rodou o critério de função e ele já passou. O que isso indica?",
+          "opcoes": ["Que o critério não mede a tarefa e precisa ser reescrito", "Que o agente vai terminar em 1 ciclo", "Que a tarefa é fácil", "Nada: critério de função tem de passar desde o início, como o de limite"],
+          "certa": 0,
+          "explica": "Critério de função que passa antes do trabalho não distingue feito de não feito. O de limite, ao contrário, deve passar desde o início.",
+          "ref": "pratica"
+        },
+        {
+          "p": "Qual camada responde \"não mexeu onde não devia e não gastou o que não devia\"?",
+          "opcoes": ["Regressão", "Limite", "Teste rápido", "Função"],
+          "certa": 1,
+          "explica": "Limite: arquivos congelados, pastas fora do escopo e gasto proibido. É a que fecha o atalho de mexer no próprio juiz.",
+          "ref": "diagrama"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "Em três frases",
+      "itens": [
+        { "t": "Três camadas", "texto": "Função, regressão e limite, cada uma com um comando e a saída esperada." },
+        { "t": "Trava em cada uma", "texto": "Contagem mínima, testes congelados por git diff ou hash, validador do conteúdo: o atalho tem de falhar." },
+        { "t": "Prova à vista", "texto": "O avaliador do /goal do Claude só lê a conversa; o loop headless roda o teste ele mesmo (aula 6)." }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir além",
+      "links": [
+        { "t": "Claude Code: /goal (documentação oficial)", "href": "https://code.claude.com/docs/en/goal", "icone": "lupa" },
+        { "t": "templates/goal.md do kit (com a escala e as 5 perguntas)", "href": "https://github.com/inematds/execucao-longa/blob/main/templates/goal.md", "icone": "arquivo" },
+        { "t": "Curso 1 da formação: verificação e evals", "href": "https://inematds.github.io/loop-r-eng-verificacao-v72/", "icone": "check" },
+        { "t": "Anthropic: Demystifying evals for AI agents (09/01/2026)", "href": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents", "icone": "grafico" }
+      ]
+    }
+  ]
+}

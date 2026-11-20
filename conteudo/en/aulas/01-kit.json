@@ -1,0 +1,353 @@
+{
+  "slug": "kit",
+  "num": 1,
+  "menu": "Kit",
+  "titulo": "The kit: seven files that hold a long run together",
+  "titulo_curto": "The kit and its 7 files",
+  "minutos": 15,
+  "lead": "A long session fails in three ways: it doesn't know when to stop, it forgets what it did after compaction, and it spends what it shouldn't. The execucao-longa kit answers with files, not with the model's memory: the agent rereads the folder instead of remembering. In this lesson you install the kit and create your first folder.",
+  "objetivo": "create the longrun/ folder for a run and say, for each of the seven files, who writes it, when it is read, and whether it only appends.",
+  "competencias": [
+    "instalar-kit-execucao-longa",
+    "criar-pasta-longrun",
+    "classificar-arquivos-de-estado"
+  ],
+  "aprende": [
+    {
+      "icone": "baixar",
+      "t": "Install the kit and confirm that all 73 tests pass"
+    },
+    {
+      "icone": "pasta",
+      "t": "Create longrun/[date]-[slug]/ with one command"
+    },
+    {
+      "icone": "arquivo",
+      "t": "Separate what gets rewritten from what only gets appended"
+    },
+    {
+      "icone": "cerebro",
+      "t": "Put the method into the agent's global rules"
+    }
+  ],
+  "hero_alt": "Gray archive folders lined up on a metal shelf, next to a small server.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "The seven files around the agent",
+      "sub": "Tap each block: who writes it, when it is read, and how it changes.",
+      "nos": [
+        {
+          "icone": "alvo",
+          "titulo": "goal.md",
+          "sub": "the goal and the proof",
+          "itens": [
+            {
+              "icone": "caneta",
+              "t": "You write",
+              "sub": "before you start"
+            },
+            {
+              "icone": "check",
+              "t": "Criteria: command → output"
+            }
+          ],
+          "detalhe": "Result in one sentence, done criteria (function, regression, limit), caps, constraints, and human gates. It is the only file the agent should not rewrite: changing the goal midway means changing the task."
+        },
+        {
+          "icone": "lista",
+          "titulo": "plan.md + state.md",
+          "sub": "rewritten every cycle",
+          "itens": [
+            {
+              "icone": "seta",
+              "t": "plan: strategy + 3 next steps"
+            },
+            {
+              "icone": "check",
+              "t": "state: what works, what's missing, how to resume"
+            }
+          ],
+          "detalhe": "Both are snapshots of right now: rewrite, don't accumulate. state.md ends with the exact commands to resume. When the first line of \"Funciona\" says concluído, the watchdog and the hook stop treating the run as active.",
+          "forte": true
+        },
+        {
+          "icone": "relogio",
+          "titulo": "progress, failures, decisions",
+          "sub": "append only",
+          "itens": [
+            {
+              "icone": "git",
+              "t": "progress: checkpoint + commit"
+            },
+            {
+              "icone": "x",
+              "t": "failures: error → attempt → result"
+            },
+            {
+              "icone": "marca",
+              "t": "decisions: decision, reason, alternative"
+            }
+          ],
+          "detalhe": "Dated history in a table. You never delete a line: it's what lets you see later whether the agent reopened an item that was already done or repeated the same attempt three times."
+        },
+        {
+          "icone": "memoria",
+          "titulo": "canal.md",
+          "sub": "what compaction loses",
+          "itens": [
+            {
+              "icone": "lupa",
+              "t": "facts, lessons learned"
+            },
+            {
+              "icone": "lupa",
+              "t": "glossary, traps"
+            }
+          ],
+          "detalhe": "Project knowledge, not task state: where things are, the right name for each piece, the trap that cost an hour. Append only, one line per fact, with a date. The hook asks you to fill it in at band 1 (lesson 3)."
+        },
+        {
+          "icone": "robo",
+          "titulo": "Agent or loop",
+          "sub": "Claude Code, Codex, codex exec",
+          "itens": [
+            {
+              "icone": "voltar",
+              "t": "Rereads goal → state → plan → canal"
+            },
+            {
+              "icone": "terminal",
+              "t": "Acts, tests, updates, commits"
+            }
+          ],
+          "detalhe": "After every compaction or resume, the first thing is to reread the files, in this order: goal → state → plan → canal → end of progress and failures, and continue from the first pending item."
+        }
+      ],
+      "volta": "Compacted, crashed, or switched models? The next cycle rereads the folder and keeps going.",
+      "legenda": "The same files work for Claude Code and for Codex: one picks up what the other wrote.",
+      "rolagem": true,
+      "rolagem_fim": {
+        "titulo": "The folder is the memory",
+        "texto": "The goal stays parked in goal.md; the now lives in plan and state; the history only grows in progress, failures and decisions; what the summary loses lives in the canal.",
+        "curto": "Reread the folder, not the conversation."
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "When each file comes into play",
+      "sub": "One run from start to finish, seen through the files.",
+      "passos": [
+        {
+          "titulo": "Before",
+          "sub": "you",
+          "texto": [
+            "<code>novo-longrun.sh</code> creates the folder with the seven files already stamped with the date.",
+            "You fill in <code>goal.md</code>. It's the slow part, and it decides whether the run finishes (lesson 2)."
+          ],
+          "exemplo": {
+            "rot": "Folder name",
+            "texto": "longrun/2026-10-19-contador-palavras/"
+          }
+        },
+        {
+          "titulo": "Every cycle",
+          "sub": "the agent",
+          "texto": [
+            "Reads state and plan, picks the next useful action, runs it and tests it.",
+            "At the end it rewrites state and plan and adds a line to progress. If something went wrong, a line in failures."
+          ],
+          "exemplo": {
+            "rot": "A progress.md line",
+            "texto": "| 2026-10-01 14:30 | medição do piloto | 7714c3c | sim (nível 3) | 332791 / 304000 / 4296 | 0 |"
+          }
+        },
+        {
+          "titulo": "After compacting",
+          "sub": "the agent, reminded by the hook",
+          "texto": [
+            "The compaction summary mixes what is confirmed with guesses. The files don't.",
+            "The agent rereads goal → state → plan → canal before acting and does not reopen what state says is done."
+          ]
+        },
+        {
+          "titulo": "At the end",
+          "sub": "you check",
+          "texto": [
+            "<code>state.md</code> says done, but you are the one who closes it: run the final test yourself and measure the session (lesson 7).",
+            "The smallest fix for each failure goes from <code>failures.md</code> to the project's <code>FALHAS.md</code>."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Install and create the first folder",
+      "sub": "Once per machine, and then one folder per run. The paths follow the kit's README.",
+      "blocos": [
+        {
+          "rot": "Terminal · install the kit (once)",
+          "icone": "terminal",
+          "conteudo": "git clone https://github.com/inematds/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
+        },
+        {
+          "rot": "Terminal · one folder per run",
+          "icone": "pasta",
+          "conteudo": "~/projetos/execucao-longa/tools/novo-longrun.sh ~/projetos/<seu-projeto> <slug-do-objetivo>\nls ~/projetos/<seu-projeto>/longrun/*/"
+        },
+        {
+          "rot": "Global CLAUDE.md and AGENTS.md · paste once (templates/AGENTS-long-run.md)",
+          "icone": "arquivo",
+          "conteudo": "## Execução longa (/goal, loop, objetivo de horas) — método em ~/projetos/execucao-longa\n\n- **Antes de começar:** `~/projetos/execucao-longa/tools/novo-longrun.sh <projeto> <slug>` cria `longrun/<data>-<slug>/` (goal, plan, state, progress, failures, decisions, canal). Critério de pronto no `goal.md` em **nível 3+**: `comando → saída esperada`, cobrindo função, regressão e limite, sem atalho possível (contagem mínima, testes congelados, validador).\n- **Durante:** releia goal → state → plan → canal após toda compactação ou retomada; registre cedo no `canal.md` (só acrescentar) fatos, aprendizados, glossário e armadilhas; teste cada mudança; commit a cada checkpoint; continue enquanto houver próxima ação útil e segura.\n- **Parar e chamar o humano:** 3 ciclos sem avanço mensurável; o mesmo plano de fechamento repetido sem fechar ou item já feito reaberto (contexto degradou); crédito/API, ação irreversível ou externa, credencial ausente, decisão de negócio.\n- **Faixas de contexto** (no Claude Code o hook avisa uma vez cada; no Codex, acompanhe o % em `/status`): ~50% → registrar no `canal.md`; ~70% → atualizar estado e pedir `/compact`; ~85% ou 3ª compactação → `/session-handoff` + sessão nova + `/prime`.\n- **Headless:** `~/projetos/execucao-longa/tools/loop-longrun.sh <pasta-longrun>` (flock, timeout, MemoryMax, testes protegidos, parada por estagnação). Medir: `tools/medir-sessao.py <jsonl>`.\n- Tetos sempre: timeout, memória (`systemd-run --user --scope -p MemoryMax=`), saída de ferramenta curta.\n- **Histórico:** `recall \"termo\" [--projeto X] [--fonte codex|claude] [--desde AAAA-MM-DD]` busca em tudo o que já foi dito com o Codex e o Claude nesta máquina (índice reindexado de hora em hora) — use antes de perguntar ao usuário algo que pode já ter sido decidido."
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>$ python3 -m pytest -q -p no:cacheprovider | tail -1\n73 passed in 18.59s\n\n$ novo-longrun.sh ~/ensaio/projeto-teste contador-palavras\ncriado: ~/ensaio/projeto-teste/longrun/2026-10-19-contador-palavras\npróximo: preencher ~/ensaio/projeto-teste/longrun/2026-10-19-contador-palavras/goal.md (critérios nível 3+) e colar templates/prompt-goal-codex.md no /goal\n\n$ ls ~/ensaio/projeto-teste/longrun/*/\ncanal.md  decisions.md  failures.md  goal.md  plan.md  progress.md  state.md\n\n$ novo-longrun.sh ~/ensaio/projeto-teste contador-palavras\njá existe: ~/ensaio/projeto-teste/longrun/2026-10-19-contador-palavras\n$ echo $?\n1</pre><p>Run with the 10/18/2026 kit; only the path of the rehearsal folder was shortened. The pytest time changes from machine to machine.</p>"
+          },
+          {
+            "rot": "Common mistakes",
+            "html": "<ul><li><b>Folder outside a project</b>: the script requires the project folder to exist. The hook and the vigia look for <code>longrun/*/state.md</code> at the root of the git repository.</li><li><b>Reusing the slug</b>: two runs on the same day with the same slug collide and the script refuses. Use another slug; don't delete the old folder, it is history.</li><li><b>Writing \"concluído\" in state.md by mistake</b>: for the hook and the vigia, the run is no longer active.</li></ul>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "video",
+      "titulo": "Video: the three pieces of the method",
+      "sub": "Six minutes with the concept (10/10/2026). The concept holds; two details changed afterward: at band 3 and at the 3rd compaction the agent finishes the task in progress before the new session (lesson 3), and the care with the cache today is the automatic handoff at 45 min idle (lesson 4).",
+      "chave": "execucao-longa-pratica"
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "On your machine. Only move on to the next one when the \"done when\" is true.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Kit installed and tested",
+          "min": "10 min",
+          "texto": "Clone the kit into ~/projetos/execucao-longa and run its test suite.",
+          "pronto": "<code>python3 -m pytest -q -p no:cacheprovider | tail -1</code> → <code>73 passed</code> (in a newer clone the number may be higher; <code>failed</code> must never appear)."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · The folder of a real run",
+          "min": "10 min",
+          "texto": "Pick a real task from one of your projects that takes more than an hour and create its folder. Run the same command twice.",
+          "pronto": "<code>ls ~/projetos/[your-project]/longrun/*/ | wc -l</code> → <code>7</code>; the second call prints <code>já existe:</code> and <code>echo $?</code> → <code>1</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · The method in the global rules",
+          "min": "10 min",
+          "texto": "Paste the block from templates/AGENTS-long-run.md into ~/.claude/CLAUDE.md and into ~/.codex/AGENTS.md. Open a new session and ask: \"how do you start a long run?\" The block also mentions /session-handoff, /prime and recall: they only exist from lessons 5 and 7 on.",
+          "pronto": "<code>grep -c novo-longrun.sh ~/.claude/CLAUDE.md</code> → <code>1</code> or more, and the new session answers by citing novo-longrun.sh and the level 3 criterion without you reminding it."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "perguntas": [
+        {
+          "p": "Which of these files should the agent REWRITE each cycle, instead of only appending to?",
+          "opcoes": [
+            "progress.md",
+            "decisions.md",
+            "failures.md",
+            "state.md"
+          ],
+          "certa": 3,
+          "explica": "state.md and plan.md are a snapshot of right now and get rewritten. progress, failures and decisions are history: they only get appended to, so you can later see whether the agent repeated an attempt or reopened an item.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "The agent found out that the test database only starts with the variable DB_LOCAL=1. Where does this go?",
+          "opcoes": [
+            "In plan.md, which gets rewritten",
+            "Nowhere: it will remember",
+            "In goal.md, as a new criterion",
+            "In canal.md, with a date"
+          ],
+          "certa": 3,
+          "explica": "It is project knowledge that compaction loses: canal.md, one line with a date. In plan.md it disappears at the next rewrite; in goal.md it would change the task.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "After a compaction, what is the first thing the agent does?",
+          "opcoes": [
+            "Asks the user to repeat the request",
+            "Rereads goal → state → plan → canal and the end of progress and failures",
+            "Writes a new goal.md",
+            "Continues from the compaction summary, which already carries the state, the decisions and the next steps"
+          ],
+          "certa": 1,
+          "explica": "The summary mixes what is confirmed with guesses. The files don't. That is why the kit tells you to reread the folder in order and continue from the first pending item.",
+          "ref": "passos",
+          "cert": true
+        },
+        {
+          "p": "You ran novo-longrun.sh with a slug that already exists today. What happens?",
+          "opcoes": [
+            "It refuses with \"já existe\" and exits with code 1",
+            "Creates a new folder with a -2 suffix and leaves the old one intact",
+            "It deletes the old folder",
+            "It overwrites the files"
+          ],
+          "certa": 0,
+          "explica": "The script refuses and doesn't touch the existing folder. An old folder is history: use another slug.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "The folder is the memory",
+          "texto": "The agent doesn't need to remember: it rereads goal, state, plan and canal after compacting or resuming."
+        },
+        {
+          "t": "Rewrite × append",
+          "texto": "plan and state are the now; progress, failures and decisions only grow; canal keeps what the summary loses."
+        },
+        {
+          "t": "One command",
+          "texto": "novo-longrun.sh creates the dated folder; the method goes into the global rules so it applies without a reminder."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "execucao-longa kit on GitHub (README PT/EN/ES)",
+          "href": "https://github.com/inematds/execucao-longa",
+          "icone": "git"
+        },
+        {
+          "t": "Visual guide to the kit",
+          "href": "https://inematds.github.io/execucao-longa/guia/",
+          "icone": "camadas"
+        },
+        {
+          "t": "Course 0 of the track: anatomy of the loop and state outside the model",
+          "href": "https://inematds.github.io/loop-r-eng-base-v72/en/",
+          "icone": "lista"
+        },
+        {
+          "t": "Anthropic: harnesses for long-running agents (11/26/2025)",
+          "href": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+          "icone": "lupa"
+        }
+      ]
+    }
+  ]
+}

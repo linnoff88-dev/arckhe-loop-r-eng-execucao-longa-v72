@@ -1,0 +1,294 @@
+{
+  "slug": "goal",
+  "num": 2,
+  "menu": "Goal",
+  "titulo": "Write a level 3+ goal.md with no possible shortcut",
+  "titulo_curto": "The level 3+ goal.md",
+  "minutos": 18,
+  "lead": "In the kit's pilot, with a level 3 criterion and 14 frozen tests, the run finished in the first cycle, in 3 minutes. Most of the work in a long run is writing the criterion. Here you write your own goal.md so that the only way to meet it is to do the work.",
+  "objetivo": "write a goal.md with command → output criteria that cover function, regression and limit and that can't be met by a shortcut.",
+  "competencias": [
+    "write-verifiable-criterion",
+    "lock-the-shortcut",
+    "adapt-criterion-to-goal"
+  ],
+  "aprende": [
+    {
+      "icone": "alvo",
+      "t": "Cover function, regression and limit"
+    },
+    {
+      "icone": "cadeado",
+      "t": "Add a lock: minimum count, frozen test, validator"
+    },
+    {
+      "icone": "chat",
+      "t": "Make the proof show up in the /goal output"
+    },
+    {
+      "icone": "check",
+      "t": "Test the criterion against the cheapest cheat"
+    }
+  ],
+  "hero_alt": "Digital caliper measuring a machined metal part on a dark workbench.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "From result to proof on screen",
+      "sub": "A good goal.md has these five parts. Tap each one.",
+      "nos": [
+        {
+          "icone": "alvo",
+          "titulo": "Result",
+          "sub": "one sentence",
+          "detalhe": "What exists when you finish, in one sentence. If you can't write the command that proves it's done, the task isn't ready to run on its own yet."
+        },
+        {
+          "icone": "check",
+          "titulo": "Function",
+          "sub": "does what it should",
+          "itens": [
+            {
+              "icone": "terminal",
+              "t": "pytest -q → 0 falhas and ≥ 48 testes"
+            }
+          ],
+          "detalhe": "The new behavior, proven by a command. Include a minimum number: \"0 failures\" alone passes if the agent deletes the tests."
+        },
+        {
+          "icone": "voltar",
+          "titulo": "Regression",
+          "sub": "didn't break the rest",
+          "itens": [
+            {
+              "icone": "terminal",
+              "t": "the old command still runs"
+            }
+          ],
+          "detalhe": "What already worked still works. In the pilot: the old measuring tools still run and weren't touched."
+        },
+        {
+          "icone": "cadeado",
+          "titulo": "Limit",
+          "sub": "didn't touch what it shouldn't",
+          "itens": [
+            {
+              "icone": "git",
+              "t": "git diff --exit-code -- tests/ → code 0"
+            }
+          ],
+          "detalhe": "Frozen files, out-of-scope folders, forbidden spending. It's the layer that's missing most often, and the one that closes the shortcut of editing the judge itself.",
+          "forte": true
+        },
+        {
+          "icone": "chat",
+          "titulo": "Proof in the output",
+          "sub": "the evaluator reads the conversation",
+          "detalhe": "In Claude Code's /goal, a small model judges the condition each turn by reading only the conversation: it doesn't run commands or open files. The condition has to appear printed in the agent's output."
+        }
+      ],
+      "legenda": "Function + regression + limit, each with a lock, and the proof visible. The full 0–4 scale is in course 0; how to build the verifier, in course 1."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "The five questions from templates/goal.md",
+      "sub": "Each \"no\" lowers the criterion's level.",
+      "passos": [
+        {
+          "titulo": "Can you check it with a command?",
+          "texto": [
+            "\"Make it good\" and \"reviewed and clean\" have no command. Rewrite until you have one."
+          ],
+          "exemplo": {
+            "rot": "Rewritten",
+            "texto": "python3 validar.py && echo OK → OK"
+          }
+        },
+        {
+          "titulo": "Is the answer yes or no?",
+          "texto": [
+            "\"Improved performance\" is a comparison. Fix the number: \"p95 under 200 ms on benchmark X\"."
+          ]
+        },
+        {
+          "titulo": "Is it impossible to meet without doing the work?",
+          "texto": [
+            "Look for the cheapest cheat: deleting a test, an empty page, a hardcoded value. For each one, a lock: minimum count, hash or git diff of the tests, content validator."
+          ],
+          "exemplo": {
+            "rot": "Level 2 → level 3",
+            "texto": "\"0 failures\" becomes \"0 failures AND ≥ 48 tests AND tests/ untouched\"."
+          }
+        },
+        {
+          "titulo": "Does the proof show up in the output?",
+          "texto": [
+            "For Claude's /goal, write the condition as something the agent prints: \"the npm test output shows 0 failures\". \"The state.md says done\" only counts if the agent shows the file."
+          ]
+        },
+        {
+          "titulo": "Are function, regression and limit covered?",
+          "texto": [
+            "All three, each with at least one line. And two tests: a quick one per cycle (seconds or minutes) and the full one at the end."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The goal.md and the two /goal prompts",
+      "sub": "Filled-in example for a small task (counting words). Swap in your own.",
+      "blocos": [
+        {
+          "rot": "longrun/[date]-contador-palavras/goal.md",
+          "icone": "arquivo",
+          "conteudo": "# Goal — contador-palavras\n\n- **Início:** 2026-10-19 09:00 · **Agente:** Claude /goal\n- **Tetos:** tempo 2 h · memória 2G\n\n## Resultado\n`conta.py` tem conta_palavras(texto) que conta palavras separadas por qualquer espaço.\n\n## Critérios de pronto (verificáveis)\n\n**Função**\n- [ ] `python3 -m pytest -q` → `3 passed`, 0 failed (e nunca menos de 3 testes)\n\n**Regressão**\n- [ ] `python3 -c \"import conta\"` → sem erro (o módulo continua importável)\n\n**Limite**\n- [ ] `git diff --exit-code -- tests/ pytest.ini` → código 0 (testes congelados)\n- [ ] `git diff --stat` → só `conta.py` e a pasta longrun/\n\n**Teste rápido por ciclo**: `python3 -m pytest -q`\n**Teste completo no final**: `python3 -m pytest -q`\n\n## Restrições\n- só pela assinatura; nenhuma API\n- não mexer em: tests/, pytest.ini\n\n## Portões humanos (parar e perguntar)\n- qualquer mudança fora de conta.py e da pasta longrun/"
+        },
+        {
+          "rot": "Claude Code · /goal (templates/prompt-goal-claude.md)",
+          "icone": "chat",
+          "conteudo": "/goal The terminal output shows <comando de verificação> passing with <resultado esperado>, and longrun/<pasta>/state.md says \"concluído\"."
+        },
+        {
+          "rot": "Codex · /goal (templates/prompt-goal-codex.md)",
+          "icone": "terminal",
+          "conteudo": "/goal\nRESULT: <final result in one sentence>\n\nVERIFICATION (it only ends when all of these pass):\n- <comando> → <saída esperada>\n\nCONSTRAINTS: <what is off limits>. Subscription use only; no API without authorization.\n\nSTATE: use longrun/<pasta>/ (goal.md, plan.md, state.md, progress.md, failures.md, decisions.md, canal.md).\nAfter any compaction or resume, reread goal.md, state.md, plan.md and canal.md before acting. Record in canal.md (append only) facts, lessons, glossary and traps as soon as they appear.\n\nCYCLE: analyze → pick the next useful action → execute → test → observe → fix → update state/progress → commit at the checkpoint → continue.\nAs long as there is a next action that is objective, safe and aligned with the goal, execute it without waiting for new instructions.\n3 cycles without measurable progress = stop, record it in failures.md and call me.\n\nSTOP AND CALL ME ONLY IF: credit/API spending, irreversible or external action (push to production, email, delete), missing credential, business decision, real conflict between requirements."
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Pilot criteria (10/01/2026)",
+            "html": "<p>From the kit's <code>longrun/2026-10-01-medir-sessao/goal.md</code>, the run that built <code>medir-sessao.py</code>:</p><pre>Função\n- pytest -q → todos passam (12 rápidos + 2 com sessões reais), 0 falhas, 0 skips\n\nRegressão\n- python3 tools/medicao/cx.py | head -1 e cc.py continuam rodando\n\nLimite\n- git diff --exit-code -- tests/ pytest.ini → vazio\n  (testes congelados; hash inicial 3ae1ba7975508cba)\n- só criar/alterar tools/medir-sessao.py e a pasta longrun/\n\nTeste rápido por ciclo: pytest -q -m \"not real\"\nTeste completo no final: pytest -q</pre><p>Result: done in the 1st cycle (3 min). Independent check afterward: test hash intact, no hardcoded values in the code, 14 passed reproduced, and a never-before-seen session checked.</p>"
+          },
+          {
+            "rot": "Signs of a bad criterion",
+            "html": "<ul><li>Words like \"good\", \"clean\", \"adequate\", \"complete\".</li><li>Depends on the agent saying it's done.</li><li>Only a count, with no check of the content (20 empty pages pass).</li><li>Doesn't say what must NOT change.</li><li>The check takes hours: the loop can't measure progress each cycle.</li></ul><p>List from the kit's <code>templates/goal.md</code>.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "Use the folder you created in lesson 1.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E4 · The goal.md for your long run",
+          "min": "30 min",
+          "texto": "Fill in goal.md with the result, function, regression, limit, the two tests, constraints and human gates. Before any work, run each criterion in the terminal.",
+          "pronto": "every criterion has a command that runs now; the function ones <b>fail</b> before the work (if they already pass, the criterion doesn't measure the task) and the limit one already passes: <code>git diff --exit-code -- tests/; echo $?</code> → <code>0</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E5 · Attack your own criterion",
+          "min": "20 min",
+          "texto": "On a throwaway branch (git switch -c ataque), pull the cheapest cheat: delete a failing test, or swap the function for a fixed value. Run the criteria again and go back with git switch -.",
+          "pronto": "for each cheat, at least one criterion fails; when you delete a test, <code>git diff --exit-code -- tests/; echo $?</code> → <code>1</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "perguntas": [
+        {
+          "p": "The criterion is \"pytest -q → 0 falhas\". Which cheat does it let through?",
+          "opcoes": [
+            "Deleting the tests that fail",
+            "None: 0 failures is enough proof",
+            "Running pytest twice",
+            "Using another model"
+          ],
+          "certa": 0,
+          "explica": "With no minimum count and no frozen tests/, deleting the failing test gives 0 failures. Level 3 adds \"≥ N tests\" and \"git diff --exit-code -- tests/ → 0\".",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "In Claude Code's /goal, why does the condition have to show up in the output?",
+          "opcoes": [
+            "Because Codex requires it",
+            "It doesn't have to: the evaluator reads state.md",
+            "Because the evaluator only reads the conversation, without running commands or opening files",
+            "Because the evaluator reruns the commands cited and compares the output with the criterion"
+          ],
+          "certa": 2,
+          "explica": "The /goal docs say the evaluator judges only what's in the conversation. That's why the condition is something the agent prints, like the test output.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "Before any work, you ran the function criterion and it already passed. What does that tell you?",
+          "opcoes": [
+            "That the criterion doesn't measure the task and needs to be rewritten",
+            "That the agent will finish in 1 cycle",
+            "That the task is easy",
+            "Nothing: a function criterion must pass from the start, like the limit one"
+          ],
+          "certa": 0,
+          "explica": "A function criterion that passes before the work can't tell done from not done. The limit one, on the other hand, should pass from the start.",
+          "ref": "pratica"
+        },
+        {
+          "p": "Which layer answers \"didn't touch what it shouldn't and didn't spend what it shouldn't\"?",
+          "opcoes": [
+            "Regression",
+            "Limit",
+            "Quick test",
+            "Function"
+          ],
+          "certa": 1,
+          "explica": "Limit: frozen files, folders out of scope and forbidden spending. It's the one that closes the shortcut of tampering with the judge itself.",
+          "ref": "diagrama"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "Three layers",
+          "texto": "Function, regression and limit, each with a command and the expected output."
+        },
+        {
+          "t": "Locks on each one",
+          "texto": "Minimum count, tests frozen by git diff or hash, content validator: the shortcut has to fail."
+        },
+        {
+          "t": "Proof in plain sight",
+          "texto": "Claude's /goal evaluator only reads the conversation; the headless loop runs the test itself (lesson 6)."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "Claude Code: /goal (official documentation)",
+          "href": "https://code.claude.com/docs/en/goal",
+          "icone": "lupa"
+        },
+        {
+          "t": "templates/goal.md from the kit (with the scale and the 5 questions)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/templates/goal.md",
+          "icone": "arquivo"
+        },
+        {
+          "t": "Course 1 of the track: verification and evals",
+          "href": "https://inematds.github.io/loop-r-eng-verificacao-v72/en/",
+          "icone": "check"
+        },
+        {
+          "t": "Anthropic: Demystifying evals for AI agents (01/09/2026)",
+          "href": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+          "icone": "grafico"
+        }
+      ]
+    }
+  ]
+}

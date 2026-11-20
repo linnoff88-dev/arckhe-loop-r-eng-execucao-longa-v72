@@ -1,0 +1,314 @@
+{
+  "slug": "handoff",
+  "num": 5,
+  "menu": "Handoff",
+  "titulo": "Handoff that checks it was saved",
+  "titulo_curto": "Verified handoff",
+  "minutos": 17,
+  "lead": "A handoff written by the agent itself certifies itself: it can say it tested what it did not test, and the file may not even have been written. Since 10/17/2026 the proof is out of the text: a script writes a stamp, commit and fingerprint of the files, and the hook checks in the transcript that the handoff was really saved.",
+  "objetivo": "write a handoff with the script, check its freshness with --conferir, and know when the hook nags, writes on its own, or warns that it did not save.",
+  "competencias": [
+    "gravar-handoff-com-prova",
+    "conferir-frescor-do-handoff",
+    "medir-retomada"
+  ],
+  "aprende": [
+    {
+      "icone": "arquivo",
+      "t": "What goes in the handoff and what does not"
+    },
+    {
+      "icone": "cadeado",
+      "t": "State block: commit and sha256 written by the script"
+    },
+    {
+      "icone": "lupa",
+      "t": "--conferir: equal (0), divergent (2), no block (3)"
+    },
+    {
+      "icone": "check",
+      "t": "Test questions and the N/5 score on resume"
+    }
+  ],
+  "hero_alt": "A metal relay baton resting on an open technical notebook, on a dark desk.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "From the request to a verified resume",
+      "sub": "Skills session-handoff and prime from the agente-claude-codex 1.8.3 kit, with hook-longrun 1.9.6.",
+      "nos": [
+        {
+          "icone": "megafone",
+          "titulo": "Who asks",
+          "sub": "four triggers",
+          "itens": [
+            {
+              "icone": "usuario",
+              "t": "you (/session-handoff)"
+            },
+            {
+              "icone": "grafico",
+              "t": "bands 2 and 3"
+            },
+            {
+              "icone": "camadas",
+              "t": "after compaction"
+            },
+            {
+              "icone": "relogio",
+              "t": "45 min idle (copy)"
+            }
+          ],
+          "detalhe": "In bands 2 and 3 and after compaction, the hook asks the agent; on idle time it writes on its own to a copy of the session (lesson 4). It works in any project with a handoffs/ folder, even without a long run."
+        },
+        {
+          "icone": "caneta",
+          "titulo": "session-handoff",
+          "sub": "the agent writes the body",
+          "itens": [
+            {
+              "icone": "check",
+              "t": "[confirmed] with proof"
+            },
+            {
+              "icone": "x",
+              "t": "Do not do"
+            },
+            {
+              "icone": "seta",
+              "t": "Next action + why"
+            }
+          ],
+          "detalhe": "Fixed template: scope, goal, accepted state, proposed and unconfirmed, decisions, files, verification (only what ran), open questions, next action, resume map, and 5 test questions. Every [confirmed] points to a commit, test, or file; without proof it becomes [unverified]."
+        },
+        {
+          "icone": "cadeado",
+          "titulo": "handoff-grava.py",
+          "sub": "the script writes",
+          "itens": [
+            {
+              "icone": "relogio",
+              "t": "real UTC timestamp, new file"
+            },
+            {
+              "icone": "git",
+              "t": "commit + sha256 of the files"
+            },
+            {
+              "icone": "lista",
+              "t": "latest.md = index of open items"
+            }
+          ],
+          "detalhe": "Creates handoffs/history/[AAAA-MM-DDTHHMMSSZ]-[subject].md without ever overwriting, appends the state block (current commit and sha256 of the cited and dirty files), updates the index of open work, and commits only those files. Never pushes. If the agent writes the block by hand, the script discards it.",
+          "forte": true
+        },
+        {
+          "icone": "lupa",
+          "titulo": "Hook checks",
+          "sub": "in the transcript",
+          "detalhe": "After the request, the hook looks in the transcript for a new write in handoffs/history/ and checks that the file exists. Found it: \"Handoff conferido\". After 8 events with no write, it asks again, up to 2 times; after that it tells you the handoff was NOT written."
+        },
+        {
+          "icone": "voltar",
+          "titulo": "/prime",
+          "sub": "resumes by checking",
+          "detalhe": "Reads AGENTS.md or CLAUDE.md, the handoff, and git, without editing or running code. Runs --conferir (freshness), checks the commit and file of each [confirmed] (proofs), and answers the 5 test questions from the source files, showing N/5. Anything that diverges does not become an action without your confirmation."
+        }
+      ],
+      "volta": "A divergent handoff is a lead, not a fact: check before acting",
+      "legenda": "Decision rule: still true after the task → persistent memory (CLAUDE.md, AGENTS.md). State of this task → handoff. Record of what happened → history (git, progress, failures, decisions)."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Four rules for a handoff that works",
+      "sub": "From the 10/17/2026 analysis of the kit.",
+      "passos": [
+        {
+          "titulo": "Pointer, not running text",
+          "texto": [
+            "The resume map, the sources of the test questions, and the evidence are paths and commits. That survives compaction, a new session, and a model switch.",
+            "A long history buries what the next agent needs to do."
+          ]
+        },
+        {
+          "titulo": "Proof outside the text",
+          "texto": [
+            "The state block belongs to the script, not the agent. Each [confirmed] points to <code>commit</code>, <code>teste:</code>, or <code>arquivo:</code>.",
+            "In a long run, what decides whether it is finished is still the test run by the loop (lesson 6)."
+          ],
+          "exemplo": {
+            "rot": "Good line",
+            "texto": "[confirmed] app.py devolve 1 (commit: base; teste: python3 -c \"import app; print(app.f())\" → 1)"
+          }
+        },
+        {
+          "titulo": "Five test questions",
+          "texto": [
+            "Task and done criterion; last decision and why; what must not change; what is half done; next action and why. The source for each one is a project file, never the handoff itself.",
+            "After compaction or --resume, the hook asks for the 5 memory answers before opening the handoff, and the agent records the score with nota-retomada.py."
+          ]
+        },
+        {
+          "titulo": "Known limits",
+          "texto": [
+            "The agent grades itself: the answers are written down beforehand, so you can audit them, but it is not an independent check.",
+            "Codex has no hook: asking for and checking the handoff is left to the written rule and to you. The handoff and /prime work the same in both."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Install the skills and rehearse --conferir",
+      "sub": "The skills come from the agente-claude-codex kit (1.8.3). The rehearsal runs in a throwaway repository in /tmp.",
+      "blocos": [
+        {
+          "rot": "Terminal · install session-handoff and prime (Claude and Codex)",
+          "icone": "baixar",
+          "conteudo": "git clone https://github.com/inematds/agente-claude-codex ~/projetos/agente-claude-codex\ncd ~/projetos/agente-claude-codex\ncp -r skills/session-handoff/dist/claude/session-handoff skills/prime/dist/claude/prime ~/.claude/skills/\nmkdir -p ~/.agents/skills\ncp -r skills/session-handoff/dist/codex/session-handoff skills/prime/dist/codex/prime ~/.agents/skills/\nmkdir -p ~/projetos/<seu-projeto>/handoffs/history   # the hook only asks for a handoff where this folder exists"
+        },
+        {
+          "rot": "Terminal · rehearsal of --conferir",
+          "icone": "play",
+          "conteudo": "rm -rf /tmp/ensaio-handoff && mkdir -p /tmp/ensaio-handoff/handoffs/history && cd /tmp/ensaio-handoff\ngit init -q && git config user.name ensaio && git config user.email ensaio@local\necho \"def f(): return 1\" > app.py && git add -A && git commit -qm base\nH=~/.claude/skills/session-handoff/scripts/handoff-grava.py\ncat > /tmp/corpo-handoff.md <<'EOF'\n# Handoff — ensaio-conferir\n\n## Estado aceito\n- [confirmed] `app.py` devolve 1 (commit: base; teste: python3 -c \"import app; print(app.f())\" → 1)\n\n## Não fazer\n- Não mudar a assinatura de f().\n\n## Próxima ação\nTrocar o retorno de f() para 2 e rodar o mesmo teste, que deve imprimir 2.\n\n## Perguntas-teste\n1. Qual é a tarefa e o critério de pronto? (fonte: app.py)\n2. Qual foi a última decisão e por quê? (fonte: git log)\n3. O que não pode mudar? (fonte: app.py)\n4. O que está pela metade? (fonte: app.py)\n5. Qual é a próxima ação e por quê? (fonte: app.py)\nEOF\npython3 $H --assunto ensaio-conferir < /tmp/corpo-handoff.md\nF=$(ls handoffs/history/*.md | head -1)\npython3 $H --conferir $F; echo \"saída: $?\"\necho \"def f(): return 2\" > app.py\npython3 $H --conferir $F; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>snapshot: handoffs/history/2026-10-19T070502Z-ensaio-conferir.md\nlatest.md: 1 assunto(s) aberto(s): ensaio-conferir\ncommit 8900d4e ensaio &lt;ensaio@local&gt; (sem push)\nretomar ESTE handoff numa sessão nova (Codex: /new no lugar de /clear):\n  /clear\n  /prime handoffs/history/2026-10-19T070502Z-ensaio-conferir.md\nfrescor: igual (1 arquivo(s) conferido(s); commit b89d8ad3ba51)\nsaída: 0\nfrescor: divergente — o handoff é pista, não fato; confira antes de agir\n  - app.py: mudou (citado no handoff)\nsaída: 2</pre><p>The stamp and the hashes change on every run. The <code>snapshot:</code> line is the one the hook reads in the transcript to know which handoff THIS session wrote.</p>"
+          },
+          {
+            "rot": "Warnings the script gives",
+            "html": "<ul><li><b>Without the \"Não fazer\" section</b>: /prime will not have the list of what must not change.</li><li><b>Without \"Perguntas-teste\"</b>: /prime does not give the N/5 score.</li><li><b>Body under 200 characters</b>: it refuses (<code>corpo do handoff vazio ou curto demais</code>).</li><li><b>More than 200 pending files</b>: the block's list is cut off and --conferir flags the leftovers as changed (limit recorded in the 10/17 analysis).</li></ul>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "The first two do not use your quota. The third uses one of your sessions.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E10 · Skills installed",
+          "min": "10 min",
+          "texto": "Install session-handoff and prime for Claude and for Codex and create handoffs/history/ in your long run's project.",
+          "pronto": "<code>python3 ~/.claude/skills/session-handoff/scripts/handoff-grava.py --help | grep -c conferir</code> → <code>1</code> or more, and <code>ls ~/.agents/skills</code> lists <code>prime</code> and <code>session-handoff</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E11 · Freshness equal and divergent",
+          "min": "10 min",
+          "texto": "Run the whole --conferir rehearsal.",
+          "pronto": "<code>frescor: igual</code> with <code>saída: 0</code>, and after changing app.py, <code>frescor: divergente</code> with <code>- app.py: mudou</code> and <code>saída: 2</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E12 · A real handoff, resumed",
+          "min": "20 min",
+          "texto": "In your long run's project, ask for /session-handoff at the end of a block of work. Open a new session and run /prime with the path the script printed.",
+          "pronto": "the /prime summary shows the freshness line (<code>igual</code>) and <code>Perguntas-teste: N/5</code>; write down the N in the run's progress.md."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "perguntas": [
+        {
+          "p": "Who writes the state block (commit and sha256) of the handoff?",
+          "opcoes": [
+            "No one: it is optional",
+            "The agent, at the end of the handoff text, so the next one can check the commit",
+            "handoff-grava.py; if the agent writes it, the script discards it",
+            "The hook, after compaction"
+          ],
+          "certa": 2,
+          "explica": "The proof left the text precisely because the agent certifies itself. The script writes the block, and that is what --conferir compares.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "--conferir exited with code 2. What does that mean?",
+          "opcoes": [
+            "Everything is the same",
+            "Something cited or pending has changed since it was written: it's a lead, not a fact",
+            "The handoff is corrupted and must be written again before any action",
+            "The test questions are missing"
+          ],
+          "certa": 1,
+          "explica": "0 = same, 2 = divergent (with the list of what changed), 3 = old snapshot without the block. Divergent means check before acting.",
+          "ref": "codigo",
+          "cert": true
+        },
+        {
+          "p": "The hook asked for a handoff and, within 8 events, nothing appeared in handoffs/history/. What happens?",
+          "opcoes": [
+            "It blocks the session",
+            "It writes the handoff itself right away, from a copy of the session, without you having to ask",
+            "Asks again, up to 2 times, and then warns that the handoff was NOT written",
+            "Nothing"
+          ],
+          "certa": 2,
+          "explica": "The check looks at the transcript: if it finds it, \"Handoff conferido\"; if not, it asks up to 2 times and then warns. Writing on its own only happens during idle time, on a copy of the session.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "\"We ran the integration tests with --fast only on this machine\" holds forever in this project. Where does it go?",
+          "opcoes": [
+            "In persistent memory (CLAUDE.md or AGENTS.md)",
+            "In progress.md",
+            "In the handoff, which /prime reads at the start of every session",
+            "Nowhere"
+          ],
+          "certa": 0,
+          "explica": "Still true after the task: persistent memory. The handoff holds the state of this task; the history records what happened.",
+          "ref": "diagrama"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "The script records the proof",
+          "texto": "Real timestamp, new file, commit, and sha256 of the files; [confirmed] only with a commit, test, or file."
+        },
+        {
+          "t": "The hook checks",
+          "texto": "Looks for the write in the transcript, prompts up to 2 times, and warns when it wasn't saved; after 45 min idle it writes to a copy."
+        },
+        {
+          "t": "Resuming gets measured",
+          "texto": "/prime runs --conferir, checks the proofs, and scores the test questions."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "agente-claude-codex kit (session-handoff and prime skills)",
+          "href": "https://github.com/inematds/agente-claude-codex",
+          "icone": "git"
+        },
+        {
+          "t": "agente-claude-codex kit guide",
+          "href": "https://inematds.github.io/agente-claude-codex/guia/",
+          "icone": "camadas"
+        },
+        {
+          "t": "Video: Claude and Codex with the same context",
+          "href": "https://inematds.github.io/agente-claude-codex/videos/",
+          "icone": "video"
+        }
+      ]
+    }
+  ]
+}

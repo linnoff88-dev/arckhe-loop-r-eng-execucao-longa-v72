@@ -1,0 +1,282 @@
+{
+  "slug": "cache",
+  "num": 4,
+  "menu": "Cache",
+  "titulo": "Cache and idle time: what the October numbers show",
+  "titulo_curto": "Cache and idle time",
+  "minutos": 16,
+  "lead": "Going back to a large session that has sat idle for two hours can cost hundreds of thousands of tokens in a single message. It's not a bug: the cache expired. With the numbers measured in October 2026, you'll understand the timeline of an idle session and decide, with real math, between resending and starting clean.",
+  "objetivo": "read the timeline of an idle session (45, 54, 60 min) and choose between resending and /clear + /prime using the measured numbers.",
+  "competencias": [
+    "calcular-custo-de-retomada",
+    "ler-linha-do-tempo-do-cache",
+    "configurar-trava-de-pausa"
+  ],
+  "aprende": [
+    {
+      "icone": "relogio",
+      "t": "What happens at 45, ~54 and 60 min idle"
+    },
+    {
+      "icone": "grafico",
+      "t": "The measured numbers: cache, compactions and resumption"
+    },
+    {
+      "icone": "escudo",
+      "t": "The gate that holds the first message after the pause"
+    },
+    {
+      "icone": "voltar",
+      "t": "When to resend and when to /clear + /prime"
+    }
+  ],
+  "hero_alt": "Glass hourglass on a dark circuit board, with a digital thermometer beside it.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "The timeline of an idle session",
+      "sub": "Claude Code, 1 h cache, context above ~200k tokens, hook-longrun 1.9.6 on.",
+      "nos": [
+        {
+          "icone": "check",
+          "titulo": "0 min",
+          "sub": "the response ends",
+          "itens": [
+            {
+              "icone": "calendario",
+              "t": "45 min timer scheduled"
+            }
+          ],
+          "detalhe": "On the Stop event, with context ≥ 200k and the handoffs/ folder in the project, the hook schedules a timer (systemd-run --user, one per session, reset on every response). If you send another message, the clock starts over."
+        },
+        {
+          "icone": "lua",
+          "titulo": "3–12 min",
+          "sub": "away summary",
+          "detalhe": "If you switch focus, Claude Code writes an away_summary into the conversation. Since 1.8.6 this (and local commands like /exit) no longer counts as \"the session moved\": before, 7 sessions on 10/16 were left without a handoff because of it."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "45 min",
+          "sub": "handoff on the copy",
+          "itens": [
+            {
+              "icone": "memoria",
+              "t": "claude -p --resume --fork-session"
+            }
+          ],
+          "detalhe": "If the session is still idle, with no handoff from this session saved within 5 min of the last reply, and the cache is still valid (< 55 min), the hook saves the handoff on a COPY of the session: same model, warm cache, allowed to run only handoff-grava.py and read files. The open session is not touched.",
+          "forte": true
+        },
+        {
+          "icone": "camadas",
+          "titulo": "~54 min",
+          "sub": "idle-time compaction",
+          "detalhe": "Claude Code compacts on its own after about 55 min without a reply, only above ~200k tokens, before the cache expires. In the records from Oct 7 to 15, 2026, all 93 compactions came 53–58 min after the last reply. But it doesn't always happen: on Oct 18, a 480k session did not compact."
+        },
+        {
+          "icone": "x",
+          "titulo": "60 min",
+          "sub": "the cache expires",
+          "detalhe": "The next message rereads the whole conversation with no cache. With more than 150k in context, the hook holds that first message once and explains: resending continues; /clear + /prime starts clean from this session's handoff."
+        }
+      ],
+      "legenda": "Why 45 and not 50: idle-time compaction comes between 53 and 58 min, and the copy takes 30–60 s plus startup. At 45 there's some slack; the cost is the same at any time before 1 h.",
+      "rolagem": true,
+      "rolagem_fim": {
+        "titulo": "The protection is the handoff",
+        "texto": "Compaction is a bonus when it comes. The handoff at 45 min, saved while the cache is warm, is what guarantees the return has a cheap path.",
+        "curto": "Handoff with a warm cache."
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "The math, in four numbers",
+      "sub": "All from the execucao-longa kit, with the date and sample size.",
+      "passos": [
+        {
+          "titulo": "Warm × cold",
+          "sub": "README, Oct 18",
+          "texto": [
+            "With a warm cache (up to ~1 h since the last reply), rereading the conversation costs ~10% of the input price. Expired, it reprocesses everything and writes the cache again, ~2×: about 20× a message with a warm cache.",
+            "On a subscription this doesn't turn into money, but it comes out of the 5 h and weekly quota. And you pay once: the following messages are cheap again."
+          ]
+        },
+        {
+          "titulo": "Resuming costs",
+          "sub": "14 days until Oct 17",
+          "texto": [
+            "Resending with an expired cache: median of 284k token-equivalents on the first call (190 cases, from 17k to 1.25 million) and ~23k per turn afterward.",
+            "/clear + /prime: median of 187k (only 11 cases) and ~10k per turn afterward. The floor comes from rewriting the initial package (instructions, memory, skills)."
+          ],
+          "exemplo": {
+            "rot": "Caveat from the source",
+            "texto": "Some of the 190 resumptions may have gone through compaction before; /prime has only 11 cases."
+          }
+        },
+        {
+          "titulo": "The cache is not the problem",
+          "sub": "3 sessions, Oct 1",
+          "texto": [
+            "Between 93% and 99% cache in every long session measured, with no decline as compactions pile up. It's no reason to cut the session short.",
+            "What grows is the cost per turn: without compacting, the last tenth of a 1M session read ~5× more per turn than the first (810k versus 157k)."
+          ]
+        },
+        {
+          "titulo": "Deciding",
+          "sub": "on return",
+          "texto": [
+            "If the decisions are in files (commits, state.md, handoff), /clear + /prime is cheaper from then on.",
+            "Resending and paying for the full reread only makes sense when a decision lives only in the conversation and didn't make it into the handoff."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The pause gate, in rehearsal",
+      "sub": "Same ensaio-hook.sh from lesson 3: fake transcript with 220k tokens and the last reply 120 min ago.",
+      "blocos": [
+        {
+          "rot": "Terminal · 2 h pause and resend",
+          "icone": "play",
+          "conteudo": "rm -rf /tmp/ensaio-hook\nbash ensaio-hook.sh 220000 120 UserPromptSubmit   # 1ª mensagem depois da pausa\nbash ensaio-hook.sh - - UserPromptSubmit          # reenviar a mesma\nbash ensaio-hook.sh 250000 0 Stop                 # fim de resposta: agenda o handoff por ociosidade\ncat /tmp/ensaio-hook/agenda.jsonl"
+        },
+        {
+          "rot": "Hook variables (in the Claude Code environment)",
+          "icone": "arquivo",
+          "conteudo": "LONGRUN_PAUSA_MIN=60          # minutos parado antes de segurar a mensagem\nLONGRUN_PAUSA_TOKENS=150000   # contexto mínimo para segurar; 0 desliga a trava\nLONGRUN_OCIOSO_MIN=45         # minutos parado antes de gravar o handoff (não passe de ~45)\nLONGRUN_OCIOSO_TOKENS=200000  # contexto mínimo para gravar; 0 desliga\nLONGRUN_CACHE_MIN=55          # depois disso a cópia não roda (o cache já estaria frio)"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>$ bash ensaio-hook.sh 220000 120 UserPromptSubmit\n{\"decision\": \"block\", \"reason\": \"Sessão parada há 2h00: o cache venceu e esta mensagem\n vai reprocessar ~220 mil tokens do seu limite. Para continuar aqui, reenvie a mensagem.\n Para começar limpo: NENHUM handoff desta sessão foi gravado: antes do /clear, peça para\n gravar (skill session-handoff), senão o /prime não terá o caminho deste trabalho.\"}\n\n$ bash ensaio-hook.sh - - UserPromptSubmit\n\n$ bash ensaio-hook.sh 250000 0 Stop\n\n$ cat /tmp/ensaio-hook/agenda.jsonl\n{\"unidade\": \"longrun-ocioso-ensaio\", \"minutos\": 45, \"cmd\": [\"/usr/bin/python3\",\n \".../execucao-longa/tools/hook-longrun.py\", \"--ocioso\", \"ensaio\", ...]}</pre><p>With <code>LONGRUN_AGENDAR_ARQ</code> the hook only records the scheduling in a file, instead of creating the real timer. It's the same variable the kit's tests use.</p>"
+          },
+          {
+            "rot": "In a real session",
+            "html": "<p>Example from the kit's README (session idle for 5h33 with 220k tokens):</p><pre>● UserPromptSubmit operation blocked by hook:\n  Sessão parada há 5h33: o cache venceu e esta mensagem vai reprocessar ~220 mil tokens do seu limite.\n  Para continuar aqui, reenvie a mensagem. Para começar limpo: /clear e depois /prime\n  (o último handoff do projeto é indicado na abertura).</pre><p>Since 1.7.1, when this session saved a handoff, the warning includes its path on separate lines: <code>/clear</code> and <code>/prime handoffs/history/[file].md</code>. Another session may have saved a newer one in the same project.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "Rehearsal at no cost, and a tweak that protects your transcripts.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E8 · The pause gate",
+          "min": "10 min",
+          "texto": "Run the 2-hour pause block. Then run it with 90000 tokens instead of 220000, in a clean folder, to see the 150k limit.",
+          "pronto": "the 1st call prints <code>\"decision\": \"block\"</code> with <code>cache venceu</code>; the resend (<code>-</code>) prints nothing; with 90k there is no block; <code>agenda.jsonl</code> shows <code>\"minutos\": 45</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E9 · Transcripts for a year",
+          "min": "5 min",
+          "texto": "Claude Code deletes transcripts after cleanupPeriodDays (default 30). Without them, there is no measurement and no recall (lesson 7). Set 365 in settings.json.",
+          "pronto": "<code>python3 -c \"import json,os;print(json.load(open(os.path.expanduser('~/.claude/settings.json'))).get('cleanupPeriodDays'))\"</code> → <code>365</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "perguntas": [
+        {
+          "p": "Why does the hook write the handoff on idle time at 45 min, and not at 58?",
+          "opcoes": [
+            "Because at 45 min the cache has already expired and the copy has to run before the automatic compaction",
+            "To interrupt whoever is working",
+            "Because Claude Code requires 45",
+            "To land before the idle-time compaction and the end of the cache, leaving room for the copy"
+          ],
+          "certa": 3,
+          "explica": "Writing with a warm cache costs one cheap read. At 50 the copy may arrive after the summary or go past the 55 min cache limit. Whoever is working is not interrupted: the copy runs separately.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "In the October measurements, the cache of long sessions...",
+          "opcoes": [
+            "dropped a little with each compaction, because the new summary invalidates the prefix",
+            "only exists in Codex",
+            "stayed below 50%",
+            "stayed between 93% and 99% and did not get worse with compactions"
+          ],
+          "certa": 3,
+          "explica": "93–99% in every long session measured. What grows without compaction is the cost per turn (~5× in the last tenth), not the loss of cache.",
+          "ref": "passos",
+          "cert": true
+        },
+        {
+          "p": "Session idle for 3 h, 300k tokens, all decisions already in this session's handoff. What to do on return?",
+          "opcoes": [
+            "Wait one more hour",
+            "Delete the handoff",
+            "/clear and /prime with this session's handoff",
+            "Resend the message: with 300k tokens already loaded, it's always the cheapest"
+          ],
+          "certa": 2,
+          "explica": "With the path in a file, starting clean costs less from then on (~10k × ~23k per turn, measured through 10/17). Resending only pays off if something lived only in the conversation.",
+          "ref": "passos"
+        },
+        {
+          "p": "The pause gate blocked your message. You want to continue in this session. What to do?",
+          "opcoes": [
+            "Run /compact first, so the session fits in the cache and the gate lifts",
+            "Turn off the hook",
+            "Wait for the cache to come back",
+            "Resend the same message: the block applies once per pause"
+          ],
+          "certa": 3,
+          "explica": "The block is a question, not an error: it applies once per pause and is saved in the session state. Resending goes straight through.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "45, 54, 60",
+          "texto": "Handoff on the copy with a warm cache, idle-time compaction when it comes, expired cache and the gate on return."
+        },
+        {
+          "t": "Numbers with dates",
+          "texto": "Cache 93–99% (10/01); resume 284k × 187k and ~23k × ~10k per turn (14 days through 10/17)."
+        },
+        {
+          "t": "Decide by the math",
+          "texto": "Path in a file: /clear + /prime. Something only in the conversation: resend once and write the handoff."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "Overall analysis: cache × compaction × continuity (10/17/2026)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/analise-geral-2026-10-17.md",
+          "icone": "grafico"
+        },
+        {
+          "t": "F7: cache curve and cost per turn (10/01/2026)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/experimento-f7-retrospectivo-2026-10.md",
+          "icone": "grafico"
+        },
+        {
+          "t": "Kit README: cache, automatic handoff and compaction",
+          "href": "https://github.com/inematds/execucao-longa#cache-handoff-autom%C3%A1tico-e-compacta%C3%A7%C3%A3o-como-funciona",
+          "icone": "arquivo"
+        }
+      ]
+    }
+  ]
+}

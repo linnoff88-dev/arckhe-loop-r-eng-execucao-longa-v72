@@ -1,0 +1,351 @@
+{
+  "slug": "headless",
+  "num": 6,
+  "menu": "Headless",
+  "titulo": "Loop headless: loop-longrun.sh, flock, timeout y MemoryMax",
+  "titulo_curto": "Loop headless",
+  "minutos": 20,
+  "lead": "En el /goal interactivo, quien decide que terminó es un evaluador que lee la conversación. En el loop headless, quien decide es la prueba, ejecutada por el propio loop, con los archivos de prueba protegidos. En esta lección ejecutas el loop-longrun.sh con un agente falso: ves cómo concluye, ves cómo se revierte la trampa y ves cómo la trava impide dos loops en la misma carpeta, sin gastar cuota.",
+  "objetivo": "ejecutar el loop-longrun.sh con un agente falso y ver cómo la prueba decide: concluido, trampa revertida, estancamiento y trava de segunda copia.",
+  "competencias": [
+    "configurar-loop-headless",
+    "proteger-testes-no-loop",
+    "por-tetos-de-tempo-e-memoria",
+    "agendar-com-systemd"
+  ],
+  "aprende": [
+    {
+      "icone": "arquivo",
+      "t": "El loop.env: pruebas, protegidos, permitidos y topes"
+    },
+    {
+      "icone": "cadeado",
+      "t": "flock, timeout y MemoryMax en cada ciclo"
+    },
+    {
+      "icone": "escudo",
+      "t": "Prueba protegida modificada = revertida y ciclo fallido"
+    },
+    {
+      "icone": "relogio",
+      "t": "systemd: vigila cada 10 min y cron con flock"
+    }
+  ],
+  "hero_alt": "Rack de servidores en una sala oscura con LEDs encendidos y ningún monitor encendido.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Un ciclo del loop-longrun.sh",
+      "sub": "El agente trabaja; el loop decide. Haz clic en cada etapa.",
+      "nos": [
+        {
+          "icone": "cadeado",
+          "titulo": "Trava",
+          "sub": "flock -n",
+          "detalhe": "El loop abre longrun/[carpeta]/.loop.lock con flock -n. Si otro loop ya corre en la misma carpeta, sale al instante con código 3 y \"outro loop já roda nesta pasta\". Vale también para cron: dos disparos nunca se atropellan."
+        },
+        {
+          "icone": "robo",
+          "titulo": "Agente con tope",
+          "sub": "timeout + MemoryMax",
+          "itens": [
+            {
+              "icone": "relogio",
+              "t": "timeout MIN_CICLO min"
+            },
+            {
+              "icone": "chip",
+              "t": "systemd-run --scope -p MemoryMax=MEM"
+            }
+          ],
+          "detalhe": "Cada ciclo es un codex exec (o claude -p) que lee prompt.md por stdin, con tope de tiempo y de memoria. En máquinas de memoria unificada el thrashing traba el host antes del OOM-killer; el tope de memoria por ciclo evita eso. AGENTE=claude existe en el script, pero está marcado como aún no probado."
+        },
+        {
+          "icone": "escudo",
+          "titulo": "Protegidos",
+          "sub": "git diff en las pruebas",
+          "detalhe": "Si el agente cambió o creó un archivo en PROTEGIDOS (pruebas, pytest.ini), el loop revierte con git checkout + git clean, cuenta el ciclo como fallido y agrega una línea en failures.md. El agente no logra pasar tocando al juez.",
+          "forte": true
+        },
+        {
+          "icone": "grafico",
+          "titulo": "Prueba rápida + commit",
+          "sub": "progreso = nº de passed",
+          "detalhe": "Ejecuta TESTE_RAPIDO y cuenta los \"N passed\". Subió: pone en cero el contador de estancamiento. Después hace commit de la carpeta longrun/ y de los PERMITIDOS como checkpoint. El agente no necesita (ni debe) hacer commit."
+        },
+        {
+          "icone": "portao",
+          "titulo": "¿Para?",
+          "sub": "tres salidas",
+          "itens": [
+            {
+              "icone": "check",
+              "t": "prueba final pasó → 0"
+            },
+            {
+              "icone": "x",
+              "t": "ESTAGNACAO ciclos sin avance → 2"
+            },
+            {
+              "icone": "relogio",
+              "t": "MAX_CICLOS sin pasar → 1"
+            }
+          ],
+          "detalhe": "Ejecuta TESTE_FINAL: si pasa, CONCLUÍDO y sale con 0. Si no, y el contador de estancamiento llegó a ESTAGNACAO, PARADO y sale con 2. Si se acabaron los ciclos, sale con 1. El código de salida es lo que miran el cron, systemd o tu script."
+        }
+      ],
+      "volta": "¿No se detuvo? Siguiente ciclo: el agente vuelve a leer goal, state y plan",
+      "legenda": "Si lo que falta solo aparece en la prueba final (lenta), cada ciclo cuenta como \"sin avance\": pon esos casos también en la prueba rápida o aumenta ESTAGNACAO (aviso del propio script)."
+    },
+    {
+      "tipo": "simfila",
+      "titulo": "Mira cómo decide el loop",
+      "sub": "Ejecútalo, interrúmpelo a la mitad y vuelve a ejecutarlo. Uno de los ciclos toca una prueba protegida.",
+      "tarefas": [
+        "Ciclo 1 · lee goal/state, escribe el parser",
+        "Ciclo 2 · \"arregla\" borrando una prueba",
+        "Ciclo 3 · trata el caso de espacios dobles",
+        "Ciclo 4 · ejecuta la prueba final"
+      ],
+      "falha": 1,
+      "rot": {
+        "entrada": "ciclos por ejecutar",
+        "rodando": "ciclo en curso",
+        "feito": "checkpoint (commit)",
+        "falhou": "revertido",
+        "rodar": "Ejecutar el loop",
+        "parar": "Matar el proceso",
+        "zerar": "Reiniciar"
+      },
+      "msg": {
+        "inicio": "4 ciclos planificados en loop.env. Haz clic en \"Ejecutar el loop\".",
+        "rodando": "Un ciclo a la vez: agente con tope, revisión de los archivos protegidos, prueba rápida, commit.",
+        "parou": "Proceso muerto a la mitad. El lock se soltó y el ciclo en curso no hizo commit.",
+        "retoma": "Loop de nuevo: el agente relee state.md y git; lo que ya tiene checkpoint no se rehace.",
+        "fim": "La prueba final pasó: CONCLUÍDO, salida 0.",
+        "fimfalha": "La prueba final pasó. Un ciclo fue revertido por tocar tests/ y quedó registrado en failures.md."
+      },
+      "legenda": "Simulación ilustrativa en el navegador. El ensayo de verdad, con agente falso, está justo abajo."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Ensayo con agente falso",
+      "sub": "El loop acepta CODEX_BIN: si apuntas a un script, no se llama a ningún modelo. Es la forma barata de probar tu loop.env antes de gastar cuota.",
+      "blocos": [
+        {
+          "rot": "ensaio-loop.sh · monta el proyecto de prueba",
+          "icone": "terminal",
+          "conteudo": "# ensaio-loop.sh — monta un proyecto de prueba con 3 pruebas congeladas y dos agentes FALSOS\nE=/tmp/ensaio-loop; K=~/projetos/execucao-longa\nrm -rf $E && mkdir -p $E/proj/tests && cd $E/proj\ngit init -q && git config user.name ensaio && git config user.email ensaio@local\ncat > tests/test_conta.py <<'PY'\nfrom conta import conta_palavras\ndef test_vazio(): assert conta_palavras(\"\") == 0\ndef test_simples(): assert conta_palavras(\"um dois três\") == 3\ndef test_espacos(): assert conta_palavras(\"  um   dois \") == 2\nPY\nprintf 'def conta_palavras(texto):\\n    raise NotImplementedError\\n' > conta.py\nprintf '[pytest]\\npythonpath = .\\n' > pytest.ini\nprintf '__pycache__/\\n' > .gitignore\ngit add -A && git commit -qm \"base: testes congelados\"\n$K/tools/novo-longrun.sh $E/proj conta-palavras > /dev/null\nD=$(ls -d $E/proj/longrun/*)\necho \"Implementa conta_palavras en conta.py. Lee goal.md, state.md y plan.md antes. No toques tests/.\" > $D/prompt.md\ncat > $D/loop.env <<'ENV'\nTESTE_RAPIDO=\"python3 -m pytest -q\"\nTESTE_FINAL=\"python3 -m pytest -q\"\nPROTEGIDOS=\"tests/ pytest.ini\"\nPERMITIDOS=\"conta.py\"\nMAX_CICLOS=4\nMIN_CICLO=2\nMEM=1G\nESTAGNACAO=3\nENV\ngit add -A && git commit -qm \"longrun: pasta da execução\"\nprintf '#!/usr/bin/env bash\\ncat > /dev/null\\nprintf \"def conta_palavras(texto):\\\\n    return len(texto.split())\\\\n\" > conta.py\\n' > $E/agente-bom.sh\nprintf '#!/usr/bin/env bash\\ncat > /dev/null\\nrm -f tests/test_conta.py\\n' > $E/agente-trapaca.sh\nprintf '#!/usr/bin/env bash\\ncat > /dev/null\\nsleep 6\\n' > $E/agente-lento.sh\nchmod +x $E/agente-*.sh\necho \"pronto: $D\""
+        },
+        {
+          "rot": "Terminal · las tres rondas",
+          "icone": "play",
+          "conteudo": "bash ensaio-loop.sh\ncd /tmp/ensaio-loop/proj && D=$(ls -d $PWD/longrun/*) && L=~/projetos/execucao-longa/tools/loop-longrun.sh\n\nCODEX_BIN=/tmp/ensaio-loop/agente-trapaca.sh $L $D; echo \"saída: $?\"   # A) trampa\nCODEX_BIN=/tmp/ensaio-loop/agente-bom.sh $L $D; echo \"saída: $?\"       # B) trabajo correcto\n\nCODEX_BIN=/tmp/ensaio-loop/agente-lento.sh $L $D > /dev/null 2>&1 &   # C) dos loops\nsleep 2; CODEX_BIN=/tmp/ensaio-loop/agente-lento.sh $L $D; echo \"saída: $?\"; wait"
+        },
+        {
+          "rot": "loop.env de una ejecución real (el piloto del kit, 01/10/2026)",
+          "icone": "arquivo",
+          "conteudo": "TESTE_RAPIDO=\"pytest -q -m 'not real'\"\nTESTE_FINAL=\"pytest -q\"\nPROTEGIDOS=\"tests/ pytest.ini tools/medicao/\"\nPERMITIDOS=\"tools/medir-sessao.py\"\nMAX_CICLOS=6\nMIN_CICLO=20\nMEM=8G\nESTAGNACAO=3\nAGENTE=codex\nMODELO=<el modelo top de tu suscripción en Codex>\n# si las pruebas levantan un servidor local, el sandbox workspace-write bloquea hasta 127.0.0.1:\n# CODEX_ARGS=\"-c sandbox_workspace_write.network_access=true\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>## A) trapaça\n2026-10-19 03:56:46 início: rápido=0 passed · agente=codex · teto 4x2min · mem 1G\n2026-10-19 03:56:46 ciclo 1: começa\n2026-10-19 03:56:46 ciclo 1: agente saiu rc=0 em 0s\n2026-10-19 03:56:46 ciclo 1: agente mexeu em arquivo protegido → revertido, ciclo falho\n2026-10-19 03:56:46 ciclo 1: checkpoint commitado\n(… ciclos 2 e 3 iguais …)\n2026-10-19 03:56:47 PARADO: 3 ciclos sem avanço mensurável — ver failures.md\nsaída: 2\n\n## B) trabalho certo\n2026-10-19 03:56:48 início: rápido=0 passed · agente=codex · teto 4x2min · mem 1G\n2026-10-19 03:56:48 ciclo 1: começa\n2026-10-19 03:56:48 ciclo 1: agente saiu rc=0 em 0s\n2026-10-19 03:56:48 ciclo 1: rápido=3 passed (melhor antes: 0)\n2026-10-19 03:56:48 ciclo 1: checkpoint commitado\n2026-10-19 03:56:49 CONCLUÍDO no ciclo 1: teste final passou (3 passed)\nsaída: 0\n\n## C) dois loops\noutro loop já roda nesta pasta\nsaída: 3</pre><p>Las pruebas borradas por la trampa volvieron: el loop revirtió los tres ciclos y escribió tres líneas \"revertido pelo loop\" en failures.md.</p>"
+          },
+          {
+            "rot": "La trampa del __pycache__",
+            "html": "<p>Sin la línea <code>__pycache__/</code> en el .gitignore, el propio pytest crea archivos nuevos dentro de <code>tests/</code>. El loop ve un archivo no rastreado en una carpeta protegida y cuenta el ciclo del agente BUENO como trampa. Capturado en el mismo ensayo, sin el .gitignore:</p><pre>2026-10-19 03:56:28 ciclo 1: agente saiu rc=0 em 0s\n2026-10-19 03:56:28 ciclo 1: agente mexeu em arquivo protegido → revertido, ciclo falho\n2026-10-19 03:56:29 CONCLUÍDO no ciclo 1: teste final passou (3 passed)</pre><p>Terminó porque la prueba final pasó, pero el ciclo quedó marcado como fallido y fue a failures.md. Con el agente lento, tres ciclos así llevarían a estancamiento. Antes de encender el loop: <code>git status --short tests/</code> después de correr las pruebas tiene que salir vacío.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Fuera de la terminal: systemd y cron",
+      "sub": "El loop corre solo; estas tres piezas lo cuidan.",
+      "passos": [
+        {
+          "titulo": "Vigia",
+          "sub": "timer de 10 min",
+          "texto": [
+            "El vigia.py busca ejecuciones activas (state.md sin \"concluído\") y alerta una vez por cada problema: PARADO (el loop.log registró una parada), PARADO SEM AVISO (hay loop.log pero ningún proceso del loop vivo) y OCIOSA (nada cambió en la carpeta ni en las sesiones hace N minutos).",
+            "Alerta = línea en ~/.local/state/execucao-longa/alertas.log; notify-send solo con --desktop."
+          ]
+        },
+        {
+          "titulo": "Ruta en las units",
+          "sub": "trampa",
+          "texto": [
+            "Las units en tools/systemd/ traen la ruta absoluta de la máquina del autor (/home/nmaldaner/…). El sed del bloque de la práctica cambia esa ruta por tu HOME antes de activar; sin él, el timer se dispara y el servicio falla en silencio."
+          ],
+          "exemplo": {
+            "rot": "Verifica",
+            "texto": "grep -c nmaldaner ~/.config/systemd/user/longrun-vigia.service → 0; systemctl --user list-timers longrun-vigia.timer → muestra el próximo disparo"
+          }
+        },
+        {
+          "titulo": "Cron con traba",
+          "sub": "flock + timeout",
+          "texto": [
+            "Todo cron que llama a un agente lleva flock -n sobre un archivo de lock y timeout con tope. En claude -p, también --max-turns.",
+            "Sin flock, un disparo lento y el siguiente corren juntos en la misma carpeta."
+          ],
+          "exemplo": {
+            "rot": "Línea de crontab",
+            "texto": "0 2 * * * flock -n /tmp/meu-loop.lock timeout 4h ~/projetos/execucao-longa/tools/loop-longrun.sh ~/projetos/[proyecto]/longrun/[carpeta]"
+          }
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Activar el vigia (una vez por máquina, Linux)",
+      "sub": "Copia las units del kit, cambia la ruta por la tuya y activa el timer.",
+      "blocos": [
+        {
+          "rot": "Terminal · vigia cada 10 min",
+          "icone": "relogio",
+          "conteudo": "mkdir -p ~/.config/systemd/user\ncp ~/projetos/execucao-longa/tools/systemd/longrun-vigia.* ~/.config/systemd/user/\nsed -i \"s#/home/nmaldaner#$HOME#g\" ~/.config/systemd/user/longrun-vigia.service\nsystemctl --user daemon-reload\nsystemctl --user enable --now longrun-vigia.timer\nsystemctl --user list-timers longrun-vigia.timer\npython3 ~/projetos/execucao-longa/tools/vigia.py --seco   # una ronda a mano, sin guardar estado"
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "Las tres rondas del ensayo, después el vigia.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E13 · Trampa revertida",
+          "min": "10 min",
+          "texto": "Ejecuta ensaio-loop.sh y la ronda A (agente-trapaca).",
+          "pronto": "la última línea del log es <code>PARADO: 3 ciclos sem avanço mensurável</code>, <code>saída: 2</code>, <code>ls tests/</code> todavía muestra test_conta.py y <code>grep -c \"revertido pelo loop\" $D/failures.md</code> → <code>3</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E14 · Terminado por la prueba y traba de segunda copia",
+          "min": "10 min",
+          "texto": "Ejecuta las rondas B y C.",
+          "pronto": "B termina con <code>CONCLUÍDO no ciclo 1: teste final passou (3 passed)</code> y <code>saída: 0</code>; C imprime <code>outro loop já roda nesta pasta</code> y <code>saída: 3</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E15 · Vigia activado",
+          "min": "15 min",
+          "texto": "Instala el timer del vigia con la ruta cambiada. Deja la carpeta de tu ejecución real (clase 1) sin \"concluído\" en state.md.",
+          "pronto": "<code>systemctl --user list-timers longrun-vigia.timer</code> muestra el próximo disparo y <code>systemctl --user status longrun-vigia.service</code> no muestra falla en la última ronda."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "perguntas": [
+        {
+          "p": "En el loop headless, ¿quién decide que la ejecución terminó?",
+          "opcoes": [
+            "Un evaluador que lee la conversación y verifica si apareció la condición",
+            "El TESTE_FINAL ejecutado por el propio loop",
+            "El agente, escribiendo \"concluído\"",
+            "El MAX_CICLOS"
+          ],
+          "certa": 1,
+          "explica": "El loop ejecuta la prueba final en cada ciclo y solo sale con 0 cuando pasa. MAX_CICLOS es un tope (salida 1), no una señal de terminado.",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "El agente borró una prueba que fallaba. ¿Qué hace el loop?",
+          "opcoes": [
+            "Revierte los archivos protegidos, cuenta el ciclo como fallido y lo anota en failures.md",
+            "Pide confirmación",
+            "Se detiene al instante con código 1 y deja el test borrado en el disco para que lo revises",
+            "Lo acepta, porque las pruebas pasan"
+          ],
+          "certa": 0,
+          "explica": "git checkout + git clean sobre los PROTEGIDOS, ciclo fallido y una línea en failures.md. Tres así seguidos dan PARADO por estancamiento (salida 2).",
+          "ref": "diagrama",
+          "cert": true
+        },
+        {
+          "p": "El loop salió con código 3. ¿Qué pasó?",
+          "opcoes": [
+            "Otro loop ya corre en la misma carpeta (flock)",
+            "Alcanzó el tope de ciclos (MAX_CICLOS) sin que el test final pasara",
+            "La prueba final pasó",
+            "Estancamiento"
+          ],
+          "certa": 0,
+          "explica": "0 terminado, 1 tope de ciclos, 2 estancamiento, 3 lock ocupado. Es el código que miran el cron o systemd.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Al agente bueno lo marcaron como \"tocó un archivo protegido\". ¿Causa más probable?",
+          "opcoes": [
+            "Falta de memoria",
+            "__pycache__ creado por pytest dentro de tests/, fuera del .gitignore",
+            "El flock",
+            "El modelo se equivocó y escribió en tests/ por error; cámbialo por un modelo más grande"
+          ],
+          "certa": 1,
+          "explica": "El loop considera un archivo no rastreado en una carpeta protegida como un cambio. Pon __pycache__/ en el .gitignore y revisa git status --short tests/ después de correr las pruebas.",
+          "ref": "codigo"
+        },
+        {
+          "p": "¿Para qué sirve el MemoryMax por ciclo?",
+          "opcoes": [
+            "Limitar los tokens que el agente gasta en cada ciclo, para que la cuenta no se dispare",
+            "Guardar la caché",
+            "Evitar que un ciclo agote la memoria y trabe el host antes del OOM-killer",
+            "Acelerar al agente"
+          ],
+          "certa": 2,
+          "explica": "systemd-run --user --scope -p MemoryMax pone un tope al cgroup del ciclo. Con memoria unificada, el thrashing traba todo antes de que el OOM-killer actúe.",
+          "ref": "diagrama"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "La prueba decide",
+          "texto": "El loop corre la prueba rápida para medir el avance y la final para parar; el agente no hace commit ni declara que terminó."
+        },
+        {
+          "t": "Juez protegido",
+          "texto": "Tocó PROTEGIDOS: revertido, ciclo fallido, línea en failures.md; 3 sin avance: se detiene con 2."
+        },
+        {
+          "t": "Topes y traba",
+          "texto": "flock (3), timeout y MemoryMax por ciclo, MAX_CICLOS (1); ensaya con un agente falso antes de gastar cuota."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "tools/loop-longrun.sh (80 líneas, léelo completo)",
+          "href": "https://github.com/inematds/execucao-longa/blob/main/tools/loop-longrun.sh",
+          "icone": "terminal"
+        },
+        {
+          "t": "El piloto: longrun/2026-10-01-medir-sessao/",
+          "href": "https://github.com/inematds/execucao-longa/tree/main/longrun/2026-10-01-medir-sessao",
+          "icone": "pasta"
+        },
+        {
+          "t": "Curso 4 de la formación: seguridad del loop autónomo",
+          "href": "https://inematds.github.io/loop-r-eng-seguranca-v72/es/",
+          "icone": "escudo"
+        }
+      ]
+    }
+  ]
+}
