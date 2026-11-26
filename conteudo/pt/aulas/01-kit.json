@@ -2,11 +2,11 @@
   "slug": "kit",
   "num": 1,
   "menu": "Kit",
-  "titulo": "O kit: sete arquivos que seguram uma execução longa",
+  "titulo": "O kit: sete arquivos que seguram uma execuçêo longa",
   "titulo_curto": "O kit e os 7 arquivos",
   "minutos": 15,
-  "lead": "Uma sessão longa falha de três jeitos: não sabe quando parar, esquece o que fez depois de compactar e gasta o que não devia. O kit execucao-longa responde com arquivos, não com memória do modelo: o agente relê a pasta em vez de lembrar. Nesta aula você instala o kit e cria a primeira pasta.",
-  "objetivo": "criar a pasta longrun/ de uma execução e dizer, para cada um dos sete arquivos, quem escreve, quando é lido e se só acrescenta.",
+  "lead": "Uma sessêo longa falha de três jeitos: nêo sabe quando parar, esquece o que fez depois de compactar e gasta o que nêo devia. O kit execucao-longa responde com arquivos, nêo com memória do modelo: o agente relê a pasta em vez de lembrar. Nesta aula você instala o kit e cria a primeira pasta.",
+  "objetivo": "criar a pasta longrun/ de uma execuçêo e dizer, para cada um dos sete arquivos, quem escreve, quando é lido e se só acrescenta.",
   "competencias": [
     "instalar-kit-execucao-longa",
     "criar-pasta-longrun",
@@ -33,7 +33,7 @@
             { "icone": "caneta", "t": "Você escreve", "sub": "antes de começar" },
             { "icone": "check", "t": "Critérios comando → saída" }
           ],
-          "detalhe": "Resultado em uma frase, critérios de pronto (função, regressão, limite), tetos, restrições e portões humanos. É o único arquivo que o agente não deve reescrever: mudar o goal no meio é mudar de tarefa."
+          "detalhe": "Resultado em uma frase, critérios de pronto (funçêo, regressêo, limite), tetos, restrições e portões humanos. É o único arquivo que o agente nêo deve reescrever: mudar o goal no meio é mudar de tarefa."
         },
         {
           "icone": "lista",
@@ -43,7 +43,7 @@
             { "icone": "seta", "t": "plan: estratégia + 3 próximos passos" },
             { "icone": "check", "t": "state: funciona, falta, como retomar" }
           ],
-          "detalhe": "Os dois são fotografias do agora: reescrever, não acumular. O state.md termina com os comandos exatos para retomar. Quando a primeira linha de \"Funciona\" diz concluído, o vigia e o hook param de tratar a execução como ativa.",
+          "detalhe": "Os dois sêo fotografias do agora: reescrever, nêo acumular. O state.md termina com os comandos exatos para retomar. Quando a primeira linha de \"Funciona\" diz concluído, o vigia e o hook param de tratar a execuçêo como ativa.",
           "forte": true
         },
         {
@@ -53,19 +53,19 @@
           "itens": [
             { "icone": "git", "t": "progress: checkpoint + commit" },
             { "icone": "x", "t": "failures: erro → tentativa → resultado" },
-            { "icone": "marca", "t": "decisions: decisão, motivo, alternativa" }
+            { "icone": "marca", "t": "decisions: decisêo, motivo, alternativa" }
           ],
           "detalhe": "Histórico datado em tabela. Nunca se apaga linha: é o que permite ver depois se o agente reabriu um item já feito ou repetiu a mesma tentativa três vezes."
         },
         {
           "icone": "memoria",
           "titulo": "canal.md",
-          "sub": "o que a compactação perde",
+          "sub": "o que a compactaçêo perde",
           "itens": [
             { "icone": "lupa", "t": "fatos, aprendizados" },
             { "icone": "lupa", "t": "glossário, armadilhas" }
           ],
-          "detalhe": "Conhecimento do projeto, não estado da tarefa: onde as coisas estão, o nome certo de cada peça, a armadilha que custou uma hora. Só acrescenta, uma linha por fato, com data. O hook pede para preencher na faixa 1 (aula 3)."
+          "detalhe": "Conhecimento do projeto, nêo estado da tarefa: onde as coisas estêo, o nome certo de cada peça, a armadilha que custou uma hora. Só acrescenta, uma linha por fato, com data. O hook pede para preencher na faixa 1 (aula 3)."
         },
         {
           "icone": "robo",
@@ -75,7 +75,7 @@
             { "icone": "voltar", "t": "Relê goal → state → plan → canal" },
             { "icone": "terminal", "t": "Age, testa, atualiza, commita" }
           ],
-          "detalhe": "Depois de toda compactação ou retomada, a primeira coisa é reler os arquivos, na ordem goal → state → plan → canal → fim de progress e failures, e seguir do primeiro item pendente."
+          "detalhe": "Depois de toda compactaçêo ou retomada, a primeira coisa é reler os arquivos, na ordem goal → state → plan → canal → fim de progress e failures, e seguir do primeiro item pendente."
         }
       ],
       "volta": "Compactou, caiu ou trocou de modelo? O próximo ciclo relê a pasta e continua.",
@@ -84,20 +84,20 @@
       "rolagem_fim": {
         "titulo": "A pasta é a memória",
         "texto": "O objetivo fica parado no goal.md; o agora fica no plan e no state; o histórico só cresce em progress, failures e decisions; o que o resumo perde fica no canal.",
-        "curto": "Relê a pasta, não a conversa."
+        "curto": "Relê a pasta, nêo a conversa."
       }
     },
     {
       "tipo": "passos",
       "titulo": "Quando cada arquivo entra em jogo",
-      "sub": "Uma execução do começo ao fim, vista pelos arquivos.",
+      "sub": "Uma execuçêo do começo ao fim, vista pelos arquivos.",
       "passos": [
         {
           "titulo": "Antes",
           "sub": "você",
           "texto": [
             "<code>novo-longrun.sh</code> cria a pasta com os sete arquivos já carimbados com a data.",
-            "Você preenche o <code>goal.md</code>. É a parte demorada, e é a que decide se a execução termina (aula 2)."
+            "Você preenche o <code>goal.md</code>. É a parte demorada, e é a que decide se a execuçêo termina (aula 2)."
           ],
           "exemplo": { "rot": "Nome da pasta", "texto": "longrun/2026-10-19-contador-palavras/" }
         },
@@ -105,25 +105,25 @@
           "titulo": "A cada ciclo",
           "sub": "o agente",
           "texto": [
-            "Lê state e plan, escolhe a próxima ação útil, executa e testa.",
+            "Lê state e plan, escolhe a próxima açêo útil, executa e testa.",
             "No fim reescreve state e plan e acrescenta uma linha em progress. Se algo deu errado, uma linha em failures."
           ],
-          "exemplo": { "rot": "Linha de progress.md", "texto": "| 2026-10-01 14:30 | medição do piloto | 7714c3c | sim (nível 3) | 332791 / 304000 / 4296 | 0 |" }
+          "exemplo": { "rot": "Linha de progress.md", "texto": "| 2026-10-01 14:30 | mediçêo do piloto | 7714c3c | sim (nível 3) | 332791 / 304000 / 4296 | 0 |" }
         },
         {
           "titulo": "Depois de compactar",
           "sub": "o agente, lembrado pelo hook",
           "texto": [
-            "O resumo da compactação mistura o confirmado com o palpite. Os arquivos não.",
-            "O agente relê goal → state → plan → canal antes de agir e não reabre o que o state diz que está feito."
+            "O resumo da compactaçêo mistura o confirmado com o palpite. Os arquivos nêo.",
+            "O agente relê goal → state → plan → canal antes de agir e nêo reabre o que o state diz que está feito."
           ]
         },
         {
           "titulo": "No fim",
           "sub": "você confere",
           "texto": [
-            "O <code>state.md</code> diz concluído, mas quem fecha é você: roda o teste final por conta própria e mede a sessão (aula 7).",
-            "A menor correção de cada falha vai do <code>failures.md</code> para o <code>FALHAS.md</code> do projeto."
+            "O <code>state.md</code> diz concluído, mas quem fecha é você: roda o teste final por conta própria e mede a sessêo (aula 7).",
+            "A menor correçêo de cada falha vai do <code>failures.md</code> para o <code>FALHAS.md</code> do projeto."
           ]
         }
       ]
@@ -131,7 +131,7 @@
     {
       "tipo": "codigo",
       "titulo": "Instalar e criar a primeira pasta",
-      "sub": "Uma vez por máquina, e depois uma pasta por execução. Os caminhos seguem o README do kit.",
+      "sub": "Uma vez por máquina, e depois uma pasta por execuçêo. Os caminhos seguem o README do kit.",
       "blocos": [
         {
           "rot": "Terminal · instalar o kit (uma vez)",
@@ -139,14 +139,14 @@
           "conteudo": "git clone https://github.com/inematds/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
         },
         {
-          "rot": "Terminal · uma pasta por execução",
+          "rot": "Terminal · uma pasta por execuçêo",
           "icone": "pasta",
           "conteudo": "~/projetos/execucao-longa/tools/novo-longrun.sh ~/projetos/<seu-projeto> <slug-do-objetivo>\nls ~/projetos/<seu-projeto>/longrun/*/"
         },
         {
           "rot": "CLAUDE.md e AGENTS.md globais · colar uma vez (templates/AGENTS-long-run.md)",
           "icone": "arquivo",
-          "conteudo": "## Execução longa (/goal, loop, objetivo de horas) — método em ~/projetos/execucao-longa\n\n- **Antes de começar:** `~/projetos/execucao-longa/tools/novo-longrun.sh <projeto> <slug>` cria `longrun/<data>-<slug>/` (goal, plan, state, progress, failures, decisions, canal). Critério de pronto no `goal.md` em **nível 3+**: `comando → saída esperada`, cobrindo função, regressão e limite, sem atalho possível (contagem mínima, testes congelados, validador).\n- **Durante:** releia goal → state → plan → canal após toda compactação ou retomada; registre cedo no `canal.md` (só acrescentar) fatos, aprendizados, glossário e armadilhas; teste cada mudança; commit a cada checkpoint; continue enquanto houver próxima ação útil e segura.\n- **Parar e chamar o humano:** 3 ciclos sem avanço mensurável; o mesmo plano de fechamento repetido sem fechar ou item já feito reaberto (contexto degradou); crédito/API, ação irreversível ou externa, credencial ausente, decisão de negócio.\n- **Faixas de contexto** (no Claude Code o hook avisa uma vez cada; no Codex, acompanhe o % em `/status`): ~50% → registrar no `canal.md`; ~70% → atualizar estado e pedir `/compact`; ~85% ou 3ª compactação → `/session-handoff` + sessão nova + `/prime`.\n- **Headless:** `~/projetos/execucao-longa/tools/loop-longrun.sh <pasta-longrun>` (flock, timeout, MemoryMax, testes protegidos, parada por estagnação). Medir: `tools/medir-sessao.py <jsonl>`.\n- Tetos sempre: timeout, memória (`systemd-run --user --scope -p MemoryMax=`), saída de ferramenta curta.\n- **Histórico:** `recall \"termo\" [--projeto X] [--fonte codex|claude] [--desde AAAA-MM-DD]` busca em tudo o que já foi dito com o Codex e o Claude nesta máquina (índice reindexado de hora em hora) — use antes de perguntar ao usuário algo que pode já ter sido decidido."
+          "conteudo": "## Execuçêo longa (/goal, loop, objetivo de horas) — método em ~/projetos/execucao-longa\n\n- **Antes de começar:** `~/projetos/execucao-longa/tools/novo-longrun.sh <projeto> <slug>` cria `longrun/<data>-<slug>/` (goal, plan, state, progress, failures, decisions, canal). Critério de pronto no `goal.md` em **nível 3+**: `comando → saída esperada`, cobrindo funçêo, regressêo e limite, sem atalho possível (contagem mínima, testes congelados, validador).\n- **Durante:** releia goal → state → plan → canal após toda compactaçêo ou retomada; registre cedo no `canal.md` (só acrescentar) fatos, aprendizados, glossário e armadilhas; teste cada mudança; commit a cada checkpoint; continue enquanto houver próxima açêo útil e segura.\n- **Parar e chamar o humano:** 3 ciclos sem avanço mensurável; o mesmo plano de fechamento repetido sem fechar ou item já feito reaberto (contexto degradou); crédito/API, açêo irreversível ou externa, credencial ausente, decisêo de negócio.\n- **Faixas de contexto** (no Claude Code o hook avisa uma vez cada; no Codex, acompanhe o % em `/status`): ~50% → registrar no `canal.md`; ~70% → atualizar estado e pedir `/compact`; ~85% ou 3ª compactaçêo → `/session-handoff` + sessêo nova + `/prime`.\n- **Headless:** `~/projetos/execucao-longa/tools/loop-longrun.sh <pasta-longrun>` (flock, timeout, MemoryMax, testes protegidos, parada por estagnaçêo). Medir: `tools/medir-sessao.py <jsonl>`.\n- Tetos sempre: timeout, memória (`systemd-run --user --scope -p MemoryMax=`), saída de ferramenta curta.\n- **Histórico:** `recall \"termo\" [--projeto X] [--fonte codex|claude] [--desde AAAA-MM-DD]` busca em tudo o que já foi dito com o Codex e o Claude nesta máquina (índice reindexado de hora em hora) — use antes de perguntar ao usuário algo que pode já ter sido decidido."
         }
       ],
       "saida": {
@@ -158,7 +158,7 @@
           },
           {
             "rot": "Erros comuns",
-            "html": "<ul><li><b>Pasta fora de um projeto</b>: o script exige que a pasta do projeto exista. O hook e o vigia procuram <code>longrun/*/state.md</code> na raiz do repositório git.</li><li><b>Reaproveitar o slug</b>: duas execuções no mesmo dia com o mesmo slug colidem e o script recusa. Use outro slug; não apague a pasta antiga, ela é histórico.</li><li><b>Escrever \"concluído\" no state.md por engano</b>: para o hook e o vigia, a execução deixa de estar ativa.</li></ul>"
+            "html": "<ul><li><b>Pasta fora de um projeto</b>: o script exige que a pasta do projeto exista. O hook e o vigia procuram <code>longrun/*/state.md</code> na raiz do repositório git.</li><li><b>Reaproveitar o slug</b>: duas execuções no mesmo dia com o mesmo slug colidem e o script recusa. Use outro slug; nêo apague a pasta antiga, ela é histórico.</li><li><b>Escrever \"concluído\" no state.md por engano</b>: para o hook e o vigia, a execuçêo deixa de estar ativa.</li></ul>"
           }
         ]
       }
@@ -166,7 +166,7 @@
     {
       "tipo": "video",
       "titulo": "Vídeo: as três peças do método",
-      "sub": "Seis minutos com o conceito (10/10/2026). O conceito vale; dois detalhes mudaram depois: na faixa 3 e na 3ª compactação o agente termina a tarefa em curso antes da sessão nova (aula 3), e o cuidado com o cache hoje é o handoff automático aos 45 min parado (aula 4).",
+      "sub": "Seis minutos com o conceito (10/10/2026). O conceito vale; dois detalhes mudaram depois: na faixa 3 e na 3ª compactaçêo o agente termina a tarefa em curso antes da sessêo nova (aula 3), e o cuidado com o cache hoje é o handoff automático aos 45 min parado (aula 4).",
       "chave": "execucao-longa-pratica"
     },
     {
@@ -183,7 +183,7 @@
         },
         {
           "id": "e2",
-          "titulo": "E2 · A pasta de uma execução de verdade",
+          "titulo": "E2 · A pasta de uma execuçêo de verdade",
           "min": "10 min",
           "texto": "Escolha uma tarefa real de um projeto seu que leve mais de uma hora e crie a pasta dela. Rode o mesmo comando duas vezes.",
           "pronto": "<code>ls ~/projetos/[seu-projeto]/longrun/*/ | wc -l</code> → <code>7</code>; a segunda chamada imprime <code>já existe:</code> e <code>echo $?</code> → <code>1</code>."
@@ -192,8 +192,8 @@
           "id": "e3",
           "titulo": "E3 · O método nas regras globais",
           "min": "10 min",
-          "texto": "Cole o bloco de templates/AGENTS-long-run.md no ~/.claude/CLAUDE.md e no ~/.codex/AGENTS.md. Abra uma sessão nova e pergunte: \"como você começa uma execução longa?\" O bloco também cita /session-handoff, /prime e recall: eles só passam a existir nas aulas 5 e 7.",
-          "pronto": "<code>grep -c novo-longrun.sh ~/.claude/CLAUDE.md</code> → <code>1</code> ou mais, e a sessão nova responde citando novo-longrun.sh e critério nível 3 sem você lembrar."
+          "texto": "Cole o bloco de templates/AGENTS-long-run.md no ~/.claude/CLAUDE.md e no ~/.codex/AGENTS.md. Abra uma sessêo nova e pergunte: \"como você começa uma execuçêo longa?\" O bloco também cita /session-handoff, /prime e recall: eles só passam a existir nas aulas 5 e 7.",
+          "pronto": "<code>grep -c novo-longrun.sh ~/.claude/CLAUDE.md</code> → <code>1</code> ou mais, e a sessêo nova responde citando novo-longrun.sh e critério nível 3 sem você lembrar."
         }
       ]
     },
@@ -205,7 +205,7 @@
           "p": "Qual destes arquivos o agente deve REESCREVER a cada ciclo, em vez de só acrescentar?",
           "opcoes": ["progress.md", "decisions.md", "failures.md", "state.md"],
           "certa": 3,
-          "explica": "state.md e plan.md são a fotografia do agora e são reescritos. progress, failures e decisions são histórico: só acrescentam, para dar para ver depois se o agente repetiu tentativa ou reabriu item.",
+          "explica": "state.md e plan.md sêo a fotografia do agora e sêo reescritos. progress, failures e decisions sêo histórico: só acrescentam, para dar para ver depois se o agente repetiu tentativa ou reabriu item.",
           "ref": "diagrama",
           "cert": true
         },
@@ -213,14 +213,14 @@
           "p": "O agente descobriu que o banco de teste só sobe com a variável DB_LOCAL=1. Onde isso vai?",
           "opcoes": ["No plan.md, que é reescrito", "Em lugar nenhum: ele vai lembrar", "No goal.md, como critério novo", "No canal.md, com data"],
           "certa": 3,
-          "explica": "É conhecimento do projeto que a compactação perde: canal.md, uma linha com data. No plan.md ele some na próxima reescrita; no goal.md mudaria a tarefa.",
+          "explica": "É conhecimento do projeto que a compactaçêo perde: canal.md, uma linha com data. No plan.md ele some na próxima reescrita; no goal.md mudaria a tarefa.",
           "ref": "diagrama"
         },
         {
-          "p": "Depois de uma compactação, qual é a primeira coisa que o agente faz?",
-          "opcoes": ["Pede ao usuário para repetir o pedido", "Relê goal → state → plan → canal e o fim de progress e failures", "Grava um goal.md novo", "Continua do resumo da compactação, que já traz o estado, as decisões e os próximos passos"],
+          "p": "Depois de uma compactaçêo, qual é a primeira coisa que o agente faz?",
+          "opcoes": ["Pede ao usuário para repetir o pedido", "Relê goal → state → plan → canal e o fim de progress e failures", "Grava um goal.md novo", "Continua do resumo da compactaçêo, que já traz o estado, as decisões e os próximos passos"],
           "certa": 1,
-          "explica": "O resumo mistura o confirmado com o palpite. Os arquivos não. Por isso o kit manda reler a pasta na ordem e seguir do primeiro item pendente.",
+          "explica": "O resumo mistura o confirmado com o palpite. Os arquivos nêo. Por isso o kit manda reler a pasta na ordem e seguir do primeiro item pendente.",
           "ref": "passos",
           "cert": true
         },
@@ -228,7 +228,7 @@
           "p": "Você rodou novo-longrun.sh com um slug que já existe hoje. O que acontece?",
           "opcoes": ["Recusa com \"já existe\" e sai com código 1", "Cria uma pasta nova com sufixo -2 e deixa a antiga intacta", "Apaga a pasta antiga", "Sobrescreve os arquivos"],
           "certa": 0,
-          "explica": "O script recusa e não toca na pasta existente. Pasta antiga é histórico: use outro slug.",
+          "explica": "O script recusa e nêo toca na pasta existente. Pasta antiga é histórico: use outro slug.",
           "ref": "codigo"
         }
       ]
@@ -237,8 +237,8 @@
       "tipo": "resumo",
       "titulo": "Em três frases",
       "itens": [
-        { "t": "A pasta é a memória", "texto": "O agente não precisa lembrar: relê goal, state, plan e canal depois de compactar ou retomar." },
-        { "t": "Reescrever × acrescentar", "texto": "plan e state são o agora; progress, failures e decisions só crescem; canal guarda o que o resumo perde." },
+        { "t": "A pasta é a memória", "texto": "O agente nêo precisa lembrar: relê goal, state, plan e canal depois de compactar ou retomar." },
+        { "t": "Reescrever × acrescentar", "texto": "plan e state sêo o agora; progress, failures e decisions só crescem; canal guarda o que o resumo perde." },
         { "t": "Um comando", "texto": "novo-longrun.sh cria a pasta datada; o método vai nas regras globais para valer sem lembrete." }
       ]
     },
@@ -248,8 +248,8 @@
       "links": [
         { "t": "Kit execucao-longa no GitHub (README PT/EN/ES)", "href": "https://github.com/inematds/execucao-longa", "icone": "git" },
         { "t": "Guia visual do kit", "href": "https://inematds.github.io/execucao-longa/guia/", "icone": "camadas" },
-        { "t": "Curso 0 da formação: anatomia do loop e estado fora do modelo", "href": "https://inematds.github.io/loop-r-eng-base-v72/", "icone": "lista" },
-        { "t": "Anthropic: harnesses para agentes de longa duração (26/11/2025)", "href": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", "icone": "lupa" }
+        { "t": "Curso 0 da formaçêo: anatomia do loop e estado fora do modelo", "href": "https://inematds.github.io/loop-r-eng-base-v72/", "icone": "lista" },
+        { "t": "Anthropic: harnesses para agentes de longa duraçêo (26/11/2025)", "href": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", "icone": "lupa" }
       ]
     }
   ]

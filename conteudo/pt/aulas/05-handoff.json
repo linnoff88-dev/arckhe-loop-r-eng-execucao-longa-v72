@@ -5,20 +5,20 @@
   "titulo": "Handoff que confere se salvou",
   "titulo_curto": "Handoff conferido",
   "minutos": 17,
-  "lead": "Um handoff escrito pelo próprio agente se autocertifica: ele pode dizer que testou o que não testou e o arquivo pode nem ter sido gravado. Desde 17/10/2026 a prova saiu do texto: um script grava carimbo, commit e impressão digital dos arquivos, e o hook confere na transcrição se o handoff foi mesmo salvo.",
-  "objetivo": "gravar um handoff pelo script, conferir o frescor dele com --conferir e saber quando o hook cobra, grava sozinho ou avisa que não salvou.",
+  "lead": "Um handoff escrito pelo próprio agente se autocertifica: ele pode dizer que testou o que nêo testou e o arquivo pode nem ter sido gravado. Desde 17/10/2026 a prova saiu do texto: um script grava carimbo, commit e impressêo digital dos arquivos, e o hook confere na transcriçêo se o handoff foi mesmo salvo.",
+  "objetivo": "gravar um handoff pelo script, conferir o frescor dele com --conferir e saber quando o hook cobra, grava sozinho ou avisa que nêo salvou.",
   "competencias": [
     "gravar-handoff-com-prova",
     "conferir-frescor-do-handoff",
     "medir-retomada"
   ],
   "aprende": [
-    { "icone": "arquivo", "t": "O que vai no handoff e o que não vai" },
+    { "icone": "arquivo", "t": "O que vai no handoff e o que nêo vai" },
     { "icone": "cadeado", "t": "Bloco de estado: commit e sha256 gravados pelo script" },
     { "icone": "lupa", "t": "--conferir: igual (0), divergente (2), sem bloco (3)" },
     { "icone": "check", "t": "Perguntas-teste e a nota N/5 na retomada" }
   ],
-  "hero_alt": "Bastão de revezamento metálico sobre um caderno técnico aberto, numa mesa escura.",
+  "hero_alt": "Bastêo de revezamento metálico sobre um caderno técnico aberto, numa mesa escura.",
   "secoes": [
     {
       "tipo": "diagrama",
@@ -35,7 +35,7 @@
             { "icone": "camadas", "t": "depois de compactar" },
             { "icone": "relogio", "t": "45 min parado (cópia)" }
           ],
-          "detalhe": "Nas faixas 2 e 3 e depois de compactar o hook pede ao agente; na ociosidade grava sozinho numa cópia da sessão (aula 4). Vale em qualquer projeto com a pasta handoffs/, mesmo sem execução longa."
+          "detalhe": "Nas faixas 2 e 3 e depois de compactar o hook pede ao agente; na ociosidade grava sozinho numa cópia da sessêo (aula 4). Vale em qualquer projeto com a pasta handoffs/, mesmo sem execuçêo longa."
         },
         {
           "icone": "caneta",
@@ -43,10 +43,10 @@
           "sub": "o agente escreve o corpo",
           "itens": [
             { "icone": "check", "t": "[confirmed] com prova" },
-            { "icone": "x", "t": "Não fazer" },
-            { "icone": "seta", "t": "Próxima ação + porquê" }
+            { "icone": "x", "t": "Nêo fazer" },
+            { "icone": "seta", "t": "Próxima açêo + porquê" }
           ],
-          "detalhe": "Modelo fixo: escopo, objetivo, estado aceito, proposto e não confirmado, decisões, arquivos, verificação (só o que rodou), perguntas abertas, próxima ação, mapa de retomada e 5 perguntas-teste. Todo [confirmed] aponta commit, teste ou arquivo; sem prova vira [unverified]."
+          "detalhe": "Modelo fixo: escopo, objetivo, estado aceito, proposto e nêo confirmado, decisões, arquivos, verificaçêo (só o que rodou), perguntas abertas, próxima açêo, mapa de retomada e 5 perguntas-teste. Todo [confirmed] aponta commit, teste ou arquivo; sem prova vira [unverified]."
         },
         {
           "icone": "cadeado",
@@ -57,24 +57,24 @@
             { "icone": "git", "t": "commit + sha256 dos arquivos" },
             { "icone": "lista", "t": "latest.md = índice de abertos" }
           ],
-          "detalhe": "Cria handoffs/history/[AAAA-MM-DDTHHMMSSZ]-[assunto].md sem nunca sobrescrever, anexa o bloco de estado (commit atual e sha256 dos arquivos citados e dos sujos), atualiza o índice de trabalhos abertos e commita só esses arquivos. Nunca faz push. Se o agente escrever o bloco à mão, o script descarta.",
+          "detalhe": "Cria handoffs/history/[AAAA-MM-DDTHHMMSSZ]-[assunto].md sem nunca sobrescrever, anexa o bloco de estado (commit atual e sha256 dos arquivos citados e dos sujos), atualiza o índice de trabalhos abertos e commita só esses arquivos. Nunca faz push. Se o agente escrever o bloco à mêo, o script descarta.",
           "forte": true
         },
         {
           "icone": "lupa",
           "titulo": "Hook confere",
-          "sub": "na transcrição",
-          "detalhe": "Depois do pedido, o hook procura na transcrição uma gravação nova em handoffs/history/ e confere que o arquivo existe. Achou: \"Handoff conferido\". Em 8 eventos sem gravação, cobra de novo, até 2 vezes; depois avisa você que o handoff NÃO foi gravado."
+          "sub": "na transcriçêo",
+          "detalhe": "Depois do pedido, o hook procura na transcriçêo uma gravaçêo nova em handoffs/history/ e confere que o arquivo existe. Achou: \"Handoff conferido\". Em 8 eventos sem gravaçêo, cobra de novo, até 2 vezes; depois avisa você que o handoff NêO foi gravado."
         },
         {
           "icone": "voltar",
           "titulo": "/prime",
           "sub": "retoma conferindo",
-          "detalhe": "Lê AGENTS.md ou CLAUDE.md, o handoff e o git, sem editar nem rodar código. Roda o --conferir (frescor), confere commit e arquivo de cada [confirmed] (provas) e responde as 5 perguntas-teste pelos arquivos de fonte, mostrando N/5. O que diverge não vira ação sem você confirmar."
+          "detalhe": "Lê AGENTS.md ou CLAUDE.md, o handoff e o git, sem editar nem rodar código. Roda o --conferir (frescor), confere commit e arquivo de cada [confirmed] (provas) e responde as 5 perguntas-teste pelos arquivos de fonte, mostrando N/5. O que diverge nêo vira açêo sem você confirmar."
         }
       ],
-      "volta": "Handoff divergente é pista, não fato: confira antes de agir",
-      "legenda": "Regra de decisão: continua verdade depois da tarefa → memória persistente (CLAUDE.md, AGENTS.md). Estado desta tarefa → handoff. Registro do que aconteceu → histórico (git, progress, failures, decisions)."
+      "volta": "Handoff divergente é pista, nêo fato: confira antes de agir",
+      "legenda": "Regra de decisêo: continua verdade depois da tarefa → memória persistente (CLAUDE.md, AGENTS.md). Estado desta tarefa → handoff. Registro do que aconteceu → histórico (git, progress, failures, decisions)."
     },
     {
       "tipo": "passos",
@@ -82,32 +82,32 @@
       "sub": "Da análise de 17/10/2026 do kit.",
       "passos": [
         {
-          "titulo": "Ponteiro, não texto corrido",
+          "titulo": "Ponteiro, nêo texto corrido",
           "texto": [
-            "Mapa de retomada, fontes das perguntas-teste e evidências são caminhos e commits. Isso sobrevive à compactação, à sessão nova e à troca de modelo.",
+            "Mapa de retomada, fontes das perguntas-teste e evidências sêo caminhos e commits. Isso sobrevive à compactaçêo, à sessêo nova e à troca de modelo.",
             "Histórico longo enterra o que o próximo agente precisa fazer."
           ]
         },
         {
           "titulo": "Prova fora do texto",
           "texto": [
-            "O bloco de estado é do script, não do agente. Cada [confirmed] aponta <code>commit</code>, <code>teste:</code> ou <code>arquivo:</code>.",
-            "Na execução longa, quem decide se acabou continua sendo o teste rodado pelo loop (aula 6)."
+            "O bloco de estado é do script, nêo do agente. Cada [confirmed] aponta <code>commit</code>, <code>teste:</code> ou <code>arquivo:</code>.",
+            "Na execuçêo longa, quem decide se acabou continua sendo o teste rodado pelo loop (aula 6)."
           ],
           "exemplo": { "rot": "Linha boa", "texto": "[confirmed] app.py devolve 1 (commit: base; teste: python3 -c \"import app; print(app.f())\" → 1)" }
         },
         {
           "titulo": "Cinco perguntas-teste",
           "texto": [
-            "Tarefa e critério de pronto; última decisão e por quê; o que não pode mudar; o que está pela metade; próxima ação e por quê. A fonte de cada uma é um arquivo do projeto, nunca o próprio handoff.",
+            "Tarefa e critério de pronto; última decisêo e por quê; o que nêo pode mudar; o que está pela metade; próxima açêo e por quê. A fonte de cada uma é um arquivo do projeto, nunca o próprio handoff.",
             "Depois de compactar ou de --resume, o hook pede as 5 respostas de memória antes de abrir o handoff, e o agente registra a nota com nota-retomada.py."
           ]
         },
         {
           "titulo": "Limites conhecidos",
           "texto": [
-            "A nota é dada pelo próprio agente: as respostas ficam escritas antes, o que dá para auditar, mas não é checagem independente.",
-            "No Codex não há hook: pedir e conferir o handoff fica com a regra escrita e com você. O handoff e o /prime funcionam igual nos dois."
+            "A nota é dada pelo próprio agente: as respostas ficam escritas antes, o que dá para auditar, mas nêo é checagem independente.",
+            "No Codex nêo há hook: pedir e conferir o handoff fica com a regra escrita e com você. O handoff e o /prime funcionam igual nos dois."
           ]
         }
       ]
@@ -125,7 +125,7 @@
         {
           "rot": "Terminal · ensaio do --conferir",
           "icone": "play",
-          "conteudo": "rm -rf /tmp/ensaio-handoff && mkdir -p /tmp/ensaio-handoff/handoffs/history && cd /tmp/ensaio-handoff\ngit init -q && git config user.name ensaio && git config user.email ensaio@local\necho \"def f(): return 1\" > app.py && git add -A && git commit -qm base\nH=~/.claude/skills/session-handoff/scripts/handoff-grava.py\ncat > /tmp/corpo-handoff.md <<'EOF'\n# Handoff — ensaio-conferir\n\n## Estado aceito\n- [confirmed] `app.py` devolve 1 (commit: base; teste: python3 -c \"import app; print(app.f())\" → 1)\n\n## Não fazer\n- Não mudar a assinatura de f().\n\n## Próxima ação\nTrocar o retorno de f() para 2 e rodar o mesmo teste, que deve imprimir 2.\n\n## Perguntas-teste\n1. Qual é a tarefa e o critério de pronto? (fonte: app.py)\n2. Qual foi a última decisão e por quê? (fonte: git log)\n3. O que não pode mudar? (fonte: app.py)\n4. O que está pela metade? (fonte: app.py)\n5. Qual é a próxima ação e por quê? (fonte: app.py)\nEOF\npython3 $H --assunto ensaio-conferir < /tmp/corpo-handoff.md\nF=$(ls handoffs/history/*.md | head -1)\npython3 $H --conferir $F; echo \"saída: $?\"\necho \"def f(): return 2\" > app.py\npython3 $H --conferir $F; echo \"saída: $?\""
+          "conteudo": "rm -rf /tmp/ensaio-handoff && mkdir -p /tmp/ensaio-handoff/handoffs/history && cd /tmp/ensaio-handoff\ngit init -q && git config user.name ensaio && git config user.email ensaio@local\necho \"def f(): return 1\" > app.py && git add -A && git commit -qm base\nH=~/.claude/skills/session-handoff/scripts/handoff-grava.py\ncat > /tmp/corpo-handoff.md <<'EOF'\n# Handoff — ensaio-conferir\n\n## Estado aceito\n- [confirmed] `app.py` devolve 1 (commit: base; teste: python3 -c \"import app; print(app.f())\" → 1)\n\n## Nêo fazer\n- Nêo mudar a assinatura de f().\n\n## Próxima açêo\nTrocar o retorno de f() para 2 e rodar o mesmo teste, que deve imprimir 2.\n\n## Perguntas-teste\n1. Qual é a tarefa e o critério de pronto? (fonte: app.py)\n2. Qual foi a última decisêo e por quê? (fonte: git log)\n3. O que nêo pode mudar? (fonte: app.py)\n4. O que está pela metade? (fonte: app.py)\n5. Qual é a próxima açêo e por quê? (fonte: app.py)\nEOF\npython3 $H --assunto ensaio-conferir < /tmp/corpo-handoff.md\nF=$(ls handoffs/history/*.md | head -1)\npython3 $H --conferir $F; echo \"saída: $?\"\necho \"def f(): return 2\" > app.py\npython3 $H --conferir $F; echo \"saída: $?\""
         }
       ],
       "saida": {
@@ -133,11 +133,11 @@
         "abas": [
           {
             "rot": "Saída capturada (19/10/2026)",
-            "html": "<pre>snapshot: handoffs/history/2026-10-19T070502Z-ensaio-conferir.md\nlatest.md: 1 assunto(s) aberto(s): ensaio-conferir\ncommit 8900d4e ensaio &lt;ensaio@local&gt; (sem push)\nretomar ESTE handoff numa sessão nova (Codex: /new no lugar de /clear):\n  /clear\n  /prime handoffs/history/2026-10-19T070502Z-ensaio-conferir.md\nfrescor: igual (1 arquivo(s) conferido(s); commit b89d8ad3ba51)\nsaída: 0\nfrescor: divergente — o handoff é pista, não fato; confira antes de agir\n  - app.py: mudou (citado no handoff)\nsaída: 2</pre><p>O carimbo e os hashes mudam a cada execução. A linha <code>snapshot:</code> é a que o hook lê na transcrição para saber qual handoff ESTA sessão gravou.</p>"
+            "html": "<pre>snapshot: handoffs/history/2026-10-19T070502Z-ensaio-conferir.md\nlatest.md: 1 assunto(s) aberto(s): ensaio-conferir\ncommit 8900d4e ensaio &lt;ensaio@local&gt; (sem push)\nretomar ESTE handoff numa sessêo nova (Codex: /new no lugar de /clear):\n  /clear\n  /prime handoffs/history/2026-10-19T070502Z-ensaio-conferir.md\nfrescor: igual (1 arquivo(s) conferido(s); commit b89d8ad3ba51)\nsaída: 0\nfrescor: divergente — o handoff é pista, nêo fato; confira antes de agir\n  - app.py: mudou (citado no handoff)\nsaída: 2</pre><p>O carimbo e os hashes mudam a cada execuçêo. A linha <code>snapshot:</code> é a que o hook lê na transcriçêo para saber qual handoff ESTA sessêo gravou.</p>"
           },
           {
             "rot": "Avisos que o script dá",
-            "html": "<ul><li><b>Sem a seção \"Não fazer\"</b>: o /prime não terá a lista do que não pode mudar.</li><li><b>Sem \"Perguntas-teste\"</b>: o /prime não dá a nota N/5.</li><li><b>Corpo com menos de 200 caracteres</b>: recusa (<code>corpo do handoff vazio ou curto demais</code>).</li><li><b>Mais de 200 arquivos pendentes</b>: a lista do bloco é cortada e o --conferir acusa os que sobraram como mudança (limite registrado na análise de 17/10).</li></ul>"
+            "html": "<ul><li><b>Sem a seçêo \"Nêo fazer\"</b>: o /prime nêo terá a lista do que nêo pode mudar.</li><li><b>Sem \"Perguntas-teste\"</b>: o /prime nêo dá a nota N/5.</li><li><b>Corpo com menos de 200 caracteres</b>: recusa (<code>corpo do handoff vazio ou curto demais</code>).</li><li><b>Mais de 200 arquivos pendentes</b>: a lista do bloco é cortada e o --conferir acusa os que sobraram como mudança (limite registrado na análise de 17/10).</li></ul>"
           }
         ]
       }
@@ -145,13 +145,13 @@
     {
       "tipo": "pratica",
       "titulo": "Prática",
-      "sub": "As duas primeiras não gastam cota. A terceira usa uma sessão sua.",
+      "sub": "As duas primeiras nêo gastam cota. A terceira usa uma sessêo sua.",
       "exercicios": [
         {
           "id": "e1",
           "titulo": "E10 · Skills instaladas",
           "min": "10 min",
-          "texto": "Instale session-handoff e prime para o Claude e para o Codex e crie handoffs/history/ no projeto da sua execução.",
+          "texto": "Instale session-handoff e prime para o Claude e para o Codex e crie handoffs/history/ no projeto da sua execuçêo.",
           "pronto": "<code>python3 ~/.claude/skills/session-handoff/scripts/handoff-grava.py --help | grep -c conferir</code> → <code>1</code> ou mais, e <code>ls ~/.agents/skills</code> lista <code>prime</code> e <code>session-handoff</code>."
         },
         {
@@ -165,8 +165,8 @@
           "id": "e3",
           "titulo": "E12 · Um handoff real, retomado",
           "min": "20 min",
-          "texto": "No projeto da sua execução, peça /session-handoff no fim de um bloco de trabalho. Abra uma sessão nova e rode /prime com o caminho que o script imprimiu.",
-          "pronto": "o resumo do /prime mostra a linha de frescor (<code>igual</code>) e <code>Perguntas-teste: N/5</code>; anote o N no progress.md da execução."
+          "texto": "No projeto da sua execuçêo, peça /session-handoff no fim de um bloco de trabalho. Abra uma sessêo nova e rode /prime com o caminho que o script imprimiu.",
+          "pronto": "o resumo do /prime mostra a linha de frescor (<code>igual</code>) e <code>Perguntas-teste: N/5</code>; anote o N no progress.md da execuçêo."
         }
       ]
     },
@@ -184,7 +184,7 @@
         },
         {
           "p": "--conferir saiu com código 2. O que isso quer dizer?",
-          "opcoes": ["Tudo igual", "Algo citado ou pendente mudou desde a gravação: é pista, não fato", "O handoff está corrompido e precisa ser gravado de novo antes de qualquer ação", "Faltam as perguntas-teste"],
+          "opcoes": ["Tudo igual", "Algo citado ou pendente mudou desde a gravaçêo: é pista, nêo fato", "O handoff está corrompido e precisa ser gravado de novo antes de qualquer açêo", "Faltam as perguntas-teste"],
           "certa": 1,
           "explica": "0 = igual, 2 = divergente (com a lista do que mudou), 3 = snapshot antigo sem bloco. Divergente pede conferir antes de agir.",
           "ref": "codigo",
@@ -192,14 +192,14 @@
         },
         {
           "p": "O hook pediu um handoff e, em 8 eventos, nada apareceu em handoffs/history/. O que acontece?",
-          "opcoes": ["Bloqueia a sessão", "Ele mesmo grava o handoff na hora, numa cópia da sessão, sem você precisar pedir", "Cobra de novo, até 2 vezes, e depois avisa que o handoff NÃO foi gravado", "Nada"],
+          "opcoes": ["Bloqueia a sessêo", "Ele mesmo grava o handoff na hora, numa cópia da sessêo, sem você precisar pedir", "Cobra de novo, até 2 vezes, e depois avisa que o handoff NêO foi gravado", "Nada"],
           "certa": 2,
-          "explica": "A conferência olha a transcrição: achou, \"Handoff conferido\"; não achou, cobra até 2 vezes e então avisa. Gravar sozinho só acontece na ociosidade, numa cópia da sessão.",
+          "explica": "A conferência olha a transcriçêo: achou, \"Handoff conferido\"; nêo achou, cobra até 2 vezes e entêo avisa. Gravar sozinho só acontece na ociosidade, numa cópia da sessêo.",
           "ref": "diagrama"
         },
         {
-          "p": "\"Rodamos os testes de integração só com --fast nesta máquina\" vale para sempre neste projeto. Onde vai?",
-          "opcoes": ["Na memória persistente (CLAUDE.md ou AGENTS.md)", "No progress.md", "No handoff, que o /prime lê no começo de toda sessão", "Em lugar nenhum"],
+          "p": "\"Rodamos os testes de integraçêo só com --fast nesta máquina\" vale para sempre neste projeto. Onde vai?",
+          "opcoes": ["Na memória persistente (CLAUDE.md ou AGENTS.md)", "No progress.md", "No handoff, que o /prime lê no começo de toda sessêo", "Em lugar nenhum"],
           "certa": 0,
           "explica": "Continua verdade depois da tarefa: memória persistente. O handoff guarda o estado desta tarefa; o histórico registra o que aconteceu.",
           "ref": "diagrama"
@@ -211,7 +211,7 @@
       "titulo": "Em três frases",
       "itens": [
         { "t": "O script grava a prova", "texto": "Carimbo real, arquivo novo, commit e sha256 dos arquivos; [confirmed] só com commit, teste ou arquivo." },
-        { "t": "O hook confere", "texto": "Procura a gravação na transcrição, cobra até 2 vezes e avisa quando não salvou; aos 45 min parado grava numa cópia." },
+        { "t": "O hook confere", "texto": "Procura a gravaçêo na transcriçêo, cobra até 2 vezes e avisa quando nêo salvou; aos 45 min parado grava numa cópia." },
         { "t": "A retomada se mede", "texto": "/prime roda o --conferir, checa as provas e dá a nota das perguntas-teste." }
       ]
     },

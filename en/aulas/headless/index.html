@@ -33,7 +33,7 @@ printf &#x27;__pycache__/\n&#x27; &gt; .gitignore
 git add -A &amp;&amp; git commit -qm &quot;base: testes congelados&quot;
 $K/tools/novo-longrun.sh $E/proj conta-palavras &gt; /dev/null
 D=$(ls -d $E/proj/longrun/*)
-echo &quot;Implemente conta_palavras em conta.py. Leia goal.md, state.md e plan.md antes. Não mexa em tests/.&quot; &gt; $D/prompt.md
+echo &quot;Implemente conta_palavras em conta.py. Leia goal.md, state.md e plan.md antes. Nêo mexa em tests/.&quot; &gt; $D/prompt.md
 cat &gt; $D/loop.env &lt;&lt;&#x27;ENV&#x27;
 TESTE_RAPIDO=&quot;python3 -m pytest -q&quot;
 TESTE_FINAL=&quot;python3 -m pytest -q&quot;
@@ -44,7 +44,7 @@ MIN_CICLO=2
 MEM=1G
 ESTAGNACAO=3
 ENV
-git add -A &amp;&amp; git commit -qm &quot;longrun: pasta da execução&quot;
+git add -A &amp;&amp; git commit -qm &quot;longrun: pasta da execuçêo&quot;
 printf &#x27;#!/usr/bin/env bash\ncat &gt; /dev/null\nprintf &quot;def conta_palavras(texto):\\n    return len(texto.split())\\n&quot; &gt; conta.py\n&#x27; &gt; $E/agente-bom.sh
 printf &#x27;#!/usr/bin/env bash\ncat &gt; /dev/null\nrm -f tests/test_conta.py\n&#x27; &gt; $E/agente-trapaca.sh
 printf &#x27;#!/usr/bin/env bash\ncat &gt; /dev/null\nsleep 6\n&#x27; &gt; $E/agente-lento.sh

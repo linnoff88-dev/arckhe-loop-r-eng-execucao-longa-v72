@@ -223,7 +223,7 @@
         {
           "rot": "Terminal · close with independent verification",
           "icone": "check",
-          "conteudo": "cd ~/projetos/<seu-projeto>\nhead -5 longrun/<pasta>/state.md                       # says concluído?\n<teste completo>                                        # run it yourself, don't read the log\ngit diff --exit-code <commit-base> -- tests/ pytest.ini; echo \"protegidos: $?\"\ngit diff --stat <commit-base>                           # only what the goal allowed?\ngrep -rn \"<valor esperado de um teste>\" <pasta do código>  # hardcoded value in the code?\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py <sessão.jsonl>"
+          "conteudo": "cd ~/projetos/<seu-projeto>\nhead -5 longrun/<pasta>/state.md                       # says concluído?\n<teste completo>                                        # run it yourself, don't read the log\ngit diff --exit-code <commit-base> -- tests/ pytest.ini; echo \"protegidos: $?\"\ngit diff --stat <commit-base>                           # only what the goal allowed?\ngrep -rn \"<valor esperado de um teste>\" <pasta do código>  # hardcoded value in the code?\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py <sessêo.jsonl>"
         }
       ]
     },

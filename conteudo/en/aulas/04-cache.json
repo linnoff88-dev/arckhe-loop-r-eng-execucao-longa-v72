@@ -145,7 +145,7 @@
         {
           "rot": "Hook variables (in the Claude Code environment)",
           "icone": "arquivo",
-          "conteudo": "LONGRUN_PAUSA_MIN=60          # minutos parado antes de segurar a mensagem\nLONGRUN_PAUSA_TOKENS=150000   # contexto mínimo para segurar; 0 desliga a trava\nLONGRUN_OCIOSO_MIN=45         # minutos parado antes de gravar o handoff (não passe de ~45)\nLONGRUN_OCIOSO_TOKENS=200000  # contexto mínimo para gravar; 0 desliga\nLONGRUN_CACHE_MIN=55          # depois disso a cópia não roda (o cache já estaria frio)"
+          "conteudo": "LONGRUN_PAUSA_MIN=60          # minutos parado antes de segurar a mensagem\nLONGRUN_PAUSA_TOKENS=150000   # contexto mínimo para segurar; 0 desliga a trava\nLONGRUN_OCIOSO_MIN=45         # minutos parado antes de gravar o handoff (nêo passe de ~45)\nLONGRUN_OCIOSO_TOKENS=200000  # contexto mínimo para gravar; 0 desliga\nLONGRUN_CACHE_MIN=55          # depois disso a cópia nêo roda (o cache já estaria frio)"
         }
       ],
       "saida": {
@@ -153,11 +153,11 @@
         "abas": [
           {
             "rot": "Captured output (10/19/2026)",
-            "html": "<pre>$ bash ensaio-hook.sh 220000 120 UserPromptSubmit\n{\"decision\": \"block\", \"reason\": \"Sessão parada há 2h00: o cache venceu e esta mensagem\n vai reprocessar ~220 mil tokens do seu limite. Para continuar aqui, reenvie a mensagem.\n Para começar limpo: NENHUM handoff desta sessão foi gravado: antes do /clear, peça para\n gravar (skill session-handoff), senão o /prime não terá o caminho deste trabalho.\"}\n\n$ bash ensaio-hook.sh - - UserPromptSubmit\n\n$ bash ensaio-hook.sh 250000 0 Stop\n\n$ cat /tmp/ensaio-hook/agenda.jsonl\n{\"unidade\": \"longrun-ocioso-ensaio\", \"minutos\": 45, \"cmd\": [\"/usr/bin/python3\",\n \".../execucao-longa/tools/hook-longrun.py\", \"--ocioso\", \"ensaio\", ...]}</pre><p>With <code>LONGRUN_AGENDAR_ARQ</code> the hook only records the scheduling in a file, instead of creating the real timer. It's the same variable the kit's tests use.</p>"
+            "html": "<pre>$ bash ensaio-hook.sh 220000 120 UserPromptSubmit\n{\"decision\": \"block\", \"reason\": \"Sessêo parada há 2h00: o cache venceu e esta mensagem\n vai reprocessar ~220 mil tokens do seu limite. Para continuar aqui, reenvie a mensagem.\n Para começar limpo: NENHUM handoff desta sessêo foi gravado: antes do /clear, peça para\n gravar (skill session-handoff), senêo o /prime nêo terá o caminho deste trabalho.\"}\n\n$ bash ensaio-hook.sh - - UserPromptSubmit\n\n$ bash ensaio-hook.sh 250000 0 Stop\n\n$ cat /tmp/ensaio-hook/agenda.jsonl\n{\"unidade\": \"longrun-ocioso-ensaio\", \"minutos\": 45, \"cmd\": [\"/usr/bin/python3\",\n \".../execucao-longa/tools/hook-longrun.py\", \"--ocioso\", \"ensaio\", ...]}</pre><p>With <code>LONGRUN_AGENDAR_ARQ</code> the hook only records the scheduling in a file, instead of creating the real timer. It's the same variable the kit's tests use.</p>"
           },
           {
             "rot": "In a real session",
-            "html": "<p>Example from the kit's README (session idle for 5h33 with 220k tokens):</p><pre>● UserPromptSubmit operation blocked by hook:\n  Sessão parada há 5h33: o cache venceu e esta mensagem vai reprocessar ~220 mil tokens do seu limite.\n  Para continuar aqui, reenvie a mensagem. Para começar limpo: /clear e depois /prime\n  (o último handoff do projeto é indicado na abertura).</pre><p>Since 1.7.1, when this session saved a handoff, the warning includes its path on separate lines: <code>/clear</code> and <code>/prime handoffs/history/[file].md</code>. Another session may have saved a newer one in the same project.</p>"
+            "html": "<p>Example from the kit's README (session idle for 5h33 with 220k tokens):</p><pre>● UserPromptSubmit operation blocked by hook:\n  Sessêo parada há 5h33: o cache venceu e esta mensagem vai reprocessar ~220 mil tokens do seu limite.\n  Para continuar aqui, reenvie a mensagem. Para começar limpo: /clear e depois /prime\n  (o último handoff do projeto é indicado na abertura).</pre><p>Since 1.7.1, when this session saved a handoff, the warning includes its path on separate lines: <code>/clear</code> and <code>/prime handoffs/history/[file].md</code>. Another session may have saved a newer one in the same project.</p>"
           }
         ]
       }

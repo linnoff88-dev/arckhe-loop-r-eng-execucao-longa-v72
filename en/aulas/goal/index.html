@@ -27,10 +27,10 @@
 
 ## Critérios de pronto (verificáveis)
 
-**Função**
+**Funçêo**
 - [ ] `python3 -m pytest -q` → `3 passed`, 0 failed (e nunca menos de 3 testes)
 
-**Regressão**
+**Regressêo**
 - [ ] `python3 -c &quot;import conta&quot;` → sem erro (o módulo continua importável)
 
 **Limite**
@@ -42,10 +42,10 @@
 
 ## Restrições
 - só pela assinatura; nenhuma API
-- não mexer em: tests/, pytest.ini
+- nêo mexer em: tests/, pytest.ini
 
 ## Portões humanos (parar e perguntar)
-- qualquer mudança fora de conta.py e da pasta longrun/</pre></div><div class="cod"><div class="cod-cab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><b>Claude Code · /goal (templates/prompt-goal-claude.md)</b><button type="button" class="copiar" data-rot="Copy" data-ok="Copied"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre>/goal The terminal output shows &lt;comando de verificação&gt; passing with &lt;resultado esperado&gt;, and longrun/&lt;pasta&gt;/state.md says &quot;concluído&quot;.</pre></div><div class="cod"><div class="cod-cab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><b>Codex · /goal (templates/prompt-goal-codex.md)</b><button type="button" class="copiar" data-rot="Copy" data-ok="Copied"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre>/goal
+- qualquer mudança fora de conta.py e da pasta longrun/</pre></div><div class="cod"><div class="cod-cab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><b>Claude Code · /goal (templates/prompt-goal-claude.md)</b><button type="button" class="copiar" data-rot="Copy" data-ok="Copied"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre>/goal The terminal output shows &lt;comando de verificaçêo&gt; passing with &lt;resultado esperado&gt;, and longrun/&lt;pasta&gt;/state.md says &quot;concluído&quot;.</pre></div><div class="cod"><div class="cod-cab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><b>Codex · /goal (templates/prompt-goal-codex.md)</b><button type="button" class="copiar" data-rot="Copy" data-ok="Copied"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre>/goal
 RESULT: &lt;final result in one sentence&gt;
 
 VERIFICATION (it only ends when all of these pass):
@@ -60,10 +60,10 @@ CYCLE: analyze → pick the next useful action → execute → test → observe 
 As long as there is a next action that is objective, safe and aligned with the goal, execute it without waiting for new instructions.
 3 cycles without measurable progress = stop, record it in failures.md and call me.
 
-STOP AND CALL ME ONLY IF: credit/API spending, irreversible or external action (push to production, email, delete), missing credential, business decision, real conflict between requirements.</pre></div></div><div class="saida"><div class="saida-tabs" role="tablist"><button type="button" data-alvo="s0" aria-selected="true">Pilot criteria (10/01/2026)</button><button type="button" data-alvo="s1" aria-selected="false">Signs of a bad criterion</button></div><div class="saida-corpo" data-painel="s0"><span class="selo real">Example from the repository</span><p>From the kit's <code>longrun/2026-10-01-medir-sessao/goal.md</code>, the run that built <code>medir-sessao.py</code>:</p><pre>Função
+STOP AND CALL ME ONLY IF: credit/API spending, irreversible or external action (push to production, email, delete), missing credential, business decision, real conflict between requirements.</pre></div></div><div class="saida"><div class="saida-tabs" role="tablist"><button type="button" data-alvo="s0" aria-selected="true">Pilot criteria (10/01/2026)</button><button type="button" data-alvo="s1" aria-selected="false">Signs of a bad criterion</button></div><div class="saida-corpo" data-painel="s0"><span class="selo real">Example from the repository</span><p>From the kit's <code>longrun/2026-10-01-medir-sessao/goal.md</code>, the run that built <code>medir-sessao.py</code>:</p><pre>Funçêo
 - pytest -q → todos passam (12 rápidos + 2 com sessões reais), 0 falhas, 0 skips
 
-Regressão
+Regressêo
 - python3 tools/medicao/cx.py | head -1 e cc.py continuam rodando
 
 Limite

@@ -223,7 +223,7 @@
         {
           "rot": "Terminal · cerrar con verificación independiente",
           "icone": "check",
-          "conteudo": "cd ~/projetos/<seu-projeto>\nhead -5 longrun/<pasta>/state.md                       # diz concluído? (¿dice concluído?)\n<teste completo>                                        # rode você, não leia o log (ejecútalo tú, no leas el log)\ngit diff --exit-code <commit-base> -- tests/ pytest.ini; echo \"protegidos: $?\"\ngit diff --stat <commit-base>                           # só o que o goal permitia? (¿solo lo que el goal permitía?)\ngrep -rn \"<valor esperado de um teste>\" <pasta do código>  # valor fixo no código? (¿valor fijo en el código?)\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py <sessão.jsonl>"
+          "conteudo": "cd ~/projetos/<seu-projeto>\nhead -5 longrun/<pasta>/state.md                       # diz concluído? (¿dice concluído?)\n<teste completo>                                        # rode você, nêo leia o log (ejecútalo tú, no leas el log)\ngit diff --exit-code <commit-base> -- tests/ pytest.ini; echo \"protegidos: $?\"\ngit diff --stat <commit-base>                           # só o que o goal permitia? (¿solo lo que el goal permitía?)\ngrep -rn \"<valor esperado de um teste>\" <pasta do código>  # valor fixo no código? (¿valor fijo en el código?)\npython3 ~/projetos/execucao-longa/tools/medir-sessao.py <sessêo.jsonl>"
         }
       ]
     },

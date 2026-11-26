@@ -5,8 +5,8 @@
   "titulo": "Cache e ociosidade: o que os números de outubro mostram",
   "titulo_curto": "Cache e ociosidade",
   "minutos": 16,
-  "lead": "Voltar a uma sessão grande parada há duas horas pode custar centenas de milhares de tokens numa única mensagem. Não é erro: é o cache que venceu. Com os números medidos em outubro de 2026, você entende a linha do tempo de uma sessão parada e decide, com conta, entre reenviar e recomeçar limpo.",
-  "objetivo": "ler a linha do tempo de uma sessão parada (45, 54, 60 min) e escolher entre reenviar e /clear + /prime com os números medidos.",
+  "lead": "Voltar a uma sessêo grande parada há duas horas pode custar centenas de milhares de tokens numa única mensagem. Nêo é erro: é o cache que venceu. Com os números medidos em outubro de 2026, você entende a linha do tempo de uma sessêo parada e decide, com conta, entre reenviar e recomeçar limpo.",
+  "objetivo": "ler a linha do tempo de uma sessêo parada (45, 54, 60 min) e escolher entre reenviar e /clear + /prime com os números medidos.",
   "competencias": [
     "calcular-custo-de-retomada",
     "ler-linha-do-tempo-do-cache",
@@ -22,7 +22,7 @@
   "secoes": [
     {
       "tipo": "diagrama",
-      "titulo": "A linha do tempo de uma sessão parada",
+      "titulo": "A linha do tempo de uma sessêo parada",
       "sub": "Claude Code, cache de 1 h, contexto acima de ~200 mil tokens, hook-longrun 1.9.6 ligado.",
       "nos": [
         {
@@ -30,40 +30,40 @@
           "titulo": "0 min",
           "sub": "a resposta termina",
           "itens": [ { "icone": "calendario", "t": "Timer de 45 min agendado" } ],
-          "detalhe": "No evento Stop, com contexto ≥ 200 mil e a pasta handoffs/ no projeto, o hook agenda um timer (systemd-run --user, um por sessão, refeito a cada resposta). Se você mandar outra mensagem, o relógio recomeça."
+          "detalhe": "No evento Stop, com contexto ≥ 200 mil e a pasta handoffs/ no projeto, o hook agenda um timer (systemd-run --user, um por sessêo, refeito a cada resposta). Se você mandar outra mensagem, o relógio recomeça."
         },
         {
           "icone": "lua",
           "titulo": "3–12 min",
           "sub": "resumo de ausência",
-          "detalhe": "Se você troca de foco, o Claude Code grava um away_summary na conversa. Desde o 1.8.6 isso (e comandos locais como /exit) não conta como \"a sessão andou\": antes, 7 sessões de 16/10 ficaram sem handoff por causa disso."
+          "detalhe": "Se você troca de foco, o Claude Code grava um away_summary na conversa. Desde o 1.8.6 isso (e comandos locais como /exit) nêo conta como \"a sessêo andou\": antes, 7 sessões de 16/10 ficaram sem handoff por causa disso."
         },
         {
           "icone": "arquivo",
           "titulo": "45 min",
           "sub": "handoff na cópia",
           "itens": [ { "icone": "memoria", "t": "claude -p --resume --fork-session" } ],
-          "detalhe": "Se a sessão continua parada, sem handoff desta sessão gravado até 5 min antes da última resposta, e o cache ainda vale (< 55 min), o hook grava o handoff numa CÓPIA da sessão, mesmo modelo, cache quente, que só pode rodar o handoff-grava.py e ler arquivos. A sessão aberta não é tocada.",
+          "detalhe": "Se a sessêo continua parada, sem handoff desta sessêo gravado até 5 min antes da última resposta, e o cache ainda vale (< 55 min), o hook grava o handoff numa CÓPIA da sessêo, mesmo modelo, cache quente, que só pode rodar o handoff-grava.py e ler arquivos. A sessêo aberta nêo é tocada.",
           "forte": true
         },
         {
           "icone": "camadas",
           "titulo": "~54 min",
-          "sub": "compactação por ociosidade",
-          "detalhe": "O Claude Code compacta sozinho com cerca de 55 min sem resposta, só acima de ~200 mil tokens, antes do cache vencer. Nos registros de 07 a 15/10/2026, as 93 compactações vieram 53–58 min depois da última resposta. Mas ela nem sempre acontece: em 18/10, uma sessão de 480 mil não compactou."
+          "sub": "compactaçêo por ociosidade",
+          "detalhe": "O Claude Code compacta sozinho com cerca de 55 min sem resposta, só acima de ~200 mil tokens, antes do cache vencer. Nos registros de 07 a 15/10/2026, as 93 compactações vieram 53–58 min depois da última resposta. Mas ela nem sempre acontece: em 18/10, uma sessêo de 480 mil nêo compactou."
         },
         {
           "icone": "x",
           "titulo": "60 min",
           "sub": "o cache vence",
-          "detalhe": "A próxima mensagem relê a conversa inteira sem cache. Com mais de 150 mil no contexto, o hook segura essa primeira mensagem uma vez e explica: reenviar continua; /clear + /prime recomeça limpo pelo handoff desta sessão."
+          "detalhe": "A próxima mensagem relê a conversa inteira sem cache. Com mais de 150 mil no contexto, o hook segura essa primeira mensagem uma vez e explica: reenviar continua; /clear + /prime recomeça limpo pelo handoff desta sessêo."
         }
       ],
-      "legenda": "Por que 45 e não 50: a compactação por ociosidade vem entre 53 e 58 min e a cópia leva 30–60 s mais a partida. Aos 45 sobra folga; o custo é o mesmo a qualquer hora antes de 1 h.",
+      "legenda": "Por que 45 e nêo 50: a compactaçêo por ociosidade vem entre 53 e 58 min e a cópia leva 30–60 s mais a partida. Aos 45 sobra folga; o custo é o mesmo a qualquer hora antes de 1 h.",
       "rolagem": true,
       "rolagem_fim": {
-        "titulo": "A proteção é o handoff",
-        "texto": "A compactação é bônus quando vem. O handoff aos 45 min, gravado com o cache quente, é o que garante que a volta tenha um caminho barato.",
+        "titulo": "A proteçêo é o handoff",
+        "texto": "A compactaçêo é bônus quando vem. O handoff aos 45 min, gravado com o cache quente, é o que garante que a volta tenha um caminho barato.",
         "curto": "Handoff com cache quente."
       }
     },
@@ -77,32 +77,32 @@
           "sub": "README, 18/10",
           "texto": [
             "Com o cache quente (até ~1 h desde a última resposta), reler a conversa sai por ~10% do preço de entrada. Vencido, reprocessa tudo e grava o cache de novo, ~2×: cerca de 20× uma mensagem com cache quente.",
-            "Na assinatura isso não vira dinheiro, mas sai da cota de 5 h e da semanal. E paga-se uma vez: as mensagens seguintes voltam a ser baratas."
+            "Na assinatura isso nêo vira dinheiro, mas sai da cota de 5 h e da semanal. E paga-se uma vez: as mensagens seguintes voltam a ser baratas."
           ]
         },
         {
           "titulo": "Retomar custa",
           "sub": "14 dias até 17/10",
           "texto": [
-            "Reenviar com o cache vencido: mediana de 284 mil tokens-equivalentes na primeira chamada (190 casos, de 17 mil a 1,25 milhão) e ~23 mil por turno depois.",
+            "Reenviar com o cache vencido: mediana de 284 mil tokens-equivalentes na primeira chamada (190 casos, de 17 mil a 1,25 milhêo) e ~23 mil por turno depois.",
             "/clear + /prime: mediana de 187 mil (só 11 casos) e ~10 mil por turno depois. O piso vem de regravar o pacote inicial (instruções, memória, skills)."
           ],
-          "exemplo": { "rot": "Ressalva da fonte", "texto": "Parte das 190 retomadas pode ter passado por compactação antes; o /prime tem só 11 casos." }
+          "exemplo": { "rot": "Ressalva da fonte", "texto": "Parte das 190 retomadas pode ter passado por compactaçêo antes; o /prime tem só 11 casos." }
         },
         {
-          "titulo": "O cache não é o problema",
+          "titulo": "O cache nêo é o problema",
           "sub": "3 sessões, 01/10",
           "texto": [
-            "Entre 93% e 99% de cache em todas as sessões longas medidas, sem piorar com o número de compactações. Não é motivo para cortar a sessão.",
-            "O que cresce é o custo por turno: sem compactar, o último décimo de uma sessão de 1M leu ~5× mais por turno que o primeiro (810 mil contra 157 mil)."
+            "Entre 93% e 99% de cache em todas as sessões longas medidas, sem piorar com o número de compactações. Nêo é motivo para cortar a sessêo.",
+            "O que cresce é o custo por turno: sem compactar, o último décimo de uma sessêo de 1M leu ~5× mais por turno que o primeiro (810 mil contra 157 mil)."
           ]
         },
         {
           "titulo": "Decidir",
           "sub": "na volta",
           "texto": [
-            "Se as decisões estão em arquivos (commits, state.md, handoff), /clear + /prime sai mais barato daí em diante.",
-            "Só vale reenviar e pagar a releitura cheia quando há decisão que ficou apenas na conversa e não foi para o handoff."
+            "Se as decisões estêo em arquivos (commits, state.md, handoff), /clear + /prime sai mais barato daí em diante.",
+            "Só vale reenviar e pagar a releitura cheia quando há decisêo que ficou apenas na conversa e nêo foi para o handoff."
           ]
         }
       ]
@@ -110,7 +110,7 @@
     {
       "tipo": "codigo",
       "titulo": "A trava da pausa, no ensaio",
-      "sub": "Mesmo ensaio-hook.sh da aula 3: transcrição falsa com 220 mil tokens e a última resposta há 120 min.",
+      "sub": "Mesmo ensaio-hook.sh da aula 3: transcriçêo falsa com 220 mil tokens e a última resposta há 120 min.",
       "blocos": [
         {
           "rot": "Terminal · pausa de 2 h e reenvio",
@@ -120,7 +120,7 @@
         {
           "rot": "Variáveis do hook (no ambiente do Claude Code)",
           "icone": "arquivo",
-          "conteudo": "LONGRUN_PAUSA_MIN=60          # minutos parado antes de segurar a mensagem\nLONGRUN_PAUSA_TOKENS=150000   # contexto mínimo para segurar; 0 desliga a trava\nLONGRUN_OCIOSO_MIN=45         # minutos parado antes de gravar o handoff (não passe de ~45)\nLONGRUN_OCIOSO_TOKENS=200000  # contexto mínimo para gravar; 0 desliga\nLONGRUN_CACHE_MIN=55          # depois disso a cópia não roda (o cache já estaria frio)"
+          "conteudo": "LONGRUN_PAUSA_MIN=60          # minutos parado antes de segurar a mensagem\nLONGRUN_PAUSA_TOKENS=150000   # contexto mínimo para segurar; 0 desliga a trava\nLONGRUN_OCIOSO_MIN=45         # minutos parado antes de gravar o handoff (nêo passe de ~45)\nLONGRUN_OCIOSO_TOKENS=200000  # contexto mínimo para gravar; 0 desliga\nLONGRUN_CACHE_MIN=55          # depois disso a cópia nêo roda (o cache já estaria frio)"
         }
       ],
       "saida": {
@@ -128,11 +128,11 @@
         "abas": [
           {
             "rot": "Saída capturada (19/10/2026)",
-            "html": "<pre>$ bash ensaio-hook.sh 220000 120 UserPromptSubmit\n{\"decision\": \"block\", \"reason\": \"Sessão parada há 2h00: o cache venceu e esta mensagem\n vai reprocessar ~220 mil tokens do seu limite. Para continuar aqui, reenvie a mensagem.\n Para começar limpo: NENHUM handoff desta sessão foi gravado: antes do /clear, peça para\n gravar (skill session-handoff), senão o /prime não terá o caminho deste trabalho.\"}\n\n$ bash ensaio-hook.sh - - UserPromptSubmit\n\n$ bash ensaio-hook.sh 250000 0 Stop\n\n$ cat /tmp/ensaio-hook/agenda.jsonl\n{\"unidade\": \"longrun-ocioso-ensaio\", \"minutos\": 45, \"cmd\": [\"/usr/bin/python3\",\n \".../execucao-longa/tools/hook-longrun.py\", \"--ocioso\", \"ensaio\", ...]}</pre><p>Com <code>LONGRUN_AGENDAR_ARQ</code> o hook só registra o agendamento num arquivo, em vez de criar o timer de verdade. É a mesma variável que os testes do kit usam.</p>"
+            "html": "<pre>$ bash ensaio-hook.sh 220000 120 UserPromptSubmit\n{\"decision\": \"block\", \"reason\": \"Sessêo parada há 2h00: o cache venceu e esta mensagem\n vai reprocessar ~220 mil tokens do seu limite. Para continuar aqui, reenvie a mensagem.\n Para começar limpo: NENHUM handoff desta sessêo foi gravado: antes do /clear, peça para\n gravar (skill session-handoff), senêo o /prime nêo terá o caminho deste trabalho.\"}\n\n$ bash ensaio-hook.sh - - UserPromptSubmit\n\n$ bash ensaio-hook.sh 250000 0 Stop\n\n$ cat /tmp/ensaio-hook/agenda.jsonl\n{\"unidade\": \"longrun-ocioso-ensaio\", \"minutos\": 45, \"cmd\": [\"/usr/bin/python3\",\n \".../execucao-longa/tools/hook-longrun.py\", \"--ocioso\", \"ensaio\", ...]}</pre><p>Com <code>LONGRUN_AGENDAR_ARQ</code> o hook só registra o agendamento num arquivo, em vez de criar o timer de verdade. É a mesma variável que os testes do kit usam.</p>"
           },
           {
-            "rot": "Numa sessão real",
-            "html": "<p>Exemplo do README do kit (sessão parada há 5h33 com 220 mil tokens):</p><pre>● UserPromptSubmit operation blocked by hook:\n  Sessão parada há 5h33: o cache venceu e esta mensagem vai reprocessar ~220 mil tokens do seu limite.\n  Para continuar aqui, reenvie a mensagem. Para começar limpo: /clear e depois /prime\n  (o último handoff do projeto é indicado na abertura).</pre><p>Desde o 1.7.1, quando esta sessão gravou um handoff, o aviso traz o caminho dele em linhas separadas: <code>/clear</code> e <code>/prime handoffs/history/[arquivo].md</code>. Outra sessão pode ter gravado um mais novo no mesmo projeto.</p>"
+            "rot": "Numa sessêo real",
+            "html": "<p>Exemplo do README do kit (sessêo parada há 5h33 com 220 mil tokens):</p><pre>● UserPromptSubmit operation blocked by hook:\n  Sessêo parada há 5h33: o cache venceu e esta mensagem vai reprocessar ~220 mil tokens do seu limite.\n  Para continuar aqui, reenvie a mensagem. Para começar limpo: /clear e depois /prime\n  (o último handoff do projeto é indicado na abertura).</pre><p>Desde o 1.7.1, quando esta sessêo gravou um handoff, o aviso traz o caminho dele em linhas separadas: <code>/clear</code> e <code>/prime handoffs/history/[arquivo].md</code>. Outra sessêo pode ter gravado um mais novo no mesmo projeto.</p>"
           }
         ]
       }
@@ -147,13 +147,13 @@
           "titulo": "E8 · A trava da pausa",
           "min": "10 min",
           "texto": "Rode o bloco da pausa de 2 h. Depois rode com 90000 tokens no lugar de 220000, numa pasta limpa, para ver o limite de 150 mil.",
-          "pronto": "a 1ª chamada imprime <code>\"decision\": \"block\"</code> com <code>cache venceu</code>; o reenvio (<code>-</code>) não imprime nada; com 90 mil não há bloqueio; <code>agenda.jsonl</code> mostra <code>\"minutos\": 45</code>."
+          "pronto": "a 1ª chamada imprime <code>\"decision\": \"block\"</code> com <code>cache venceu</code>; o reenvio (<code>-</code>) nêo imprime nada; com 90 mil nêo há bloqueio; <code>agenda.jsonl</code> mostra <code>\"minutos\": 45</code>."
         },
         {
           "id": "e2",
           "titulo": "E9 · Transcrições por um ano",
           "min": "5 min",
-          "texto": "O Claude Code apaga as transcrições depois de cleanupPeriodDays (padrão 30). Sem elas, não há medição nem recall (aula 7). Ponha 365 no settings.json.",
+          "texto": "O Claude Code apaga as transcrições depois de cleanupPeriodDays (padrêo 30). Sem elas, nêo há mediçêo nem recall (aula 7). Ponha 365 no settings.json.",
           "pronto": "<code>python3 -c \"import json,os;print(json.load(open(os.path.expanduser('~/.claude/settings.json'))).get('cleanupPeriodDays'))\"</code> → <code>365</code>."
         }
       ]
@@ -163,33 +163,33 @@
       "titulo": "Teste da aula",
       "perguntas": [
         {
-          "p": "Por que o hook grava o handoff por ociosidade aos 45 min, e não aos 58?",
-          "opcoes": ["Porque aos 45 min o cache já venceu e a cópia precisa rodar antes da compactação automática", "Para interromper quem está trabalhando", "Porque o Claude Code exige 45", "Para chegar antes da compactação por ociosidade e do fim do cache, com folga para a cópia"],
+          "p": "Por que o hook grava o handoff por ociosidade aos 45 min, e nêo aos 58?",
+          "opcoes": ["Porque aos 45 min o cache já venceu e a cópia precisa rodar antes da compactaçêo automática", "Para interromper quem está trabalhando", "Porque o Claude Code exige 45", "Para chegar antes da compactaçêo por ociosidade e do fim do cache, com folga para a cópia"],
           "certa": 3,
-          "explica": "Gravar com o cache quente custa uma leitura barata. Aos 50 a cópia pode chegar depois do resumo ou passar dos 55 min do limite do cache. Quem está trabalhando não é interrompido: a cópia roda à parte.",
+          "explica": "Gravar com o cache quente custa uma leitura barata. Aos 50 a cópia pode chegar depois do resumo ou passar dos 55 min do limite do cache. Quem está trabalhando nêo é interrompido: a cópia roda à parte.",
           "ref": "diagrama",
           "cert": true
         },
         {
           "p": "Nas medições de outubro, o cache das sessões longas...",
-          "opcoes": ["caiu um pouco a cada compactação, porque o resumo novo invalida o prefixo", "só existe no Codex", "ficou abaixo de 50%", "ficou entre 93% e 99% e não piorou com as compactações"],
+          "opcoes": ["caiu um pouco a cada compactaçêo, porque o resumo novo invalida o prefixo", "só existe no Codex", "ficou abaixo de 50%", "ficou entre 93% e 99% e nêo piorou com as compactações"],
           "certa": 3,
-          "explica": "93–99% em todas as sessões longas medidas. O que cresce sem compactar é o custo por turno (~5× no último décimo), não a perda de cache.",
+          "explica": "93–99% em todas as sessões longas medidas. O que cresce sem compactar é o custo por turno (~5× no último décimo), nêo a perda de cache.",
           "ref": "passos",
           "cert": true
         },
         {
-          "p": "Sessão parada há 3 h, 300 mil tokens, todas as decisões já no handoff desta sessão. O que fazer na volta?",
-          "opcoes": ["Esperar mais uma hora", "Apagar o handoff", "/clear e /prime com o handoff desta sessão", "Reenviar a mensagem: com 300 mil tokens já carregados, é sempre o mais barato"],
+          "p": "Sessêo parada há 3 h, 300 mil tokens, todas as decisões já no handoff desta sessêo. O que fazer na volta?",
+          "opcoes": ["Esperar mais uma hora", "Apagar o handoff", "/clear e /prime com o handoff desta sessêo", "Reenviar a mensagem: com 300 mil tokens já carregados, é sempre o mais barato"],
           "certa": 2,
           "explica": "Com o caminho em arquivo, recomeçar limpo custa menos daí em diante (~10 mil × ~23 mil por turno, medido até 17/10). Reenviar só vale se algo ficou só na conversa.",
           "ref": "passos"
         },
         {
-          "p": "A trava da pausa bloqueou a sua mensagem. Você quer continuar nesta sessão. O que fazer?",
-          "opcoes": ["Rodar /compact antes, para a sessão caber no cache e a trava liberar", "Desligar o hook", "Esperar o cache voltar", "Reenviar a mesma mensagem: o bloqueio vale uma vez por pausa"],
+          "p": "A trava da pausa bloqueou a sua mensagem. Você quer continuar nesta sessêo. O que fazer?",
+          "opcoes": ["Rodar /compact antes, para a sessêo caber no cache e a trava liberar", "Desligar o hook", "Esperar o cache voltar", "Reenviar a mesma mensagem: o bloqueio vale uma vez por pausa"],
           "certa": 3,
-          "explica": "O bloqueio é uma pergunta, não um erro: vale uma vez por pausa e fica gravado no estado da sessão. Reenviar passa direto.",
+          "explica": "O bloqueio é uma pergunta, nêo um erro: vale uma vez por pausa e fica gravado no estado da sessêo. Reenviar passa direto.",
           "ref": "codigo"
         }
       ]
@@ -198,7 +198,7 @@
       "tipo": "resumo",
       "titulo": "Em três frases",
       "itens": [
-        { "t": "45, 54, 60", "texto": "Handoff na cópia com cache quente, compactação por ociosidade quando vem, cache vencido e trava na volta." },
+        { "t": "45, 54, 60", "texto": "Handoff na cópia com cache quente, compactaçêo por ociosidade quando vem, cache vencido e trava na volta." },
         { "t": "Números com data", "texto": "Cache 93–99% (01/10); retomar 284 mil × 187 mil e ~23 mil × ~10 mil por turno (14 dias até 17/10)." },
         { "t": "Decida pela conta", "texto": "Caminho em arquivo: /clear + /prime. Algo só na conversa: reenviar uma vez e gravar o handoff." }
       ]
@@ -207,9 +207,9 @@
       "tipo": "links",
       "titulo": "Para ir além",
       "links": [
-        { "t": "Análise geral: cache × compactação × continuidade (17/10/2026)", "href": "https://github.com/inematds/execucao-longa/blob/main/docs/analise-geral-2026-10-17.md", "icone": "grafico" },
+        { "t": "Análise geral: cache × compactaçêo × continuidade (17/10/2026)", "href": "https://github.com/inematds/execucao-longa/blob/main/docs/analise-geral-2026-10-17.md", "icone": "grafico" },
         { "t": "F7: curva de cache e custo por turno (01/10/2026)", "href": "https://github.com/inematds/execucao-longa/blob/main/docs/experimento-f7-retrospectivo-2026-10.md", "icone": "grafico" },
-        { "t": "README do kit: cache, handoff automático e compactação", "href": "https://github.com/inematds/execucao-longa#cache-handoff-autom%C3%A1tico-e-compacta%C3%A7%C3%A3o-como-funciona", "icone": "arquivo" }
+        { "t": "README do kit: cache, handoff automático e compactaçêo", "href": "https://github.com/inematds/execucao-longa#cache-handoff-autom%C3%A1tico-e-compacta%C3%A7%C3%A3o-como-funciona", "icone": "arquivo" }
       ]
     }
   ]
