@@ -271,17 +271,17 @@
       "links": [
         {
           "t": "tools/medir-sessao.py",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/tools/medir-sessao.py",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/tools/medir-sessao.py",
           "icone": "grafico"
         },
         {
           "t": "Investigación: claude-mem × recall (oct/2026)",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/pesquisa-memoria-claude-mem-2026-10.md",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/docs/pesquisa-memoria-claude-mem-2026-10.md",
           "icone": "lupa"
         },
         {
           "t": "Curso 5 de la formación: observabilidad y costo por ciclo en el loop que aprende",
-          "href": "https://inematds.github.io/loop-r-eng-aprende-v72/es/",
+          "href": "https://linnoff88-dev.github.io/arckhe-/es/",
           "icone": "camadas"
         }
       ]

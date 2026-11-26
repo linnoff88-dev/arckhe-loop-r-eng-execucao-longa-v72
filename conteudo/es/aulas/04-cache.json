@@ -263,17 +263,17 @@
       "links": [
         {
           "t": "Análisis general: caché × compactación × continuidad (17/10/2026)",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/analise-geral-2026-10-17.md",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/docs/analise-geral-2026-10-17.md",
           "icone": "grafico"
         },
         {
           "t": "F7: curva de caché y costo por turno (01/10/2026)",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/experimento-f7-retrospectivo-2026-10.md",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/docs/experimento-f7-retrospectivo-2026-10.md",
           "icone": "grafico"
         },
         {
           "t": "README del kit: caché, handoff automático y compactación",
-          "href": "https://github.com/inematds/execucao-longa#cache-handoff-autom%C3%A1tico-e-compacta%C3%A7%C3%A3o-como-funciona",
+          "href": "https://github.com/linnoff88-dev/execucao-longa#cache-handoff-autom%C3%A1tico-e-compacta%C3%A7%C3%A3o-como-funciona",
           "icone": "arquivo"
         }
       ]

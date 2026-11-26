@@ -120,7 +120,7 @@
         {
           "rot": "Terminal · instalar session-handoff e prime (Claude e Codex)",
           "icone": "baixar",
-          "conteudo": "git clone https://github.com/inematds/agente-claude-codex ~/projetos/agente-claude-codex\ncd ~/projetos/agente-claude-codex\ncp -r skills/session-handoff/dist/claude/session-handoff skills/prime/dist/claude/prime ~/.claude/skills/\nmkdir -p ~/.agents/skills\ncp -r skills/session-handoff/dist/codex/session-handoff skills/prime/dist/codex/prime ~/.agents/skills/\nmkdir -p ~/projetos/<seu-projeto>/handoffs/history   # o hook só pede handoff onde esta pasta existe"
+          "conteudo": "git clone https://github.com/linnoff88-dev/agente-claude-codex ~/projetos/agente-claude-codex\ncd ~/projetos/agente-claude-codex\ncp -r skills/session-handoff/dist/claude/session-handoff skills/prime/dist/claude/prime ~/.claude/skills/\nmkdir -p ~/.agents/skills\ncp -r skills/session-handoff/dist/codex/session-handoff skills/prime/dist/codex/prime ~/.agents/skills/\nmkdir -p ~/projetos/<seu-projeto>/handoffs/history   # o hook só pede handoff onde esta pasta existe"
         },
         {
           "rot": "Terminal · ensaio do --conferir",
@@ -219,9 +219,9 @@
       "tipo": "links",
       "titulo": "Para ir além",
       "links": [
-        { "t": "Kit agente-claude-codex (skills session-handoff e prime)", "href": "https://github.com/inematds/agente-claude-codex", "icone": "git" },
-        { "t": "Guia do kit agente-claude-codex", "href": "https://inematds.github.io/agente-claude-codex/guia/", "icone": "camadas" },
-        { "t": "Vídeo: Claude e Codex com o mesmo contexto", "href": "https://inematds.github.io/agente-claude-codex/videos/", "icone": "video" }
+        { "t": "Kit agente-claude-codex (skills session-handoff e prime)", "href": "https://github.com/linnoff88-dev/agente-claude-codex", "icone": "git" },
+        { "t": "Guia do kit agente-claude-codex", "href": "https://linnoff88-dev.github.io/arckhe-/guia/", "icone": "camadas" },
+        { "t": "Vídeo: Claude e Codex com o mesmo contexto", "href": "https://linnoff88-dev.github.io/arckhe-/videos/", "icone": "video" }
       ]
     }
   ]

@@ -270,12 +270,12 @@
       "links": [
         {
           "t": "Compaction × handoff study (10/15/2026)",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/docs/compactacao-x-handoff-2026-10-15.md",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/docs/compactacao-x-handoff-2026-10-15.md",
           "icone": "grafico"
         },
         {
           "t": "hook-longrun.py (code and LONGRUN_* variables)",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/tools/hook-longrun.py",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/tools/hook-longrun.py",
           "icone": "terminal"
         },
         {

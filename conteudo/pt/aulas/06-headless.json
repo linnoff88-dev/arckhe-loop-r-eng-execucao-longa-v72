@@ -263,9 +263,9 @@
       "tipo": "links",
       "titulo": "Para ir além",
       "links": [
-        { "t": "tools/loop-longrun.sh (80 linhas, leia inteiro)", "href": "https://github.com/inematds/execucao-longa/blob/main/tools/loop-longrun.sh", "icone": "terminal" },
-        { "t": "O piloto: longrun/2026-10-01-medir-sessao/", "href": "https://github.com/inematds/execucao-longa/tree/main/longrun/2026-10-01-medir-sessao", "icone": "pasta" },
-        { "t": "Curso 4 da formaçêo: segurança do loop autônomo", "href": "https://inematds.github.io/loop-r-eng-seguranca-v72/", "icone": "escudo" }
+        { "t": "tools/loop-longrun.sh (80 linhas, leia inteiro)", "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/tools/loop-longrun.sh", "icone": "terminal" },
+        { "t": "O piloto: longrun/2026-10-01-medir-sessao/", "href": "https://github.com/linnoff88-dev/execucao-longa/tree/main/longrun/2026-10-01-medir-sessao", "icone": "pasta" },
+        { "t": "Curso 4 da formaçêo: segurança do loop autônomo", "href": "https://linnoff88-dev.github.io/arckhe-/", "icone": "escudo" }
       ]
     }
   ]

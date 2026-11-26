@@ -332,17 +332,17 @@
       "links": [
         {
           "t": "tools/loop-longrun.sh (80 lines, read it all)",
-          "href": "https://github.com/inematds/execucao-longa/blob/main/tools/loop-longrun.sh",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/tools/loop-longrun.sh",
           "icone": "terminal"
         },
         {
           "t": "The pilot: longrun/2026-10-01-medir-sessao/",
-          "href": "https://github.com/inematds/execucao-longa/tree/main/longrun/2026-10-01-medir-sessao",
+          "href": "https://github.com/linnoff88-dev/execucao-longa/tree/main/longrun/2026-10-01-medir-sessao",
           "icone": "pasta"
         },
         {
           "t": "Course 4 of the track: safety of the autonomous loop",
-          "href": "https://inematds.github.io/loop-r-eng-seguranca-v72/en/",
+          "href": "https://linnoff88-dev.github.io/arckhe-/en/",
           "icone": "escudo"
         }
       ]

@@ -188,7 +188,7 @@
         {
           "rot": "Terminal · instalar el kit (una vez)",
           "icone": "terminal",
-          "conteudo": "git clone https://github.com/inematds/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
+          "conteudo": "git clone https://github.com/linnoff88-dev/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
         },
         {
           "rot": "Terminal · una carpeta por ejecución",
@@ -329,17 +329,17 @@
       "links": [
         {
           "t": "Kit execucao-longa en GitHub (README PT/EN/ES)",
-          "href": "https://github.com/inematds/execucao-longa",
+          "href": "https://github.com/linnoff88-dev/execucao-longa",
           "icone": "git"
         },
         {
           "t": "Guía visual del kit",
-          "href": "https://inematds.github.io/execucao-longa/guia/",
+          "href": "https://linnoff88-dev.github.io/arckhe-/guia/",
           "icone": "camadas"
         },
         {
           "t": "Curso 0 de la formación: anatomía del loop y estado fuera del modelo",
-          "href": "https://inematds.github.io/loop-r-eng-base-v72/es/",
+          "href": "https://linnoff88-dev.github.io/arckhe-/es/",
           "icone": "lista"
         },
         {

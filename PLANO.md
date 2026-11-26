@@ -20,4 +20,4 @@ Fora do escopo (dono em outro curso): escala 0–4 do critério (curso 0, aula 6
 Vídeo publicado: "Execuçêo Longa na prática" (6 min, 10/10) na aula 1, com nota do que mudou (faixa 3 e 3ª compactaçêo; cache: hoje o handoff por ociosidade aos 45 min substitui "acordar a cada 55 min").
 Simulaçêo: `simfila` na aula 6 (tarefas = ciclos; falha = ciclo que mexe em teste protegido).
 Imagens: capa + inicio + 8 heroes pelo Codex (uma por vez), sem texto.
-Próximo curso da ordem: `https://inematds.github.io/loop-r-eng-multiagente-v72/` (curso 3; ainda nêo publicado em 19/10).
+Próximo curso da ordem: `https://linnoff88-dev.github.io/arckhe-/` (curso 3; ainda nêo publicado em 19/10).

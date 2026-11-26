@@ -165,7 +165,7 @@
         {
           "rot": "Terminal · install session-handoff and prime (Claude and Codex)",
           "icone": "baixar",
-          "conteudo": "git clone https://github.com/inematds/agente-claude-codex ~/projetos/agente-claude-codex\ncd ~/projetos/agente-claude-codex\ncp -r skills/session-handoff/dist/claude/session-handoff skills/prime/dist/claude/prime ~/.claude/skills/\nmkdir -p ~/.agents/skills\ncp -r skills/session-handoff/dist/codex/session-handoff skills/prime/dist/codex/prime ~/.agents/skills/\nmkdir -p ~/projetos/<seu-projeto>/handoffs/history   # the hook only asks for a handoff where this folder exists"
+          "conteudo": "git clone https://github.com/linnoff88-dev/agente-claude-codex ~/projetos/agente-claude-codex\ncd ~/projetos/agente-claude-codex\ncp -r skills/session-handoff/dist/claude/session-handoff skills/prime/dist/claude/prime ~/.claude/skills/\nmkdir -p ~/.agents/skills\ncp -r skills/session-handoff/dist/codex/session-handoff skills/prime/dist/codex/prime ~/.agents/skills/\nmkdir -p ~/projetos/<seu-projeto>/handoffs/history   # the hook only asks for a handoff where this folder exists"
         },
         {
           "rot": "Terminal · rehearsal of --conferir",
@@ -295,17 +295,17 @@
       "links": [
         {
           "t": "agente-claude-codex kit (session-handoff and prime skills)",
-          "href": "https://github.com/inematds/agente-claude-codex",
+          "href": "https://github.com/linnoff88-dev/agente-claude-codex",
           "icone": "git"
         },
         {
           "t": "agente-claude-codex kit guide",
-          "href": "https://inematds.github.io/agente-claude-codex/guia/",
+          "href": "https://linnoff88-dev.github.io/arckhe-/guia/",
           "icone": "camadas"
         },
         {
           "t": "Video: Claude and Codex with the same context",
-          "href": "https://inematds.github.io/agente-claude-codex/videos/",
+          "href": "https://linnoff88-dev.github.io/arckhe-/videos/",
           "icone": "video"
         }
       ]

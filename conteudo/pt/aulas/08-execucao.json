@@ -330,9 +330,9 @@
       "tipo": "links",
       "titulo": "Continue por aqui",
       "links": [
-        { "t": "Próximo curso da formaçêo: Multiagente e orquestraçêo (curso 3)", "href": "https://inematds.github.io/loop-r-eng-multiagente-v72/", "icone": "seta" },
-        { "t": "Área LOOP-R Engenharia", "href": "https://eventos.inema.pro/loop-r-engenharia/", "icone": "camadas" },
-        { "t": "Kit execucao-longa: o plano completo (critérios, receitas, modo fila, guardrails)", "href": "https://github.com/inematds/execucao-longa/blob/main/docs/PLANO-EXECUCAO-LONGA.md", "icone": "arquivo" },
+        { "t": "Próximo curso da formaçêo: Multiagente e orquestraçêo (curso 3)", "href": "https://linnoff88-dev.github.io/arckhe-/", "icone": "seta" },
+        { "t": "Área LOOP-R Engenharia", "href": "https://eventos.ARCKHÉ.pro/loop-r-engenharia/", "icone": "camadas" },
+        { "t": "Kit execucao-longa: o plano completo (critérios, receitas, modo fila, guardrails)", "href": "https://github.com/linnoff88-dev/execucao-longa/blob/main/docs/PLANO-EXECUCAO-LONGA.md", "icone": "arquivo" },
         { "t": "Anthropic: harness design para apps de longa duraçêo (24/03/2026)", "href": "https://anthropic.com/engineering/harness-design-long-running-apps", "icone": "lupa" }
       ]
     }

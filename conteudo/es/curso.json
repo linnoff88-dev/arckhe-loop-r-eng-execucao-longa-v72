@@ -1,29 +1,29 @@
 {
   "id": "loop-r-eng-execucao-longa-v72",
   "lang": "es",
-  "url": "https://inematds.github.io/loop-r-eng-execucao-longa-v72/es/",
+  "url": "https://linnoff88-dev.github.io/arckhe-/es/",
   "nome": "Ejecución larga",
   "sub": "Formación LOOP-R Ingeniería · curso 2",
   "volta": {
     "t": "Área LOOP-R Ingeniería",
-    "href": "https://eventos.inema.pro/loop-r-engenharia/es/"
+    "href": "https://eventos.ARCKHÉ.pro/loop-r-engenharia/es/"
   },
   "lado_card": {
     "rot": "El kit de este curso",
     "t": "Ejecución larga (código abierto)",
     "texto": "Templates, hook, loop headless y medición. Todo comando de las clases viene de él, en la versión del 18/10/2026.",
     "link": "Abrir la guía del kit",
-    "href": "https://inematds.github.io/execucao-longa/guia/"
+    "href": "https://linnoff88-dev.github.io/arckhe-/guia/"
   },
-  "rodape": "INEMA.CLUB · contenido abierto y gratuito · formato INEMA Learning v7.2 · Formación LOOP-R Ingeniería, curso 2 de 6 · <a href=\"https://eventos.inema.pro/loop-r-engenharia/es/\">eventos.inema.pro/loop-r-engenharia</a> · <a href=\"https://github.com/inematds/execucao-longa\">kit execucao-longa en GitHub</a> · <a href=\"https://inema.club/\">inema.club</a>",
+  "rodape": "ARCKHÉ AI · contenido abierto y gratuito · formato ARCKHÉ Learning v7.2 · Formación LOOP-R Ingeniería, curso 2 de 6 · <a href=\"https://eventos.ARCKHÉ.pro/loop-r-engenharia/es/\">eventos.ARCKHÉ.pro/loop-r-engenharia</a> · <a href=\"https://github.com/linnoff88-dev/execucao-longa\">kit execucao-longa en GitHub</a> · <a href=\"https://ARCKHÉ AI/\">ARCKHÉ AI</a>",
   "videos": {
     "execucao-longa-pratica": {
       "titulo": "Ejecución larga en la práctica",
       "duracao": "6 min 20 s",
-      "mp4": "https://github.com/inematds/execucao-longa-pratica/releases/download/video-v2.0.0/execucao-longa-pratica-completo-16x9.mp4",
+      "mp4": "https://github.com/linnoff88-dev/execucao-longa-pratica/releases/download/video-v2.0.0/execucao-longa-pratica-completo-16x9.mp4",
       "vtt": "assets/vtt/execucao-longa-pratica.vtt",
       "poster": "assets/img/execucao-longa-pratica.jpg",
-      "pagina": "https://inematds.github.io/execucao-longa-pratica/videos/"
+      "pagina": "https://linnoff88-dev.github.io/arckhe-/videos/"
     }
   },
   "inicio": {
@@ -33,7 +33,7 @@
     "cta": "Empezar por la clase 1",
     "cta2": {
       "t": "Ver el área de la formación",
-      "href": "https://eventos.inema.pro/loop-r-engenharia/es/"
+      "href": "https://eventos.ARCKHÉ.pro/loop-r-engenharia/es/"
     },
     "capa_alt": "Banco de ingeniería de noche con terminal, panel de instrumentos y un cable en lazo.",
     "numeros": [

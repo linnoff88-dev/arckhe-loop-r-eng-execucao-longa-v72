@@ -136,7 +136,7 @@
         {
           "rot": "Terminal · instalar o kit (uma vez)",
           "icone": "terminal",
-          "conteudo": "git clone https://github.com/inematds/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
+          "conteudo": "git clone https://github.com/linnoff88-dev/execucao-longa ~/projetos/execucao-longa\ncd ~/projetos/execucao-longa\npython3 -m pytest -q -p no:cacheprovider | tail -1"
         },
         {
           "rot": "Terminal · uma pasta por execuçêo",
@@ -246,9 +246,9 @@
       "tipo": "links",
       "titulo": "Para ir além",
       "links": [
-        { "t": "Kit execucao-longa no GitHub (README PT/EN/ES)", "href": "https://github.com/inematds/execucao-longa", "icone": "git" },
-        { "t": "Guia visual do kit", "href": "https://inematds.github.io/execucao-longa/guia/", "icone": "camadas" },
-        { "t": "Curso 0 da formaçêo: anatomia do loop e estado fora do modelo", "href": "https://inematds.github.io/loop-r-eng-base-v72/", "icone": "lista" },
+        { "t": "Kit execucao-longa no GitHub (README PT/EN/ES)", "href": "https://github.com/linnoff88-dev/execucao-longa", "icone": "git" },
+        { "t": "Guia visual do kit", "href": "https://linnoff88-dev.github.io/arckhe-/guia/", "icone": "camadas" },
+        { "t": "Curso 0 da formaçêo: anatomia do loop e estado fora do modelo", "href": "https://linnoff88-dev.github.io/arckhe-/", "icone": "lista" },
         { "t": "Anthropic: harnesses para agentes de longa duraçêo (26/11/2025)", "href": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", "icone": "lupa" }
       ]
     }
